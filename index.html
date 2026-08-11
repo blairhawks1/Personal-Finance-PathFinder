@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1292,6 +1290,40 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 .v620-trust{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:10px;font-size:11px;color:var(--muted)}.v620-verified{display:inline-flex;align-items:center;gap:5px;background:#eef8f0;border:1px solid #bcd7c2;color:#28633b;border-radius:99px;padding:5px 8px;font-weight:800}.v620-review{border:0;background:transparent;color:var(--muted);text-decoration:underline;font:750 11px inherit;cursor:pointer}.v620-review.warn{color:#9b5a10}.v620-report-note{display:none;margin-top:8px;padding:8px 10px;background:#fff1dd;border:1px solid #efc892;border-radius:9px;color:#80521b;font-size:11.5px}.v620-report-note.show{display:block}
 .v620-recovery{display:grid;gap:7px;margin-top:10px}.v620-recovery button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 10px;text-align:left;color:var(--ink);font:750 12px inherit;cursor:pointer}.v620-recovery button:hover{background:var(--panel)}.v620-recovery-result{margin-top:9px;padding:10px;background:var(--panel);border-radius:9px;color:var(--muted);font-size:12px;line-height:1.45}
 @media(max-width:700px){.v620-personas{grid-template-columns:1fr}.v620-route-map{padding:18px 8px 24px}.v620-map-stop{grid-template-columns:1fr 44px 1fr}.v620-stop-card{max-width:145px;padding:7px 8px}.v620-stop-card b{font-size:10.5px}.v620-stop-card small{font-size:9.5px}.v620-map-line{top:80px}}
+
+
+/* ---------- Version 6.21: Natural-language Trail Finder ---------- */
+.v621-finder{max-width:860px;margin:22px auto;background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 12px 32px rgba(24,58,38,.08)}
+.v621-finder.compact{margin:18px 0 0;max-width:none}
+.v621-finder .eyebrow{font-size:10px;font-weight:950;letter-spacing:.12em;text-transform:uppercase;color:var(--done)}
+.v621-finder h2{font-family:Georgia,'Iowan Old Style','Times New Roman',serif;font-size:clamp(24px,4vw,34px);line-height:1.12;color:var(--ink);margin-top:4px}
+.v621-finder>p{color:var(--muted);font-size:13.5px;line-height:1.5;margin-top:7px;max-width:680px}
+.v621-box{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:15px}
+.v621-input{width:100%;min-height:52px;border:1.5px solid #bccabd;border-radius:13px;background:#fbfcfa;color:var(--text);padding:12px 14px;font:650 15px/1.35 inherit;outline:none}
+.v621-input:focus{border-color:var(--done);box-shadow:0 0 0 3px rgba(30,138,90,.12);background:#fff}
+.v621-submit{min-height:52px;border:0;border-radius:13px;background:var(--ink);color:#fff;padding:0 18px;font:850 14px inherit;cursor:pointer}
+.v621-submit:hover{filter:brightness(1.05)}
+.v621-examples{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.v621-example{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:99px;padding:6px 9px;font:750 10.5px inherit;cursor:pointer}
+.v621-example:hover{background:#fff}
+.v621-private{font-size:10.5px;color:var(--muted);margin-top:9px}
+.v621-results{display:none;margin-top:17px;border-top:1px solid var(--line);padding-top:17px}
+.v621-results.show{display:block}
+.v621-randy{display:grid;grid-template-columns:48px 1fr;gap:11px;align-items:center;margin-bottom:13px}
+.v621-randy .randy-portrait{width:46px;height:46px}
+.v621-randy b{display:block;color:var(--ink);font-size:13px}.v621-randy span{font-size:12px;color:var(--muted)}
+.v621-primary{display:block;text-decoration:none;background:linear-gradient(145deg,#eef8f0,#fff);border:2px solid #86b48f;border-radius:16px;padding:16px;color:var(--ink);box-shadow:0 8px 20px rgba(30,86,49,.08)}
+.v621-primary small{display:block;font-size:9px;font-weight:950;letter-spacing:.12em;text-transform:uppercase;color:var(--done)}
+.v621-primary h3{font-size:20px;line-height:1.2;margin-top:4px}.v621-primary p{color:var(--muted);font-size:12.5px;line-height:1.45;margin-top:5px}
+.v621-primary strong{display:inline-block;margin-top:10px;font-size:13px}
+.v621-reason{margin-top:10px;background:var(--panel);border-radius:10px;padding:9px 10px;font-size:11.5px;color:var(--muted);line-height:1.4}
+.v621-reason b{color:var(--ink)}
+.v621-alt-title{font-size:10px;font-weight:950;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:15px 0 7px}
+.v621-alts{display:grid;gap:7px}
+.v621-alt{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:11px;padding:9px 11px;text-decoration:none;color:var(--ink);background:#fff}
+.v621-alt b{font-size:12px}.v621-alt small{display:block;font-size:10px;color:var(--muted);margin-top:1px}.v621-alt span{font-weight:900}
+.v621-none{padding:12px;border-radius:12px;background:var(--panel);color:var(--muted);font-size:12.5px}
+@media(max-width:700px){.v621-finder{margin:15px 12px;padding:17px;border-radius:18px}.v621-finder.compact{margin:14px 0 0}.v621-box{grid-template-columns:1fr}.v621-submit{width:100%}.v621-input{font-size:16px}.v621-examples{display:grid;grid-template-columns:1fr 1fr}.v621-example{text-align:left;border-radius:10px;min-height:38px}}
 
 </style>
 </head>
@@ -9382,6 +9414,131 @@ const v620_renderTutorial=renderTutorial;
 renderTutorial=function(id,focusStep){v620_renderTutorial(id,focusStep);v620EnhanceTrail(id)};
 const v620_renderV5Result=renderV5Result;
 renderV5Result=function(state){v620_renderV5Result(state);v620EnhanceResult()};
+
+
+
+/* ---------- Version 6.21: Natural-language Trail Finder ---------- */
+const V621_INTENTS=[
+  {ids:["changed-jobs","fidelity-rollover-401k","schwab-rollover-401k"],phrases:["old 401k","old 401(k)","left my job","left a job","changed jobs","new job","former employer","roll over","rollover","401k from","401(k) from"]},
+  {ids:["new-parent","fidelity-open-529","schwab-open-529","general-trump-account","fidelity-open-custodial","schwab-open-custodial"],phrases:["new baby","had a baby","new kid","my child","my kids","college savings","save for college","529","custodial","ugma","utma"]},
+  {ids:["first-investment","fidelity-open-roth-ira","schwab-open-roth-ira"],phrases:["start investing","new to investing","never invested","first investment","begin investing","get started investing","invest my first","open a roth","roth ira"]},
+  {ids:["fidelity-buy-index-fund","schwab-buy-index-fund","general-choose-index-fund"],phrases:["index fund","which fund","choose a fund","ticker","s&p 500","s and p 500","expense ratio","large cap","mid cap","small cap","total market"]},
+  {ids:["fidelity-buy-etf","schwab-buy-etf","general-choose-index-fund"],phrases:["buy an etf","which etf","etf"]},
+  {ids:["idle-cash","general-hysa","fidelity-open-cma","schwab-open-checking","fidelity-buy-treasury","schwab-buy-treasury","fidelity-buy-cd"],phrases:["cash earning nothing","cash sitting","savings earning","high yield savings","hysa","better interest","treasury","t bill","cd rate","safe place for cash"]},
+  {ids:["high-earner","fidelity-backdoor-roth","schwab-backdoor-roth"],phrases:["too much for roth","income too high","roth income limit","backdoor roth","high earner"]},
+  {ids:["switch-brokerage","fidelity-acats-in","schwab-acats-in","general-choose-brokerage"],phrases:["switch brokerage","change brokerage","move brokerage","transfer investments","transfer account","acats","fidelity or schwab","choose brokerage"]},
+  {ids:["nearing-retirement","general-rebalance","general-roth-conversion","fidelity-rmd","schwab-rmd"],phrases:["near retirement","retiring soon","retire soon","rmd","required minimum distribution","draw down","roth conversion"]},
+  {ids:["where-to-start","general-kill-debt","general-hysa"],phrases:["extra money","what should i do with my money","where should my money go","pay debt or invest","emergency fund","credit card debt","where do i start"]},
+  {ids:["fidelity-beneficiaries","schwab-beneficiaries"],phrases:["beneficiary","beneficiaries","who inherits","inherit my account"]},
+  {ids:["fidelity-recurring","schwab-recurring"],phrases:["automatic investing","recurring investment","invest every month","monthly investing","auto invest"]},
+  {ids:["fidelity-drip","schwab-drip"],phrases:["drip","reinvest dividends","dividend reinvest"]},
+  {ids:["general-market-drop"],phrases:["market crashed","market drop","stocks are down","market is down","should i sell"]},
+  {ids:["general-brokerage-taxes","fidelity-tax-docs","schwab-tax-docs"],phrases:["investment taxes","brokerage taxes","tax documents","1099","capital gains tax"]}
+];
+function v621Words(s){return String(s||"").toLowerCase().replace(/[’']/g,"").replace(/[^a-z0-9$%()]+/g," ").trim()}
+function v621CandidateById(id){
+  const p=PATHS.find(x=>x.id===id);if(p)return {kind:"route",id,title:p.title,desc:p.who,href:`#/p/${p.id}`,obj:p};
+  const t=TUTORIALS.find(x=>x.id===id&&x.status==="ready");if(t)return {kind:"trail",id,title:t.title,desc:t.tagline,href:`#/t/${t.id}`,obj:t};
+  return null;
+}
+function v621SavedContextText(){
+  const chunks=[];const b=getBrok();if(b)chunks.push(b);
+  const v=getV5();if(v?.state)chunks.push(...Object.values(v.state).filter(x=>typeof x==="string"));
+  const p=getProfile();if(p)Object.values(p).forEach(a=>Array.isArray(a)&&chunks.push(...a));
+  return v621Words(chunks.join(" "));
+}
+function v621Score(query,c){
+  const q=v621Words(query),ctx=v621SavedContextText(),words=q.split(/\s+/).filter(x=>x.length>2);
+  const fields=v621Words([c.title,c.desc,c.kind==="trail"?c.obj.category:""].join(" "));
+  let score=0,reasons=[];
+  for(const w of words)if(fields.includes(w)){score+=1.25}
+  if(q&&fields.includes(q)){score+=7;reasons.push("your wording closely matches this trail")}
+  V621_INTENTS.forEach(intent=>{
+    const matched=intent.phrases.filter(ph=>q.includes(v621Words(ph)));
+    if(matched.length&&intent.ids.includes(c.id)){score+=9+Math.min(6,matched.length*2);reasons.push(`you mentioned ${matched[0]}`)}
+  });
+  const brok=getBrok();
+  if(c.kind==="trail"&&brok){
+    if(c.obj.brokerage===brok){score+=3;reasons.push(`you use ${brok}`)}
+    else if(c.obj.brokerage!=="General"){score-=6}
+  }
+  if(c.kind==="trail"){
+    const prog=getProg(c.id),total=c.obj.steps.length;
+    if(prog.length&&prog.length<total){score+=5;reasons.push("you already started it")}
+    if(total&&prog.length>=total)score-=5;
+  }else{
+    const st=pathStats(c.obj);
+    if(st.done>0&&st.done<st.total){score+=4;reasons.push("this route is already in progress")}
+    if(st.total&&st.done===st.total)score-=4;
+  }
+  const v=getV5();
+  if(v?.complete&&v.state){
+    try{const r=v5Recommendation(v.state);if(r?.path?.id===c.id){score+=3;reasons.push("it also matches your saved journey")}}catch(e){}
+  }
+  if(ctx){
+    const titleWords=v621Words(c.title).split(/\s+/).filter(x=>x.length>3);
+    if(titleWords.some(w=>ctx.includes(w)))score+=1;
+  }
+  return {score,reasons:[...new Set(reasons)]};
+}
+function v621Find(query){
+  const q=v621Words(query);if(!q)return [];
+  const all=[
+    ...PATHS.map(p=>v621CandidateById(p.id)),
+    ...TUTORIALS.filter(t=>t.status==="ready").map(t=>v621CandidateById(t.id))
+  ].filter(Boolean);
+  return all.map(c=>({...c,...v621Score(query,c)}))
+    .filter(c=>c.score>1)
+    .sort((a,b)=>b.score-a.score || (a.kind==="route"?-1:1))
+    .filter((c,i,a)=>a.findIndex(x=>x.id===c.id)===i)
+    .slice(0,3);
+}
+function v621FinderHTML(compact=false){
+  return `<section class="v621-finder${compact?" compact":""}" data-v621-finder>
+    <div class="eyebrow">Ask Ranger Randy</div>
+    <h2>What are you trying to figure out?</h2>
+    <p>Describe what’s going on in your own words. You don’t need to know the financial terminology.</p>
+    <div class="v621-box"><input class="v621-input" type="search" autocomplete="off" placeholder="Example: I left my job and have an old 401(k)…" aria-label="Tell Ranger Randy what you need help with"><button class="v621-submit" type="button">Find my path →</button></div>
+    <div class="v621-examples"><button class="v621-example" type="button">I want to start investing</button><button class="v621-example" type="button">I had a baby</button><button class="v621-example" type="button">My cash earns almost nothing</button><button class="v621-example" type="button">I left my job with a 401(k)</button></div>
+    <div class="v621-private">Your words stay in this browser. This version does not send your question to an AI service.</div>
+    <div class="v621-results" aria-live="polite"></div>
+  </section>`;
+}
+function v621RenderResults(root,q){
+  const box=root.querySelector(".v621-results"),hits=v621Find(q);
+  try{localStorage.setItem("pf2-last-trail-finder-query",q)}catch(e){}
+  if(!hits.length){box.innerHTML=`<div class="v621-none"><b>Randy isn’t confident enough to pick one trail from that.</b><br>Try describing the life event or task another way, or use Explore to browse the whole park.</div>`;box.classList.add("show");return}
+  const p=hits[0],alts=hits.slice(1);
+  const reason=p.reasons.length?p.reasons.slice(0,2).join(" and "):"it is the closest match to what you described";
+  box.innerHTML=`<div class="v621-randy">${rangerRandy("avatar",false)}<div><b>I know where I’d start.</b><span>I used what you typed${getBrok()?`, your ${esc(getBrok())} preference`:""}, and your saved PathFinder progress.</span></div></div>
+    <a class="v621-primary" href="${p.href}"><small>${p.kind==="route"?"Recommended route":"Recommended trail"}</small><h3>${esc(p.title)}</h3><p>${esc(p.desc||"")}</p><div class="v621-reason"><b>Why Randy picked this:</b> ${esc(reason)}.</div><strong>${p.kind==="route"?"Open this route":"Start this trail"} →</strong></a>
+    ${alts.length?`<div class="v621-alt-title">Other trails that might help</div><div class="v621-alts">${alts.map(a=>`<a class="v621-alt" href="${a.href}"><div><b>${esc(a.title)}</b><small>${esc(a.kind==="route"?"Route":"Trail")} · ${esc(a.reasons[0]||"Related to what you described")}</small></div><span>→</span></a>`).join("")}</div>`:""}`;
+  box.classList.add("show");
+}
+function v621BindFinder(root){
+  if(!root||root.dataset.v621Bound)return;root.dataset.v621Bound="1";
+  const input=root.querySelector(".v621-input"),go=()=>{const q=input.value.trim();if(q)v621RenderResults(root,q)};
+  root.querySelector(".v621-submit")?.addEventListener("click",go);
+  input?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();go()}});
+  root.querySelectorAll(".v621-example").forEach(b=>b.addEventListener("click",()=>{input.value=b.textContent.trim();go()}));
+}
+function v621AttachHomeFinder(){
+  if(app.querySelector("[data-v621-finder]"))return;
+  const marketing=app.querySelector(".pf65-how-section");
+  if(marketing){marketing.insertAdjacentHTML("afterend",v621FinderHTML(false));v621BindFinder(app.querySelector("[data-v621-finder]"));return}
+  const camp=app.querySelector(".v615-camp-focus");
+  if(camp){camp.insertAdjacentHTML("afterend",v621FinderHTML(true));v621BindFinder(app.querySelector("[data-v621-finder]"))}
+}
+function v621AttachExploreFinder(){
+  if(app.querySelector("[data-v621-finder]"))return;
+  const banner=app.querySelector(".explore-mode-banner");
+  if(banner){banner.insertAdjacentHTML("afterend",v621FinderHTML(false));v621BindFinder(app.querySelector("[data-v621-finder]"))}
+}
+/* Wrap the current rendered views so the finder stays additive and does not alter route state. */
+const v621_renderV5Home=renderV5Home;
+renderV5Home=function(){v621_renderV5Home();v621AttachHomeFinder()};
+const v621_renderLegacyExplore=renderLegacyExplore;
+renderLegacyExplore=function(filter=""){v621_renderLegacyExplore(filter);if(location.hash==="#/explore")v621AttachExploreFinder()};
 
 
 /* ---------- router ---------- */
