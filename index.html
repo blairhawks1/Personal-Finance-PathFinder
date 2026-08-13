@@ -1325,6 +1325,14 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 .v621-none{padding:12px;border-radius:12px;background:var(--panel);color:var(--muted);font-size:12.5px}
 @media(max-width:700px){.v621-finder{margin:15px 12px;padding:17px;border-radius:18px}.v621-finder.compact{margin:14px 0 0}.v621-box{grid-template-columns:1fr}.v621-submit{width:100%}.v621-input{font-size:16px}.v621-examples{display:grid;grid-template-columns:1fr 1fr}.v621-example{text-align:left;border-radius:10px;min-height:38px}}
 
+
+/* ---------- Version 6.22: Ask Ranger Randy + Decision Trails ---------- */
+.v622-ask{display:inline-flex;align-items:center;gap:7px;margin-top:12px;border:1px solid #a9c4ae;background:#f5fbf5;color:var(--ink);border-radius:10px;padding:8px 10px;font:850 12px inherit;cursor:pointer}.v622-ask:hover{background:#fff;border-color:var(--done)}.v622-ask .randy-portrait{width:25px;height:25px;flex:none}
+.v622-explain[hidden]{display:none}.v622-explain{position:fixed;inset:0;z-index:520;display:flex;align-items:flex-end;justify-content:center;padding:16px}.v622-explain-bg{position:absolute;inset:0;border:0;background:rgba(10,25,16,.48)}.v622-explain-card{position:relative;z-index:1;width:min(580px,100%);max-height:min(78vh,720px);overflow:auto;background:#fff;border-radius:23px;padding:20px;box-shadow:0 26px 80px rgba(0,0,0,.28);animation:v622In .18s ease-out}@keyframes v622In{from{transform:translateY(20px);opacity:.5}to{transform:none;opacity:1}}
+.v622-explain-head{display:grid;grid-template-columns:54px 1fr auto;gap:11px;align-items:center}.v622-explain-head .randy-portrait{width:52px;height:52px}.v622-explain-head small{display:block;font-size:9px;font-weight:950;letter-spacing:.11em;text-transform:uppercase;color:var(--done)}.v622-explain-head h2{font-size:20px;line-height:1.2;color:var(--ink);margin-top:2px}.v622-explain-x{width:38px;height:38px;border:1px solid var(--line);background:#fff;border-radius:50%;font-size:20px;color:var(--ink);cursor:pointer}.v622-explain-body{margin-top:14px;color:var(--text);font-size:13.5px;line-height:1.55}.v622-explain-body p+p{margin-top:9px}
+.v622-terms{display:grid;gap:8px;margin-top:13px}.v622-term{border:1px solid var(--line);border-radius:12px;padding:10px 11px;background:var(--panel)}.v622-term b{display:block;color:var(--ink);font-size:12.5px}.v622-term span{display:block;color:var(--muted);font-size:12px;line-height:1.45;margin-top:2px}.v622-decision-link{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:13px;border:1px solid #ddbd65;background:var(--hi-soft);border-radius:12px;padding:11px 12px;text-decoration:none;color:var(--ink)}.v622-decision-link b{display:block;font-size:12px}.v622-decision-link small{display:block;color:var(--muted);font-size:10.5px;margin-top:2px}.v622-decision-link>span{font-weight:950}.v622-gotit{width:100%;min-height:47px;margin-top:15px;border:0;border-radius:11px;background:var(--ink);color:#fff;font:850 13px inherit;cursor:pointer}
+@media(max-width:700px){.v622-explain{padding:0}.v622-explain-card{border-radius:22px 22px 0 0;max-height:84vh;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}.v622-ask{min-height:44px}}@media(prefers-reduced-motion:reduce){.v622-explain-card{animation:none}}
+
 </style>
 </head>
 <body>
@@ -7378,6 +7386,56 @@ TUTORIALS.push(
 }
 );
 
+
+TUTORIALS.push(
+{
+  id:"general-etf-vs-mutual-fund",brokerage:"General",category:"Getting started",title:"ETF vs. mutual fund: which format fits you?",tagline:"Two ways to own a diversified fund. Compare how they trade, how you buy them, automation, portability, and what actually matters.",minutes:6,difficulty:"Beginner",lastVerified:"2026-08-12",status:"ready",next:null,before:["Know which account you plan to invest in"],steps:[
+    {title:"Start with what is the same",body:"An **ETF** and a **mutual fund** can hold essentially the same underlying investments. Either can track a broad index. The important first question is what the fund owns — not whether the wrapper says ETF or mutual fund.",note:{type:"tip",title:"Don't confuse the wrapper with the strategy",body:"An S&P 500 ETF and an S&P 500 mutual fund can give very similar market exposure even though you buy and trade them differently."}},
+    {title:"Understand how trading differs",body:"ETFs trade on an exchange during market hours, so their market price can move throughout the day. Traditional mutual funds are generally priced once per day at net asset value after the market closes."},
+    {title:"Compare automation and convenience",body:"Both formats may support recurring investing, but the exact workflow depends on your brokerage and the fund. If your plan is to invest the same dollar amount automatically, check that the brokerage supports that workflow for the fund you choose."},
+    {title:"Compare costs and account context",body:"Look at the **expense ratio**, transaction fees, and any trading friction. ETFs can have bid/ask spreads. Mutual funds can have purchase or redemption fees depending on the fund. In a taxable account, tax efficiency can matter more than it does inside an IRA."},
+    {title:"Use the simple decision rule",body:"If two funds give you the exposure you want at similarly low cost, choose the format that makes good behavior easiest: something you understand, can buy consistently, and are comfortable holding for years.",note:{type:"decision",title:"Don't over-optimize the wrapper",body:"Diversification, costs, and staying invested usually matter more than squeezing every last structural advantage from ETF versus mutual fund."}}
+  ],finish:{title:"You can choose the wrapper without overthinking it",body:"Focus first on diversification, index exposure, costs, and whether you'll actually keep investing.",cta:null}
+},
+{
+  id:"general-debt-vs-invest",brokerage:"General",category:"Getting started",title:"Pay debt or invest: which comes first?",tagline:"Balance guaranteed interest savings, employer matches, emergency cash, and long-term investing.",minutes:7,difficulty:"Beginner",lastVerified:"2026-08-12",status:"ready",next:null,before:["A rough idea of each debt's interest rate","Whether your employer offers a retirement-plan match","Whether you have emergency cash"],steps:[
+    {title:"Protect the floor first",body:"Before aggressively investing or paying extra on lower-rate debt, make sure a normal surprise won't immediately send you back into expensive borrowing. A starter emergency cushion can protect the rest of the plan."},
+    {title:"Check the employer match",body:"If your workplace retirement plan offers matching contributions, understand the actual formula and vesting rules before deciding to skip contributions entirely.",note:{type:"decision",title:"Use your plan's real rules",body:"Match formulas vary. Check the plan rather than relying on a generic rule of thumb."}},
+    {title:"Treat high-interest debt as urgent",body:"Paying debt down gives you a known reduction in future interest charges. The higher the rate, the harder it is to justify carrying it in exchange for an uncertain investment return.",note:{type:"warning",title:"Investment returns are not guaranteed",body:"Do not compare a guaranteed debt rate with an assumed stock-market return as if both were guaranteed."}},
+    {title:"For lower rates, weigh your whole situation",body:"Once expensive debt is controlled, your time horizon, emergency savings, taxes, retirement match, risk tolerance, and monthly cash flow all matter."},
+    {title:"A split can be reasonable",body:"After covering the basics, you do not always need an all-or-nothing answer. Some people intentionally divide extra cash between debt reduction and long-term investing."}
+  ],finish:{title:"You have a priority framework",body:"Protect cash flow, understand your match, prioritize expensive debt, then weigh lower-rate debt against your longer-term goals.",cta:null}
+},
+{
+  id:"general-roth-vs-taxable",brokerage:"General",category:"Getting started",title:"Roth IRA vs. taxable brokerage: where should you invest?",tagline:"Retirement tax advantages versus unrestricted access. Decide what the money is for before choosing the account.",minutes:7,difficulty:"Beginner",lastVerified:"2026-08-12",status:"ready",next:null,before:["Know whether this money is mainly for retirement or may be needed earlier"],steps:[
+    {title:"Separate the account from the investment",body:"A Roth IRA and a taxable brokerage account are **account types**. Either can hold investments such as mutual funds or ETFs. Choosing the account answers the tax-and-access question; choosing the fund answers what you own."},
+    {title:"Understand the Roth trade",body:"Roth IRA contributions are not deductible, and qualified distributions can be tax-free if the rules are met. Roth IRAs also have eligibility and annual contribution rules, so they are not an unlimited investing bucket."},
+    {title:"Understand the taxable brokerage trade",body:"A taxable brokerage account does not have the Roth IRA's contribution limit or retirement-purpose rules, but dividends, interest, and realized gains can create current tax consequences."},
+    {title:"Match the account to the goal",body:"Money genuinely intended for retirement may benefit from available tax-advantaged space. Money for flexible goals before retirement may need the accessibility of a taxable brokerage account.",note:{type:"decision",title:"It can be both",body:"Many investors use retirement accounts for retirement and a taxable brokerage account for additional or more flexible long-term investing."}},
+    {title:"Check eligibility before contributing",body:"Roth IRA contribution eligibility depends on compensation and income rules that can change by tax year. Verify current IRS rules if you're near a limit or have an unusual tax situation."}
+  ],finish:{title:"Choose the account based on the money's job",body:"Decide what the money is for first; then choose the account whose tax and access rules fit that goal.",cta:null}
+},
+{
+  id:"general-529-vs-custodial",brokerage:"General",category:"Getting started",title:"529 vs. custodial account: which is better for a child?",tagline:"Education-focused tax advantages versus a flexible account that legally becomes the child's.",minutes:7,difficulty:"Beginner",lastVerified:"2026-08-12",status:"ready",next:null,before:["Think about whether the primary goal is education or a broader gift for the child's future"],steps:[
+    {title:"Start with ownership and control",body:"A **529 plan** is generally an education-focused account with an owner and beneficiary. A **custodial account** under UGMA/UTMA holds assets that are an irrevocable gift to the child, managed by a custodian until control transfers under applicable law.",note:{type:"warning",title:"Custodial money belongs to the child",body:"Once assets are placed in a custodial account, the gift is generally not simply reversible because plans changed."}},
+    {title:"Compare the intended use",body:"A 529 is designed around qualified education expenses and tax advantages when its rules are followed. Custodial assets are broader in potential use but do not receive the same education-specific treatment."},
+    {title:"Consider control later",body:"The 529 owner generally retains control subject to plan rules. A custodial account eventually transfers control to the beneficiary under the applicable law and account terms."},
+    {title:"Don't ignore taxes and financial aid",body:"Ownership and account type can affect taxes and financial-aid treatment. Those rules can be nuanced and can change, so do not choose solely from a simplified rule of thumb if aid is important."},
+    {title:"Use the goal as the tiebreaker",body:"If the money is primarily for education and you value owner control, start by evaluating a 529. If you're making an irrevocable gift for a child's broader future use and accept eventual child control, a custodial account may fit that intent."}
+  ],finish:{title:"The key difference is purpose and control",body:"A 529 is built around education. A custodial account is an irrevocable gift owned by the child.",cta:null}
+},
+{
+  id:"general-rollover-vs-leave-401k",brokerage:"General",category:"Getting started",title:"Roll over an old 401(k) or leave it there?",tagline:"Compare fees, investments, protections, consolidation, and tax consequences before moving retirement money.",minutes:8,difficulty:"Beginner",lastVerified:"2026-08-12",status:"ready",next:null,before:["Your old plan's fee and investment information if available","Whether your new employer accepts incoming rollovers","Whether a backdoor Roth strategy could matter to you"],steps:[
+    {title:"Know the main choices",body:"After leaving a job, common choices include leaving money in the former plan if permitted, rolling it to a new employer plan if accepted, rolling it to an IRA, or taking a distribution.",note:{type:"warning",title:"Cashing out is not a rollover",body:"A taxable distribution can trigger income tax and potentially additional tax. Don't choose a cash distribution when your intent is a tax-deferred rollover."}},
+    {title:"Compare the old plan before moving it",body:"An old 401(k) may have low-cost institutional investments, plan-specific services, or protections worth keeping. Check actual fees and fund choices rather than assuming an IRA is automatically better."},
+    {title:"Compare the IRA option",body:"An IRA can offer a broad investment menu and simpler consolidation, but fees, services, and legal protections differ. Moving pre-tax 401(k) money to a traditional IRA can also matter if you later use a **backdoor Roth** strategy."},
+    {title:"Consider the new employer plan",body:"If your current employer plan accepts incoming rollovers, consolidating there can reduce the number of accounts you manage while keeping assets in an employer plan. Compare its actual costs and investments."},
+    {title:"If you roll, preserve the tax character",body:"Pre-tax and Roth money need compatible destinations if you want to avoid an unintended taxable conversion. A direct plan-to-plan or trustee-to-trustee rollover can reduce withholding and timing problems compared with receiving the money personally.",note:{type:"warning",title:"Pause if the check is payable to you",body:"Indirect rollovers have timing and withholding rules. Verify the mechanics before proceeding."}}
+  ],finish:{title:"Compare before moving anything",body:"Leaving the old plan can be reasonable. So can a new 401(k) or IRA. Use the actual plan costs, protections, taxes, and future strategy to decide.",cta:null}
+}
+);
+
+
 const CATEGORY_ORDER = ["Getting started","Opening accounts","Moving money","Buying investments","Managing your accounts","Advanced moves"];
 
 /* =========================================================
@@ -9539,6 +9597,61 @@ const v621_renderV5Home=renderV5Home;
 renderV5Home=function(){v621_renderV5Home();v621AttachHomeFinder()};
 const v621_renderLegacyExplore=renderLegacyExplore;
 renderLegacyExplore=function(filter=""){v621_renderLegacyExplore(filter);if(location.hash==="#/explore")v621AttachExploreFinder()};
+
+
+
+/* ---------- Version 6.22: Ask Ranger Randy ---------- */
+const V622_GLOSSARY={
+  "expense ratio":"The fund’s annual operating expenses expressed as a percentage of assets. Ongoing costs reduce the return you keep over time.",
+  "etf":"An exchange-traded fund: a pooled investment that trades on an exchange during the market day.",
+  "mutual fund":"A pooled investment whose shares are generally purchased or redeemed at the fund’s net asset value. Traditional mutual funds are usually priced once per business day.",
+  "ticker":"The short symbol used to identify a security or fund when you place a trade.",
+  "market cap":"Market capitalization: a company’s share price multiplied by shares outstanding. Many broad indexes give larger companies larger weights.",
+  "large cap":"A label for larger public companies. Exact boundaries depend on the index provider.",
+  "mid cap":"A label for companies between large- and small-cap segments. Exact boundaries depend on the index.",
+  "small cap":"A label for smaller public companies. Small-cap funds can behave differently from large-company funds and can be more volatile.",
+  "index fund":"A mutual fund or ETF designed to track a specified market index rather than having a manager choose holdings to try to beat it.",
+  "s&p 500":"A widely followed U.S. stock index of 500 leading companies that represents large-cap U.S. equity exposure, not every U.S. stock.",
+  "total market":"A fund or index intended to cover a much broader share of a stock market, often including large-, mid-, and small-cap companies.",
+  "roth ira":"An IRA funded with non-deductible contributions; qualified distributions can be tax-free when IRS requirements are met.",
+  "traditional ira":"An IRA where contributions may be deductible depending on circumstances and taxable amounts are generally taxed when distributed.",
+  "taxable brokerage":"A regular investment account without an IRA’s retirement-specific tax shelter. Taxes can arise from dividends, interest, and realized gains.",
+  "drip":"Dividend reinvestment: eligible dividends are automatically used to buy additional shares instead of being left as cash.",
+  "settlement":"The completion of a securities transaction, when the trade’s cash and securities obligations are finalized.",
+  "rollover":"Moving eligible retirement assets from one retirement plan or IRA to another while following the applicable tax rules.",
+  "beneficiary":"A person or entity designated to receive an account or plan benefit after the owner’s death, subject to the account rules.",
+  "limit order":"An order to buy or sell only at a specified price or better. It controls price, but execution is not guaranteed.",
+  "market order":"An instruction to buy or sell promptly at the best available market price. Execution is prioritized, but exact price is not guaranteed.",
+  "bid/ask":"The bid is generally the highest current price a buyer will pay; the ask is the lowest current price a seller will accept.",
+  "529":"A tax-advantaged education savings plan under Section 529. Qualified uses and plan rules matter.",
+  "custodial":"An UGMA/UTMA-style account where a custodian manages assets that legally belong to the minor until control transfers under applicable law.",
+  "backdoor roth":"A common description for a nondeductible traditional IRA contribution followed by a Roth conversion. Existing pre-tax IRA balances can affect the tax calculation."
+};
+const V622_DECISION_LINKS=[
+  {terms:["etf","mutual fund"],id:"general-etf-vs-mutual-fund",label:"ETF vs. mutual fund"},
+  {terms:["debt","credit card","interest rate"],id:"general-debt-vs-invest",label:"Pay debt or invest"},
+  {terms:["taxable brokerage","brokerage account","roth ira"],id:"general-roth-vs-taxable",label:"Roth IRA vs. taxable brokerage"},
+  {terms:["529","custodial","ugma","utma"],id:"general-529-vs-custodial",label:"529 vs. custodial account"},
+  {terms:["rollover","old 401","former employer"],id:"general-rollover-vs-leave-401k",label:"Roll over or leave an old 401(k)"},
+  {terms:["roth","traditional ira"],id:"general-roth-vs-trad",label:"Roth vs. Traditional IRA"},
+  {terms:["brokerage","fidelity","schwab"],id:"general-choose-brokerage",label:"Choose a brokerage"},
+  {terms:["index fund","s&p 500","total market","expense ratio","large cap","mid cap","small cap"],id:"general-choose-index-fund",label:"Choose an index fund"}
+];
+function v622StepPlain(step){return [step.title,step.body,step.note?.title,step.note?.body].filter(Boolean).join(" ").replace(/\*\*|\[\[|\]\]/g," ")}
+function v622TermsForStep(step){const hay=v622StepPlain(step).toLowerCase();return Object.entries(V622_GLOSSARY).filter(([term])=>hay.includes(term)).slice(0,5)}
+function v622DecisionForStep(step,currentId){const hay=v622StepPlain(step).toLowerCase();return V622_DECISION_LINKS.find(x=>x.id!==currentId&&x.terms.some(t=>hay.includes(t)))||null}
+function v622StepPurpose(step,t){const title=String(step.title||"this step").replace(/[.?!]+$/," ");if(step.note?.type==="warning")return `This stop is mainly about avoiding a costly or hard-to-reverse mistake while you ${title.toLowerCase().trim()}.`;if(step.note?.type==="decision")return "This is a decision point. The goal is to understand the tradeoff before you make the next real-world choice.";if(t.category==="Buying investments")return "This step moves you closer to placing the intended investment in the intended account without guessing at the brokerage screen.";if(t.category==="Opening accounts")return "This step helps make sure the account is set up correctly before money or investments are added.";if(t.category==="Moving money")return "This step helps move money deliberately while keeping the source, destination, and transaction type clear.";return "This step exists so you understand what you are doing before moving to the next stop on the trail."}
+function v622ExplainHTML(t,step,i){const terms=v622TermsForStep(step),decision=v622DecisionForStep(step,t.id);return `<div class="v622-explain" id="v622Explain" hidden><button class="v622-explain-bg" type="button" aria-label="Close Ranger Randy explanation"></button><section class="v622-explain-card" role="dialog" aria-modal="true" aria-labelledby="v622ExplainTitle"><div class="v622-explain-head">${rangerRandy("avatar",false)}<div><small>Ask Ranger Randy</small><h2 id="v622ExplainTitle">${esc(step.title)}</h2></div><button type="button" class="v622-explain-x" aria-label="Close">×</button></div><div class="v622-explain-body"><p><b>Why this matters:</b> ${esc(v622StepPurpose(step,t))}</p>${terms.length?`<div class="v622-terms">${terms.map(([k,v])=>`<div class="v622-term"><b>${esc(k.replace(/\b\w/g,m=>m.toUpperCase()))}</b><span>${esc(v)}</span></div>`).join("")}</div>`:`<p>There isn't much jargon in this stop. Focus on the action in the instructions and compare what you see with the screenshot.</p>`}${decision?`<a class="v622-decision-link" href="#/t/${esc(decision.id)}"><div><b>Not sure which option is right?</b><small>Open decision trail: ${esc(decision.label)}</small></div><span>→</span></a>`:""}</div><button type="button" class="v622-gotit">Got it — keep hiking</button></section></div>`}
+function v622EnhanceTrail(id){const t=getTut(id);if(!t)return;app.querySelectorAll(".step").forEach((el,i)=>{const step=t.steps[i];if(!step)return;const body=el.querySelector(".step-body");if(!body||body.querySelector(".v622-ask"))return;const ask=document.createElement("button");ask.type="button";ask.className="v622-ask";ask.innerHTML=`${rangerRandy("avatar",false)}<span>Ask Randy to explain this</span>`;const action=body.querySelector(".walk-next,.v614-pause");if(action)action.insertAdjacentElement("beforebegin",ask);else body.appendChild(ask);ask.addEventListener("click",()=>{document.getElementById("v622Explain")?.remove();document.body.insertAdjacentHTML("beforeend",v622ExplainHTML(t,step,i));const modal=document.getElementById("v622Explain");modal.hidden=false;const close=()=>modal.remove();modal.querySelector(".v622-explain-bg")?.addEventListener("click",close);modal.querySelector(".v622-explain-x")?.addEventListener("click",close);modal.querySelector(".v622-gotit")?.addEventListener("click",close);modal.querySelector(".v622-decision-link")?.addEventListener("click",()=>{try{localStorage.setItem("pf2-decision-return",JSON.stringify({guide:id,step:i}))}catch(e){}})})})}
+function v622AddDecisionReturn(id){let ret=null;try{ret=JSON.parse(localStorage.getItem("pf2-decision-return")||"null")}catch(e){}if(!ret||!ret.guide||ret.guide===id)return;const t=getTut(id);if(!t||t.brokerage!=="General")return;const bar=app.querySelector(".trail-mode-bar");if(!bar||bar.querySelector(".v622-back-decision"))return;const a=document.createElement("a");a.className="trail-detour-back v622-back-decision";a.href=`#/t/${encodeURIComponent(ret.guide)}/s${Number(ret.step)||0}`;a.innerHTML='<span aria-hidden="true">←</span><span>Back to your trail</span>';const old=bar.querySelector(".trail-mode-exit,.trail-detour-back");if(old)old.replaceWith(a);a.addEventListener("click",()=>{try{localStorage.removeItem("pf2-decision-return")}catch(e){}})}
+const v622_renderTutorial=renderTutorial;renderTutorial=function(id,focusStep){v622_renderTutorial(id,focusStep);v622EnhanceTrail(id);v622AddDecisionReturn(id)};
+if(typeof V621_INTENTS!=="undefined")V621_INTENTS.push(
+  {ids:["general-etf-vs-mutual-fund"],phrases:["etf or mutual fund","etf vs mutual fund","mutual fund or etf"]},
+  {ids:["general-debt-vs-invest"],phrases:["pay debt or invest","debt vs invest","invest or pay off debt","credit card or invest"]},
+  {ids:["general-roth-vs-taxable"],phrases:["roth or brokerage","roth vs brokerage","taxable or roth"]},
+  {ids:["general-529-vs-custodial"],phrases:["529 or custodial","529 vs custodial","ugma or 529","utma or 529"]},
+  {ids:["general-rollover-vs-leave-401k"],phrases:["leave 401k or rollover","rollover or leave it","should i roll over my 401k","old 401k options"]}
+);
 
 
 /* ---------- router ---------- */
