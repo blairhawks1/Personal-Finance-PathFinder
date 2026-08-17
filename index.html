@@ -1368,6 +1368,18 @@ a[href^="#"],button,[role="button"]{
 }
 button,[role="button"],a[href^="#"]{touch-action:manipulation}
 
+
+/* ---------- Version 6.26: deterministic iPhone navigation ---------- */
+a.pitem-card,
+a[href^="#"],
+button[data-href^="#"]{
+  cursor:pointer;
+  touch-action:manipulation;
+  -webkit-user-select:none;
+  user-select:none;
+}
+a.pitem-card{position:relative;z-index:2}
+
 </style>
 </head>
 <body>
@@ -8905,7 +8917,7 @@ function renderPath(id){
         ${isHere?'<div class="youhere">You are here</div>':""}
         <span class="pbox" aria-hidden="true">&#9744;</span>
         ${clickable&&!agnostic
-          ?`<a class="pitem-card" href="#/t/${t.id}">${brokTag}${inner}</a>`
+          ?`<a class="pitem-card" href="#/t/${t.id}" data-open-tutorial="${t.id}">${brokTag}${inner}</a>`
           :`<div class="pitem-card${agnostic?" agn":""}">${brokTag}${inner}</div>`}
         ${override}
       </div>
@@ -8924,12 +8936,8 @@ function renderPath(id){
       const href=card.getAttribute('href');
       if(!href)return;
       e.preventDefault();
-      if(location.hash===href){
-        const m=href.match(/^#\/t\/(.+)$/);
-        if(m)renderTutorial(decodeURIComponent(m[1]));
-      }else{
-        location.hash=href;
-      }
+      e.stopPropagation();
+      pf25Navigate(href);
     });
   });
 
@@ -9596,27 +9604,22 @@ const v623_renderTutorial=renderTutorial;renderTutorial=function(id,focusStep){v
 (function(){
   function pf25Navigate(href){
     if(!href || href.charAt(0)!=="#") return false;
-    if(location.hash===href){
-      // Hashchange does not fire when navigating to the same hash.
-      // Route it explicitly so dead-looking taps still work.
-      const h=href||"#/";
-      let m;
-      if(h==="#"||h==="#/"||h==="#/today"){ renderHome(); return true; }
-      if(h==="#/explore"){ renderLegacyExplore(); return true; }
-      if(h==="#/journey"){ if(typeof renderJourney==="function") renderJourney(); else renderHome(); return true; }
-      if(h==="#/passport"){ renderPassport(); return true; }
-      if(h==="#/profile"){ renderProfile(); return true; }
-      if(h==="#/changes"){ renderChanges(); return true; }
-      if((m=h.match(/^#\/p\/(.+)$/))){ renderPath(decodeURIComponent(m[1])); return true; }
-      if((m=h.match(/^#\/t\/([^/]+)(?:\/s(\d+))?$/))){
-        renderTutorial(decodeURIComponent(m[1]), m[2]!=null?Number(m[2]):undefined);
-        return true;
-      }
+
+    // Update the visible URL without depending on Safari's hashchange event.
+    // Then route immediately. This makes taps deterministic on iPhone.
+    if(location.hash!==href){
+      try{ history.pushState(null,"",href); }
+      catch(e){ location.hash=href; }
+    }
+
+    // Route synchronously so the destination opens even if Safari does not
+    // emit hashchange for this interaction.
+    if(typeof route==="function"){
       route();
       return true;
     }
-    location.hash=href;
-    return true;
+
+    return false;
   }
 
   document.addEventListener("click",function(e){
@@ -9700,6 +9703,7 @@ function route(){
   renderHome();
 }
 window.addEventListener("hashchange",route);
+window.addEventListener("popstate",route);
 route();
 (function(){
   const el=document.getElementById("yearnote");if(el)el.textContent=LIMITS.year;
