@@ -217,6 +217,7 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 20px 80px}
   transition:border-color .15s, box-shadow .15s;
 }
 a.pitem-card:hover{border-color:var(--ink-soft);box-shadow:0 4px 16px rgba(24,58,38,.09)}
+a.pitem-card{cursor:pointer;-webkit-tap-highlight-color:rgba(30,86,49,.10);touch-action:manipulation}
 .pitem-card h3{font-size:16px;font-weight:700;color:var(--ink);line-height:1.35;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .pitem-card p{font-size:13.5px;color:var(--muted);margin-top:4px}
 .pitem-card .pim{font-size:12.5px;color:var(--muted);margin-top:8px}
@@ -8908,6 +8909,22 @@ function renderPath(id){
   html+=`${th?`<div class="trailend"><div class="tflag">⚑</div><p>${esc(th.outro)}</p></div>`:""}</div></main>`;
   app.innerHTML=html;
   window.scrollTo(0,0);
+
+  /* Mobile Safari reliability: make trail cards explicitly navigate.
+     The whole white guide card remains tappable, including its title/text. */
+  app.querySelectorAll('a.pitem-card[href^="#/t/"]').forEach(card=>{
+    card.addEventListener('click',e=>{
+      const href=card.getAttribute('href');
+      if(!href)return;
+      e.preventDefault();
+      if(location.hash===href){
+        const m=href.match(/^#\/t\/(.+)$/);
+        if(m)renderTutorial(decodeURIComponent(m[1]));
+      }else{
+        location.hash=href;
+      }
+    });
+  });
 
   // path-level brokerage toggle
   app.querySelectorAll(".pbbtn,[data-pathbrok].ssbtn").forEach(btn=>{
