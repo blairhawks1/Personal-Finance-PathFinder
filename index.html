@@ -612,6 +612,11 @@ footer p+p{margin-top:8px}
 .qrcap{font-size:12.5px;line-height:1.45;color:var(--muted)}
 .qrcap b{display:block;color:var(--ink);font-size:13px;font-weight:700;margin-bottom:2px}
 @media print{.qrbox{display:none!important}}
+/* ---------- Version 6.24: screenshot anchor strategy ----------
+   PathFinder intentionally uses screenshots only at visual checkpoints.
+   Intermediate clicks stay text-led so one workflow does not require a new
+   screenshot after every tap. Keep new screenshot requirements selective.
+--------------------------------------------------------------- */
 /* ---- screenshot freshness (CAPTURED manifest) ---- */
 .capnote{margin:0;padding:7px 12px;border-top:1px solid var(--line);background:#FAFCFA;font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}
 .capnote .capstale{color:var(--warn)}
@@ -1333,6 +1338,28 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 .v622-terms{display:grid;gap:8px;margin-top:13px}.v622-term{border:1px solid var(--line);border-radius:12px;padding:10px 11px;background:var(--panel)}.v622-term b{display:block;color:var(--ink);font-size:12.5px}.v622-term span{display:block;color:var(--muted);font-size:12px;line-height:1.45;margin-top:2px}.v622-decision-link{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:13px;border:1px solid #ddbd65;background:var(--hi-soft);border-radius:12px;padding:11px 12px;text-decoration:none;color:var(--ink)}.v622-decision-link b{display:block;font-size:12px}.v622-decision-link small{display:block;color:var(--muted);font-size:10.5px;margin-top:2px}.v622-decision-link>span{font-weight:950}.v622-gotit{width:100%;min-height:47px;margin-top:15px;border:0;border-radius:11px;background:var(--ink);color:#fff;font:850 13px inherit;cursor:pointer}
 @media(max-width:700px){.v622-explain{padding:0}.v622-explain-card{border-radius:22px 22px 0 0;max-height:84vh;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}.v622-ask{min-height:44px}}@media(prefers-reduced-motion:reduce){.v622-explain-card{animation:none}}
 
+
+/* ---------- Version 6.23: Confidence & Polish ---------- */
+.v623-catchup{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 18px;padding:12px 14px;background:#f7faf6;border:1px solid var(--line);border-radius:14px}
+.v623-catchup div{min-width:0}.v623-catchup b{display:block;color:var(--ink);font-size:12.5px}.v623-catchup small{display:block;color:var(--muted);font-size:11px;line-height:1.4;margin-top:2px}
+.v623-catchup button{flex:none;min-height:44px;border:1px solid #9fb7a4;background:#fff;color:var(--ink);border-radius:10px;padding:8px 11px;font:850 12px inherit;cursor:pointer}
+.v623-modal[hidden]{display:none}.v623-modal{position:fixed;inset:0;z-index:620;display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.v623-modal-bg{position:absolute;inset:0;border:0;background:rgba(8,23,14,.52)}
+.v623-dialog{position:relative;z-index:1;width:min(560px,100%);max-height:84vh;overflow:auto;background:#fff;border-radius:24px;padding:21px;box-shadow:0 30px 90px rgba(0,0,0,.3);animation:v623Sheet .2s ease-out}
+@keyframes v623Sheet{from{transform:translateY(22px);opacity:.5}to{transform:none;opacity:1}}
+.v623-dialog-head{display:grid;grid-template-columns:54px 1fr auto;gap:11px;align-items:center}.v623-dialog-head .randy-portrait{width:52px;height:52px}.v623-dialog-head small{display:block;color:var(--done);font-size:9px;font-weight:950;letter-spacing:.1em;text-transform:uppercase}.v623-dialog-head h2{font-size:21px;line-height:1.2;color:var(--ink);margin-top:2px}.v623-x{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--ink);font-size:20px;cursor:pointer}
+.v623-dialog-copy{margin-top:13px;color:var(--muted);font-size:13px;line-height:1.5}.v623-checks{display:grid;gap:8px;margin-top:13px}.v623-check{display:flex;align-items:flex-start;gap:9px;border:1px solid var(--line);border-radius:11px;padding:10px;background:#fbfcfa;color:var(--text);font-size:12.5px;line-height:1.4}.v623-check input{width:20px;height:20px;flex:none;margin-top:0;accent-color:var(--done)}
+.v623-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}.v623-actions button,.v623-actions a{min-height:48px;border-radius:11px;display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;font:850 12.5px inherit;cursor:pointer}.v623-primary{border:0;background:var(--ink);color:#fff}.v623-primary:disabled{opacity:.42;cursor:not-allowed}.v623-secondary{border:1px solid var(--line);background:#fff;color:var(--ink)}
+.v623-safety-note{margin-top:9px;padding:9px 10px;border-radius:9px;background:#fff5df;border:1px solid #e6c98e;color:#77551b;font-size:11.5px;line-height:1.45}
+.v623-complete[hidden]{display:none}.v623-complete{position:fixed;inset:0;z-index:650;display:grid;place-items:center;padding:16px;background:rgba(12,29,18,.58)}.v623-complete-card{width:min(600px,100%);background:linear-gradient(155deg,#f9fff7,#fff9e6);border:1px solid #c7d9bf;border-radius:28px;padding:25px;box-shadow:0 32px 100px rgba(0,0,0,.32);text-align:center;position:relative;overflow:hidden}.v623-complete-card:after{content:"⚑";position:absolute;right:20px;top:12px;font-size:52px;opacity:.12;transform:rotate(8deg)}.v623-complete-randy{width:92px;height:92px;margin:0 auto 8px}.v623-complete-randy .randy-portrait{width:88px;height:88px}.v623-complete-card .eyebrow{font-size:10px;font-weight:950;letter-spacing:.13em;text-transform:uppercase;color:var(--done)}.v623-complete-card h2{font-family:Georgia,'Iowan Old Style','Times New Roman',serif;font-size:30px;line-height:1.12;color:var(--ink);margin-top:5px}.v623-complete-card>p{color:var(--muted);font-size:13px;line-height:1.5;margin:8px auto 0;max-width:470px}.v623-next{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px;text-align:left}.v623-next small{display:block;color:var(--done);font-size:9px;font-weight:950;letter-spacing:.1em;text-transform:uppercase}.v623-next b{display:block;color:var(--ink);font-size:16px;margin-top:3px}.v623-next p{font-size:11.5px;color:var(--muted);margin-top:3px}.v623-complete-actions{display:grid;grid-template-columns:1.4fr 1fr;gap:8px;margin-top:14px}.v623-complete-actions a,.v623-complete-actions button{min-height:49px;border-radius:11px;display:flex;align-items:center;justify-content:center;text-decoration:none;font:850 13px inherit;cursor:pointer}.v623-next-btn{border:0;background:var(--ink);color:#fff}.v623-camp-btn{border:1px solid var(--line);background:#fff;color:var(--ink)}
+/* Accessibility and iPhone polish */
+:where(a,button,input,summary,[role="button"],[role="checkbox"]):focus-visible{outline:3px solid #176c46!important;outline-offset:3px!important}
+.step,.finish,[id]{scroll-margin-top:150px}.stepcheck,.before-check,.tc-btn,.v614-pause,.walk-next,.index-info-link,.v622-ask{touch-action:manipulation}
+.stepcheck{min-width:44px;min-height:44px}.before-check{min-height:44px}.tc-btn{min-height:44px}.trail-mode-exit,.trail-detour-back,.trail-mode-close-secondary{min-height:44px}
+@media(max-width:700px){body.trail-mode{padding-bottom:calc(84px + env(safe-area-inset-bottom))}.trail-mode-bar{padding-top:calc(8px + env(safe-area-inset-top));min-height:calc(62px + env(safe-area-inset-top))}body.trail-mode .trail-sign{top:calc(62px + env(safe-area-inset-top))}.v623-catchup{align-items:flex-start;flex-direction:column}.v623-catchup button{width:100%}.v623-modal{padding:0}.v623-dialog{border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}.v623-actions{grid-template-columns:1fr}.v623-complete{padding:10px}.v623-complete-card{padding:21px 16px calc(18px + env(safe-area-inset-bottom));border-radius:23px}.v623-complete-actions{grid-template-columns:1fr}.v623-complete-card h2{font-size:27px}}
+@media(prefers-reduced-motion:reduce){.v623-dialog,.v623-complete-card{animation:none!important;transition:none!important}}
+@media(orientation:landscape) and (max-height:500px){.v623-dialog,.v623-complete-card{max-height:94vh;overflow:auto}.guide-scene{min-height:300px!important}}
+
 </style>
 </head>
 <body>
@@ -1559,7 +1586,6 @@ const TUTORIALS = [
     {
       title:"Enter your personal information",
       body:"This is standard identity information required by federal law for any brokerage account: legal name, date of birth, Social Security number, and citizenship status.\n\nType your SSN carefully — this is the one field that can't be fixed later without calling in.",
-      shot:"fid-roth-04",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account",
       note:{type:"tip",title:"Why they ask",
@@ -1568,21 +1594,18 @@ const TUTORIALS = [
     {
       title:"Enter your contact info and address",
       body:"Provide your email, phone, and **residential** address. If you get mail somewhere else, you can add a separate mailing address, but the legal address must be where you live.",
-      shot:"fid-roth-05",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
     {
       title:"Answer the employment and regulatory questions",
       body:"Next you'll enter your employment status and employer name/address, then three yes/no compliance questions that surprise most first-timers:\n\n**Are you employed by or affiliated with a broker-dealer?** For most people: No.\n\n**Are you a 10% shareholder or director of a publicly traded company?** For most people: No.\n\n**Is anyone with an interest in the account a politically exposed person?** For most people: No.\n\nAnswer honestly — but if none of these describe you, don't overthink them.",
-      shot:"fid-roth-06",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
     {
       title:"Choose where uninvested cash sits (the core position)",
       body:"Fidelity asks which **core position** you want. This is just the holding spot for cash that isn't invested yet — like the account's built-in wallet.",
-      shot:"fid-roth-07",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account",
       note:{type:"decision",title:"SPAXX vs. FDIC cash — pick and move on",
@@ -1601,7 +1624,6 @@ const TUTORIALS = [
       body:"From the confirmation page, click [[Fund your account]] (or later: [[Accounts & Trade]] → [[Transfers]]). Choose [[Link a bank]], then either sign in to your bank through the instant-verification flow or enter your routing and account numbers manually (manual takes 1–2 business days to verify with small test deposits).\n\nThen enter the amount to transfer into the Roth IRA.",
       app:{body:"Tap [[Fund your account]] on the confirmation screen (or later: the [[Transact]] tab → [[Transfer]]). Tap [[Link a bank]], sign in to your bank for instant verification (or enter routing and account numbers manually), then enter the amount to move into the Roth IRA.",
         url:"Fidelity app › Transfer"},
-      shot:"fid-roth-09",
       url:"digital.fidelity.com/ftgw/digital/transfer",
       note:{type:"warning",title:"Know the contribution limit",
       body:"For {{L.year}} the IRA limit is **{{L.ira.limit}}** ({{L.ira.limit50}} if you're 50 or older) across all your IRAs combined. You have until the tax deadline in April 2027 to finish contributing for {{L.year}}. When you transfer, Fidelity will ask which **tax year** the contribution is for — pay attention to that dropdown in the first few months of the year."}
@@ -1609,7 +1631,6 @@ const TUTORIALS = [
     {
       title:"One more thing: contributing is not investing",
       body:"This is the single most common mistake with a new IRA. The money you just transferred is sitting in your core position (cash) — it is **not invested** and won't grow like the market until you buy something with it.\n\nOnce your transfer settles (1–3 business days), continue to the next guide to actually put the money to work.",
-      shot:"fid-roth-10",
       url:"digital.fidelity.com/ftgw/digital/portfolio/summary",
       appUrl:"Fidelity app › Positions",
       note:{type:"warning",title:"Don't skip this",
@@ -1653,7 +1674,6 @@ const TUTORIALS = [
       body:"The first dropdown on the ticket is the **account selector**. If you have more than one account (say, a Roth IRA and a regular brokerage account), make sure the right one is selected — buying in the wrong account is annoying to unwind, especially in an IRA.",
       app:{body:"At the top of the ticket, tap the **account** field and pick the right one. If you have both a Roth IRA and a taxable brokerage account, choosing the wrong one is annoying to unwind — especially in an IRA.",
         url:"Fidelity app › Trade"},
-      shot:"fid-buy-02",
       url:"digital.fidelity.com/ftgw/digital/trade-equity",
       note:{type:"warning",title:"IRA vs. brokerage matters here",
       body:"A purchase inside a Roth IRA grows tax-free. The same purchase in a taxable brokerage account does not. Double-check the selector before continuing."}
@@ -1662,7 +1682,6 @@ const TUTORIALS = [
       title:"Enter the ticker symbol",
       body:"In the **Symbol** field, type the fund's ticker — for example **FXAIX** — and select it from the suggestions. The ticket will show the fund's name and current price so you can confirm it's the right one.",
       infoGuide:"general-choose-index-fund",
-      shot:"fid-buy-03",
       url:"digital.fidelity.com/ftgw/digital/trade-equity",
       appUrl:"Fidelity app › Trade",
       note:{type:"tip",title:"Mutual fund vs. ETF — why this ticket looks different",
@@ -1680,7 +1699,6 @@ const TUTORIALS = [
       body:"Click [[Preview order]]. Read the summary: the account, the fund name, the dollar amount, and the estimated trade date. Fidelity index funds like FXAIX have **no transaction fee**, so the estimated total should equal exactly what you typed.",
       app:{body:"Tap [[Preview order]]. Read the summary: account, fund name, dollar amount, estimated trade date. Index funds like FXAIX have **no transaction fee**, so the total should match exactly what you typed.",
         url:"Fidelity app › Trade"},
-      shot:"fid-buy-05",
       url:"digital.fidelity.com/ftgw/digital/trade-equity"
     },
     {
@@ -1688,7 +1706,6 @@ const TUTORIALS = [
       body:"Click [[Place order]]. You'll get an order confirmation number. Because mutual funds price once a day, the order will show as **pending** until after the market closes — that's normal, not an error.",
       app:{body:"Tap [[Place order]]. You'll get a confirmation number. Because mutual funds price once a day, the order shows as **pending** until after the market closes — that's normal, not an error.",
         url:"Fidelity app › Trade"},
-      shot:"fid-buy-06",
       url:"digital.fidelity.com/ftgw/digital/trade-equity"
     },
     {
@@ -2707,13 +2724,11 @@ TUTORIALS.push(
       body:"The **Positions** tab lists every investment you hold, with its current value, today's change, and (if you turn the column on) your cost basis and total gain/loss. This is where you check how a holding is doing and where you'll find the option to reinvest dividends or set up recurring buys on a specific fund.",
       app:{body:"The **Positions** tab lists everything you own — value, day change, and gain/loss. It's also where per-holding actions (like dividend reinvestment) live.",
         url:"Fidelity app › Positions"},
-      shot:"fid-tour-02",
       url:"digital.fidelity.com/ftgw/digital/portfolio/positions"
     },
     {
       title:"Balances — cash and buying power",
       body:"The **Balances** view breaks down your cash: your **core position** (uninvested cash), what's **available to trade**, and what's **available to withdraw**. When you're wondering 'how much can I actually spend or invest right now,' this is the screen — remember those two numbers can differ while deposits settle.",
-      shot:"fid-tour-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Balances"
     },
@@ -2722,7 +2737,6 @@ TUTORIALS.push(
       body:"**Activity** (sometimes **Activity & Orders** or **History**) is the running log of everything that's happened: trades, deposits, withdrawals, dividends paid, and pending orders. If you placed an order and want to confirm it went through, or you're checking whether a transfer landed, this is where you look.",
       app:{body:"**Activity** (or History) is the log of trades, transfers, dividends, and pending orders. Check here to confirm an order filled or a transfer landed.",
         url:"Fidelity app › Activity"},
-      shot:"fid-tour-04",
       url:"digital.fidelity.com/ftgw/digital/portfolio/activity"
     },
     {
@@ -2771,13 +2785,11 @@ TUTORIALS.push(
       body:"The **Positions** tab lists every investment you hold with its current value, today's change, and (with the column on) cost basis and gain/loss. It's where you check how a holding is doing and find per-holding actions like dividend reinvestment.",
       app:{body:"The **Positions** tab lists everything you own — value, day change, gain/loss — and is where per-holding actions live.",
         url:"Schwab Mobile › Positions"},
-      shot:"sch-tour-02",
       url:"client.schwab.com/positions"
     },
     {
       title:"Balances — cash and buying power",
       body:"The **Balances** view breaks down your cash: what's in the **sweep**, what's **available to trade**, and what's **available to withdraw**. When you're wondering how much you can actually spend or invest right now, this is the screen — those numbers can differ while deposits settle.",
-      shot:"sch-tour-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Balances",
       note:{type:"tip",title:"Remember Schwab's cash sweep",
@@ -2788,7 +2800,6 @@ TUTORIALS.push(
       body:"**History** (or **Transactions**) is the running log of everything: trades, deposits, withdrawals, dividends, and pending orders. If you placed an order and want to confirm it went through, or you're checking whether a transfer landed, look here.",
       app:{body:"**History / Transactions** is the log of trades, transfers, dividends, and pending orders. Check here to confirm an order filled or a transfer landed.",
         url:"Schwab Mobile › History"},
-      shot:"sch-tour-04",
       url:"client.schwab.com/history"
     },
     {
@@ -2845,7 +2856,6 @@ TUTORIALS.push(
       body:"Find **Two-factor authentication** (Fidelity may call it 'two-step' or 'enhanced authentication') and turn it on. This means that even if someone has your password, they can't log in without a second code.\n\nWhen offered a method, an **authenticator app** is more secure than **text-message (SMS)** codes — SMS can be intercepted via SIM-swap attacks. Set up the authenticator app if you can; SMS is still far better than nothing.",
       app:{body:"Find **Two-factor** (or 'two-step') authentication and enable it. Choose an **authenticator app** over SMS codes if offered — it resists SIM-swap attacks. SMS is still much better than nothing.",
         url:"Fidelity app › Security Center"},
-      shot:"fid-sec-02",
       url:"digital.fidelity.com",
       note:{type:"warning",title:"Enable it everywhere it's offered",
       body:"Turn on two-factor for logins **and** for high-risk actions like money transfers if Fidelity offers that separately. The extra prompt is a minor annoyance to you and a brick wall to an attacker."}
@@ -2855,7 +2865,6 @@ TUTORIALS.push(
       body:"In the alerts or notifications area, turn on alerts for the events that would tell you something's wrong: **logins from new devices**, **password or profile changes**, and especially **money movements / withdrawals**. Have them sent to your email and/or phone.\n\nAn alert the moment money starts moving is often the difference between catching fraud in minutes versus discovering it weeks later.",
       app:{body:"In alerts/notifications, enable warnings for **new-device logins**, **profile/password changes**, and **money movements**. Send them to email and/or push. Early warning is what limits the damage.",
         url:"Fidelity app › Alerts"},
-      shot:"fid-sec-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Alerts"
     },
@@ -2864,7 +2873,6 @@ TUTORIALS.push(
       body:"This is the feature almost nobody knows about. Fidelity's **Money Transfer Lockdown** blocks electronic money transfers **out** of your accounts via the ACH network — so even someone who fully takes over your login can't pull your money to an outside bank.\n\nYou can still trade and move money between your own Fidelity accounts; it specifically blocks external withdrawals. When you genuinely need to move money out, you toggle it off, do it, and toggle it back on.",
       app:{body:"Find **Money Transfer Lockdown** and turn it on. It blocks ACH transfers **out** of your accounts to outside banks — so a login thief still can't drain you. Toggle it off only when you genuinely need to withdraw.",
         url:"Fidelity app › Security Center"},
-      shot:"fid-sec-04",
       url:"digital.fidelity.com",
       note:{type:"tip",title:"Why this one matters so much",
       body:"Two-factor and alerts make a takeover hard and visible. Money Transfer Lockdown makes it **useless** — there's nowhere for a thief to send the money. Together they're a genuinely strong defense for a self-directed account."}
@@ -2920,7 +2928,6 @@ TUTORIALS.push(
       body:"Find **two-step verification** (Schwab may call it 'two-factor' or 'Schwab Security') and turn it on. Even if someone has your password, they can't get in without a second code.\n\nAn **authenticator app** or a security key is more secure than **text-message (SMS)** codes, which can be intercepted via SIM-swap attacks. Use an app if you can; SMS is still far better than nothing.",
       app:{body:"Enable **two-step verification**. Prefer an **authenticator app** or security key over SMS codes where offered — they resist SIM-swap attacks. SMS is still much better than none.",
         url:"Schwab Mobile › Security Center"},
-      shot:"sch-sec-02",
       url:"client.schwab.com",
       note:{type:"tip",title:"Consider a verbal password too",
       body:"Schwab lets you set a **verbal password** for phone calls — an extra spoken code before their reps discuss your account. It's a nice guard against someone social-engineering their way in over the phone."}
@@ -2930,7 +2937,6 @@ TUTORIALS.push(
       body:"In the alerts area, turn on notifications for the events that reveal trouble: **logins from new devices**, **password or profile changes**, and especially **money movements and withdrawals**. Send them to email and/or your phone.\n\nAn alert the moment money starts moving is often the difference between catching fraud in minutes versus weeks.",
       app:{body:"Enable alerts for **new-device logins**, **profile/password changes**, and **money movements**. Send to email and/or push. Early warning limits the damage.",
         url:"Schwab Mobile › Alerts"},
-      shot:"sch-sec-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Alerts"
     },
@@ -2985,7 +2991,6 @@ TUTORIALS.push(
       body:"Schwab groups its accounts by goal. Find the **Retirement** section, select **Roth IRA**, and click [[Get Started]] (it may read [[Open Roth IRA]]).",
       app:{body:"Scroll to the **Retirement** group and tap **Roth IRA**, then tap [[Get Started]].",
         url:"Schwab Mobile › Open an account"},
-      shot:"sch-roth-02",
       url:"schwab.com/open-an-account",
       note:{type:"decision",title:"Roth vs. Traditional — 30-second version",
       body:"**Roth IRA:** you pay tax on the money now; qualified withdrawals in retirement are tax-free. Usually favored if you expect to be in a similar or higher tax bracket later.\n\n**Traditional IRA:** contributions may be tax-deductible now; you pay tax when you withdraw. If you're unsure, this guide continues with Roth — the screens for Traditional are nearly identical."}
@@ -2993,7 +2998,6 @@ TUTORIALS.push(
     {
       title:"Sign in, or start as a new customer",
       body:"Schwab asks whether you already have a login. Existing clients sign in and most of the application pre-fills. New customers choose the new-account path and create a username and password near the end.",
-      shot:"sch-roth-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account"
     },
@@ -3009,7 +3013,6 @@ TUTORIALS.push(
     {
       title:"Enter your contact info and address",
       body:"Provide your email, phone, and **residential** address. You can add a separate mailing address if your mail goes elsewhere, but the legal address has to be where you actually live.",
-      shot:"sch-roth-05",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account"
     },
@@ -3031,7 +3034,6 @@ TUTORIALS.push(
       body:"You'll get a summary of everything you entered. Check the SSN and birthdate one more time, tick the box to agree to the account terms, and click [[Open Account]].\n\nApproval is usually quick — you'll land on a confirmation page with your new account number.",
       app:{body:"Review the summary, double-check your SSN and birthdate, agree to the account terms, and tap [[Open Account]].\n\nApproval is usually quick — you'll see a confirmation with your new account number.",
         url:"Schwab Mobile › Review"},
-      shot:"sch-roth-08",
       url:"client.schwab.com"
     },
     {
@@ -3039,7 +3041,6 @@ TUTORIALS.push(
       body:"From the confirmation page, choose [[Fund your account]] (or later: [[Transfers & Payments]]). Set up **Schwab MoneyLink** to connect your bank — sign in through instant verification, or enter your routing and account numbers manually (manual takes 1–2 business days to verify with small test deposits).\n\nThen enter the amount to contribute to the Roth IRA.",
       app:{body:"Tap [[Move Money]] (or [[Transfers]]) in the app, then [[Connect a bank]] to set up **MoneyLink** — instant sign-in or manual routing/account numbers. Enter the amount to contribute to the Roth IRA.",
         url:"Schwab Mobile › Move Money"},
-      shot:"sch-roth-09",
       url:"client.schwab.com/transfers",
       note:{type:"warning",title:"Know the contribution limit",
       body:"For {{L.year}} the IRA limit is **{{L.ira.limit}}** ({{L.ira.limit50}} if you're 50 or older) across all your IRAs combined. You have until the tax deadline in April 2027 to finish contributing for {{L.year}}. When you transfer, Schwab will ask which **tax year** the contribution is for — watch that dropdown in the first few months of the year."}
@@ -3100,13 +3101,11 @@ TUTORIALS.push(
       body:"In the **Retirement** section, find and select **Traditional IRA** (right next to Roth IRA — make sure you pick Traditional). Click [[Open a Traditional IRA]] or [[Get started]].",
       app:{body:"Scroll to the **Retirement** group and tap **Traditional IRA** (careful not to tap Roth), then [[Get started]].",
         url:"Fidelity app › Open an account"},
-      shot:"fid-trad-02",
       url:"fidelity.com/open-account/overview"
     },
     {
       title:"Tell Fidelity whether you're a new or existing customer",
       body:"You'll be asked if you already have a Fidelity login. If yes, sign in and most of the application pre-fills. If no, choose the new-customer path and you'll create a username and password near the end.",
-      shot:"fid-trad-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
@@ -3122,14 +3121,12 @@ TUTORIALS.push(
     {
       title:"Enter your contact info and address",
       body:"Provide your email, phone, and **residential** address. You can add a separate mailing address, but the legal address must be where you actually live.",
-      shot:"fid-trad-05",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
     {
       title:"Answer the employment and regulatory questions",
       body:"You'll enter employment status and employer name/address, then a few yes/no compliance questions that surprise first-timers:\n\n**Are you employed by or affiliated with a broker-dealer?** For most people: No.\n\n**Are you a director, 10% shareholder, or policy-maker of a publicly traded company?** For most people: No.\n\nAnswer honestly — but if none of these describe you, don't overthink them.",
-      shot:"fid-trad-06",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
@@ -3147,7 +3144,6 @@ TUTORIALS.push(
       body:"You'll see a summary of everything you entered. Check the SSN and birthdate one more time, tick the box to agree to the account terms, and click [[Open account]].\n\nApproval is usually instant — you'll land on a confirmation page with your new account number.",
       app:{body:"Review the summary, double-check your SSN and birthdate, agree to the account terms, and tap [[Open account]]. Approval is usually instant — you'll see your new account number.",
         url:"Fidelity app › Review"},
-      shot:"fid-trad-08",
       url:"digital.fidelity.com"
     },
     {
@@ -3155,7 +3151,6 @@ TUTORIALS.push(
       body:"From the confirmation page, click [[Fund your account]] (or later: [[Accounts & Trade]] → [[Transfers]]). Choose [[Link a bank]], then sign in for instant verification or enter routing and account numbers manually (manual takes 1–2 business days).\n\nThen enter the amount to contribute to the Traditional IRA.",
       app:{body:"Tap [[Fund your account]] (or later: [[Transact]] → [[Transfer]]). Tap [[Link a bank]], verify instantly or enter routing/account numbers, then enter the contribution amount.",
         url:"Fidelity app › Transfer"},
-      shot:"fid-trad-09",
       url:"digital.fidelity.com/ftgw/digital/transfer",
       note:{type:"warning",title:"Contribution limit and the tax-year dropdown",
       body:"For {{L.year}} the IRA limit is **{{L.ira.limit}}** ({{L.ira.limit50}} if you're 50 or older) across all your IRAs combined — Traditional and Roth share one limit, so it's the total of both, not each. You have until the April 2027 tax deadline to finish contributing for {{L.year}}. When you transfer, Fidelity asks which **tax year** the contribution is for — watch that dropdown early in the year."}
@@ -3215,13 +3210,11 @@ TUTORIALS.push(
       body:"In the **Retirement** section, select **Traditional IRA** (right next to Roth — make sure you pick Traditional) and click [[Get Started]].",
       app:{body:"Scroll to the **Retirement** group and tap **Traditional IRA** (careful not to tap Roth), then [[Get Started]].",
         url:"Schwab Mobile › Open an account"},
-      shot:"sch-trad-02",
       url:"schwab.com/open-an-account"
     },
     {
       title:"Sign in, or start as a new customer",
       body:"Schwab asks whether you already have a login. Existing clients sign in and most of the application pre-fills. New customers choose the new-account path and create a username and password near the end.",
-      shot:"sch-trad-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account"
     },
@@ -3237,7 +3230,6 @@ TUTORIALS.push(
     {
       title:"Enter your contact info and address",
       body:"Provide your email, phone, and **residential** address. A separate mailing address is fine, but the legal address must be where you actually live.",
-      shot:"sch-trad-05",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account"
     },
@@ -3259,7 +3251,6 @@ TUTORIALS.push(
       body:"You'll get a summary of everything entered. Check the SSN and birthdate one more time, tick the box to agree to the account terms, and click [[Open Account]].\n\nApproval is usually quick — you'll land on a confirmation page with your new account number.",
       app:{body:"Review the summary, double-check your SSN and birthdate, agree to the terms, and tap [[Open Account]]. Approval is usually quick — you'll see your new account number.",
         url:"Schwab Mobile › Review"},
-      shot:"sch-trad-08",
       url:"client.schwab.com"
     },
     {
@@ -3267,7 +3258,6 @@ TUTORIALS.push(
       body:"From the confirmation page, choose [[Fund your account]] (or later: [[Transfers & Payments]]). Set up **Schwab MoneyLink** to connect your bank — instant sign-in verification, or enter routing and account numbers manually (1–2 business days).\n\nThen enter the amount to contribute to the Traditional IRA.",
       app:{body:"Tap [[Move Money]] (or [[Transfers]]), then [[Connect a bank]] for **MoneyLink** — instant sign-in or manual numbers. Enter the contribution amount.",
         url:"Schwab Mobile › Move Money"},
-      shot:"sch-trad-09",
       url:"client.schwab.com/transfers",
       note:{type:"warning",title:"Contribution limit and the tax-year dropdown",
       body:"For {{L.year}} the IRA limit is **{{L.ira.limit}}** ({{L.ira.limit50}} if you're 50 or older) across all your IRAs combined — Traditional and Roth share one limit, so it's the total of both. You have until the April 2027 deadline to contribute for {{L.year}}. Schwab will ask which **tax year** the contribution is for — watch that dropdown early in the year."}
@@ -3328,13 +3318,11 @@ TUTORIALS.push(
       body:"On the account list, look for the **non-retirement** or **Investing & trading** group and pick **The Fidelity Account** (a brokerage account). Click [[Open an account]] or [[Get started]].\n\nDon't pick anything labeled IRA, Cash Management, or Youth — those are different accounts with their own guides.",
       app:{body:"Scroll to the **Investing & trading** group and tap **The Fidelity Account** (brokerage), then [[Get started]]. Steer clear of the IRA and Cash Management options.",
         url:"Fidelity app › Open an account"},
-      shot:"fid-brk-02",
       url:"fidelity.com/open-account/overview"
     },
     {
       title:"Decide: individual or joint",
       body:"You'll choose the **ownership type**. **Individual** is just you. **Joint** (usually 'joint tenants with rights of survivorship') puts two people on the account with equal access — common for spouses.",
-      shot:"fid-brk-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account",
       note:{type:"decision",title:"Individual vs. joint — a real decision",
@@ -3350,7 +3338,6 @@ TUTORIALS.push(
     {
       title:"Enter personal information",
       body:"Standard identity information required by federal law: legal name, date of birth, Social Security number, and citizenship status. For a joint account, you'll enter this for both people.\n\nType each SSN carefully — it's the one field that's a hassle to fix later.",
-      shot:"fid-brk-05",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account",
       note:{type:"tip",title:"Why they ask",
@@ -3359,14 +3346,12 @@ TUTORIALS.push(
     {
       title:"Enter contact info and address",
       body:"Provide email, phone, and **residential** address for each owner. If your mail goes elsewhere you can add a separate mailing address, but the legal address must be where you actually live.",
-      shot:"fid-brk-06",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
     {
       title:"Answer the employment and regulatory questions",
       body:"You'll enter employment status and employer name/address, then a few yes/no compliance questions that surprise first-timers:\n\n**Are you employed by or affiliated with a broker-dealer?** For most people: No.\n\n**Are you a director, 10% shareholder, or policy-maker of a publicly traded company?** For most people: No.\n\nAnswer honestly for each owner — but if none of these describe you, don't overthink them.",
-      shot:"fid-brk-07",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
@@ -3384,7 +3369,6 @@ TUTORIALS.push(
       body:"You'll see a summary of everything entered. Check the SSNs and birthdates one more time, tick the box to agree to the account terms, and click [[Open account]].\n\nApproval is usually instant — you'll land on a confirmation page with your new account number.",
       app:{body:"Review the summary, double-check every SSN and birthdate, agree to the account terms, and tap [[Open account]].\n\nApproval is usually instant — you'll see a confirmation with your new account number.",
         url:"Fidelity app › Review"},
-      shot:"fid-brk-09",
       url:"digital.fidelity.com"
     },
     {
@@ -3392,7 +3376,6 @@ TUTORIALS.push(
       body:"From the confirmation page, click [[Fund your account]] (or later: [[Accounts & Trade]] → [[Transfers]]). Choose [[Link a bank]], then either sign in to your bank for instant verification or enter routing and account numbers manually (manual takes 1–2 business days to verify with small test deposits).\n\nBecause this is a taxable account, there's no contribution limit — deposit whatever you like.",
       app:{body:"Tap [[Fund your account]] on the confirmation screen (or later: the [[Transact]] tab → [[Transfer]]). Tap [[Link a bank]], verify instantly by signing in or enter routing/account numbers manually, then enter the amount to deposit. No contribution limit here — put in what you want.",
         url:"Fidelity app › Transfer"},
-      shot:"fid-brk-10",
       url:"digital.fidelity.com/ftgw/digital/transfer"
     },
     {
@@ -3450,13 +3433,11 @@ TUTORIALS.push(
       body:"On the account list, find the **brokerage** option — Schwab's standard taxable account is often called the **Schwab One** brokerage account. Select it and click [[Get Started]].\n\nDon't pick anything labeled IRA or Checking — those are different accounts.",
       app:{body:"Scroll to the brokerage/investing group and tap the standard **brokerage (Schwab One)** account, then [[Get Started]]. Avoid the IRA and checking options.",
         url:"Schwab Mobile › Open an account"},
-      shot:"sch-brk-02",
       url:"schwab.com/open-an-account"
     },
     {
       title:"Decide: individual or joint",
       body:"You'll choose the **ownership type**. **Individual** is just you. **Joint** (usually 'joint tenants with rights of survivorship') puts two people on the account with equal access — common for spouses.",
-      shot:"sch-brk-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account",
       note:{type:"decision",title:"Individual vs. joint — a real decision",
@@ -3472,7 +3453,6 @@ TUTORIALS.push(
     {
       title:"Enter personal information",
       body:"Standard identity information required by federal law: legal name, date of birth, Social Security number, and citizenship status — for each owner on a joint account.\n\nType each SSN carefully.",
-      shot:"sch-brk-05",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account",
       note:{type:"tip",title:"Why they ask",
@@ -3481,7 +3461,6 @@ TUTORIALS.push(
     {
       title:"Enter contact info and address",
       body:"Provide email, phone, and **residential** address for each owner. A separate mailing address is fine, but the legal address must be where you actually live.",
-      shot:"sch-brk-06",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account"
     },
@@ -3503,7 +3482,6 @@ TUTORIALS.push(
       body:"You'll get a summary of everything entered. Check the SSNs and birthdates, tick the box to agree to the account terms, and click [[Open Account]].\n\nApproval is usually quick — you'll land on a confirmation page with your new account number.",
       app:{body:"Review the summary, double-check every SSN and birthdate, agree to the terms, and tap [[Open Account]]. Approval is usually quick — you'll see your new account number.",
         url:"Schwab Mobile › Review"},
-      shot:"sch-brk-09",
       url:"client.schwab.com"
     },
     {
@@ -3511,7 +3489,6 @@ TUTORIALS.push(
       body:"From the confirmation page, choose [[Fund your account]] (or later: [[Transfers & Payments]]). Set up **Schwab MoneyLink** to connect your bank — instant sign-in verification, or enter routing and account numbers manually (1–2 business days).\n\nThis is a taxable account, so there's no contribution limit — deposit whatever you like.",
       app:{body:"Tap [[Move Money]] (or [[Transfers]]), then [[Connect a bank]] to set up **MoneyLink** — instant sign-in or manual numbers. Enter the amount to deposit. No contribution limit here.",
         url:"Schwab Mobile › Move Money"},
-      shot:"sch-brk-10",
       url:"client.schwab.com/transfers"
     },
     {
@@ -3568,7 +3545,6 @@ TUTORIALS.push(
     {
       title:"Enter your information and confirm eligibility",
       body:"Provide the standard identity information (legal name, date of birth, SSN, address). You'll also attest that you're covered by an HSA-eligible HDHP — Fidelity doesn't verify your health plan, so it's on you to be sure you qualify before contributing.",
-      shot:"fid-hsa-02",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
@@ -3577,7 +3553,6 @@ TUTORIALS.push(
       body:"Confirm your details, agree to the account terms, and click [[Open account]]. Approval is usually quick and you'll get an HSA account number.",
       app:{body:"Confirm details, agree to the terms, and tap [[Open account]]. You'll get an HSA account number.",
         url:"Fidelity app › Review"},
-      shot:"fid-hsa-03",
       url:"digital.fidelity.com"
     },
     {
@@ -3585,7 +3560,6 @@ TUTORIALS.push(
       body:"Link your bank ([[Transfers]]) and contribute. For **{{L.year}}** the limits are **{{L.hsa.self}}** (self-only coverage) or **{{L.hsa.family}}** (family), plus a **{{L.hsa.catchup}}** catch-up if you're 55 or older. These are the totals from all sources — if your employer contributes, that counts toward the limit.\n\nYou have until the April 2027 tax deadline to contribute for {{L.year}}, and Fidelity will ask which tax year the contribution is for.",
       app:{body:"Link your bank ([[Transact]] → [[Transfer]]) and contribute. **{{L.year}} limits:** {{L.hsa.self}} self-only / {{L.hsa.family}} family, +{{L.hsa.catchup}} at 55+. Includes any employer contributions. Pick the correct tax year.",
         url:"Fidelity app › Transfer"},
-      shot:"fid-hsa-04",
       url:"digital.fidelity.com/ftgw/digital/transfer",
       note:{type:"tip",title:"The deduction, if you contribute directly",
       body:"Money you put in yourself is **tax-deductible** on your return (payroll contributions through an employer are usually already pre-tax, so don't double-count). Fidelity sends a **Form 5498-SA** confirming contributions and a **1099-SA** if you take distributions."}
@@ -3642,7 +3616,6 @@ TUTORIALS.push(
     {
       title:"Enter your personal information",
       body:"Standard identity information required for any account: legal name, date of birth, Social Security number, address, and contact info. The same federal verification applies as with any brokerage or bank account.",
-      shot:"fid-cma-02",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
@@ -3651,7 +3624,6 @@ TUTORIALS.push(
       body:"Confirm your details, agree to the account terms, and click [[Open account]]. Approval is usually quick, and you'll get a CMA account number. Fidelity will mail your **debit card** separately, typically within a week or so.",
       app:{body:"Confirm details, agree to the terms, and tap [[Open account]]. You'll get a CMA account number; the **debit card** arrives by mail in about a week.",
         url:"Fidelity app › Review"},
-      shot:"fid-cma-03",
       url:"digital.fidelity.com"
     },
     {
@@ -3659,7 +3631,6 @@ TUTORIALS.push(
       body:"Link your existing bank ([[Transfers]] → [[Link a bank]]) so you can move money in and set up direct deposit. Fund the CMA with what you'll use for near-term spending and bills.\n\nTo route your paycheck here, grab the CMA's account and routing numbers from the account details and hand them to your employer's direct-deposit form.",
       app:{body:"Link your bank ([[Transact]] → [[Transfer]] → [[Link a bank]]) and fund the CMA. For direct deposit, copy the CMA's account and routing numbers from the account details into your employer's payroll form.",
         url:"Fidelity app › Transfer"},
-      shot:"fid-cma-04",
       url:"digital.fidelity.com/ftgw/digital/transfer"
     },
     {
@@ -3713,7 +3684,6 @@ TUTORIALS.push(
     {
       title:"Enter your personal information",
       body:"Standard identity information required for any bank or brokerage account: legal name, date of birth, Social Security number, address, and contact info. The same federal verification applies.",
-      shot:"sch-chk-02",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account"
     },
@@ -3722,7 +3692,6 @@ TUTORIALS.push(
       body:"Confirm your details, agree to the account terms, and submit. Approval is usually quick, and you'll get checking and brokerage account numbers. Your **debit card** arrives by mail, typically within a week or so.",
       app:{body:"Confirm details, agree to the terms, and submit. You'll get account numbers; the **debit card** arrives by mail in about a week.",
         url:"Schwab Mobile › Review"},
-      shot:"sch-chk-03",
       url:"client.schwab.com"
     },
     {
@@ -3730,7 +3699,6 @@ TUTORIALS.push(
       body:"Link your existing bank via **MoneyLink** ([[Move Money]] → [[Transfers]]) so you can move money in and set up direct deposit. To route your paycheck here, grab the checking account and routing numbers from the account details for your employer's direct-deposit form.",
       app:{body:"Link your bank via **MoneyLink** ([[Move Money]] → [[Transfer]]) and fund it. For direct deposit, copy the checking account and routing numbers into your employer's payroll form.",
         url:"Schwab Mobile › Move Money"},
-      shot:"sch-chk-04",
       url:"client.schwab.com/transfers"
     },
     {
@@ -3786,7 +3754,6 @@ TUTORIALS.push(
       body:"Click [[Open an account]], then in the account list look under **Saving & investing for a child** (or similar) and pick the **custodial (UGMA/UTMA)** account. Fidelity may call it a 'Fidelity Youth' custodial or simply a custodial account — make sure it's the one where **you invest on the child's behalf** (not the teen-owned debit account, which is different).",
       app:{body:"Tap [[Open an account]], then find the **custodial (UGMA/UTMA)** option under the saving-for-a-child group. Make sure it's the one where **you invest on the child's behalf**, not the teen-owned account.",
         url:"Fidelity app › Open an account"},
-      shot:"fid-cust-02",
       url:"fidelity.com"
     },
     {
@@ -3799,7 +3766,6 @@ TUTORIALS.push(
     {
       title:"Answer the standard questions",
       body:"You'll answer the usual employment and regulatory questions (as the custodian) and the identity verification required for any brokerage account. Nothing unusual here — the same broker-dealer / public-company affiliation questions, answered about you.",
-      shot:"fid-cust-04",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
@@ -3808,7 +3774,6 @@ TUTORIALS.push(
       body:"Check both the custodian and minor details, agree to the custodial account terms (these spell out the irrevocable-gift and age-of-termination rules), and click [[Open account]]. Approval is usually quick.",
       app:{body:"Review the custodian and minor details, agree to the custodial account terms (they spell out the irrevocable-gift and age rules), and tap [[Open account]].",
         url:"Fidelity app › Review"},
-      shot:"fid-cust-05",
       url:"digital.fidelity.com"
     },
     {
@@ -3865,7 +3830,6 @@ TUTORIALS.push(
       body:"Click [[Open an Account]], then in the account list find the **custodial (UGMA/UTMA)** account — Schwab calls it a **Schwab One Custodial Account**. Select it and click [[Get Started]]. Make sure it's the custodial account where **you invest on the child's behalf**, not a teen-owned account.",
       app:{body:"Tap [[Open an Account]], then find the **Schwab One Custodial (UGMA/UTMA)** account and tap [[Get Started]]. Confirm it's the one where **you** manage it for the child.",
         url:"Schwab Mobile › Open an account"},
-      shot:"sch-cust-02",
       url:"schwab.com"
     },
     {
@@ -3878,7 +3842,6 @@ TUTORIALS.push(
     {
       title:"Answer the standard questions and note the cash sweep",
       body:"You'll answer the usual employment and regulatory questions (as custodian) and identity verification for any brokerage account.\n\nBecause this is a Schwab brokerage account, remember the Schwab cash quirk: uninvested cash defaults to the low-yield **Schwab Bank sweep**. Fine while you're about to invest, but don't leave the child's cash sitting there long-term — buy a money fund like SWVXX or your index fund.",
-      shot:"sch-cust-04",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account"
     },
@@ -3887,7 +3850,6 @@ TUTORIALS.push(
       body:"Check both the custodian and minor details, agree to the custodial account terms (they spell out the irrevocable-gift and age-of-termination rules), and click [[Open Account]]. Approval is usually quick.",
       app:{body:"Review the custodian and minor details, agree to the custodial account terms, and tap [[Open Account]]. Approval is usually quick.",
         url:"Schwab Mobile › Review"},
-      shot:"sch-cust-05",
       url:"client.schwab.com"
     },
     {
@@ -3945,13 +3907,11 @@ TUTORIALS.push(
       body:"In the account list, look under **Save for education** (or similar) and pick **529 Plan**. Fidelity will show which state plan you're opening (e.g. the UNIQUE plan for New Hampshire) — the plan is available nationwide even though it's a specific state's plan. Click [[Open a 529]] or [[Get started]].",
       app:{body:"Scroll to the **Save for education** group and tap **529 Plan**, then [[Get started]]. Fidelity shows which state plan it is — available nationwide.",
         url:"Fidelity app › Open an account"},
-      shot:"fid-529-02",
       url:"fidelity.com/529-plans/overview"
     },
     {
       title:"Enter the account owner and the beneficiary",
       body:"A 529 has two people: the **owner** (you — you keep control of the money) and the **beneficiary** (the child the money is for). Enter your info as owner, then the child's legal name, date of birth, and SSN as beneficiary.\n\nYou stay in control the whole time — the child can't just take the money, and you can even change the beneficiary later.",
-      shot:"fid-529-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account",
       note:{type:"tip",title:"You keep control — that's a feature",
@@ -3960,7 +3920,6 @@ TUTORIALS.push(
     {
       title:"Enter personal and contact information",
       body:"Standard identity information for you as the owner: legal name, date of birth, SSN, address, contact info. The same federal identity rules apply here as for any account.",
-      shot:"fid-529-04",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
@@ -3978,7 +3937,6 @@ TUTORIALS.push(
       body:"Check the beneficiary's details (especially the SSN and birthdate), agree to the plan terms, and click [[Open account]]. Approval is usually quick and you'll get a 529 account number.",
       app:{body:"Review the beneficiary's SSN and birthdate, agree to the plan terms, and tap [[Open account]]. Approval is usually quick — you'll get a 529 account number.",
         url:"Fidelity app › Review"},
-      shot:"fid-529-06",
       url:"digital.fidelity.com"
     },
     {
@@ -3986,7 +3944,6 @@ TUTORIALS.push(
       body:"Link your bank ([[Fund your account]], or later [[Transfers]]) and contribute. There's no annual contribution limit like an IRA, but 529 contributions count as **gifts** to the beneficiary.\n\nFor 2026 you can give up to **{{L.gift.annual}} per child** ({{L.gift.annualMarried}} if married and splitting gifts) without any gift-tax paperwork. Grandparents and others can each give their own {{L.gift.annual}}, too.",
       app:{body:"Tap [[Fund your account]] (or later [[Transact]] → [[Transfer]]), link your bank, and contribute. No annual limit like an IRA — but contributions are **gifts**: up to {{L.gift.annual}} per child in 2026 ({{L.gift.annualMarried}} married) with no gift-tax paperwork.",
         url:"Fidelity app › Transfer"},
-      shot:"fid-529-07",
       url:"digital.fidelity.com/ftgw/digital/transfer",
       note:{type:"tip",title:"Superfunding: front-load five years at once",
       body:"A special 529 rule lets you contribute up to **five years' worth of the annual exclusion at once** — {{L.gift.five29}} per child in {{L.year}} ({{L.gift.five29Married}} for a married couple) — and treat it as spread over five years for gift-tax purposes. It's how grandparents often jump-start a 529. Requires filing a gift-tax return to elect it; worth a word with a tax pro if you go big."}
@@ -4042,13 +3999,11 @@ TUTORIALS.push(
       body:"In the account list, look under **Education** (or 'Save for education') and pick the **Schwab 529 Education Savings Plan**. Click [[Get Started]]. It's a nationally available plan even though, like all 529s, it's technically sponsored through a specific state.",
       app:{body:"Scroll to the **Education** group and tap the **Schwab 529 Education Savings Plan**, then [[Get Started]].",
         url:"Schwab Mobile › Open an account"},
-      shot:"sch-529-02",
       url:"schwab.com/529-plan"
     },
     {
       title:"Enter the account owner and the beneficiary",
       body:"A 529 has two people: the **owner** (you — you keep control of the money) and the **beneficiary** (the child the money is for). Enter your info as owner, then the child's legal name, date of birth, and SSN as beneficiary.\n\nYou stay in control the whole time — the child can't just take the money, and you can change the beneficiary later.",
-      shot:"sch-529-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account",
       note:{type:"tip",title:"You keep control — that's a feature",
@@ -4057,7 +4012,6 @@ TUTORIALS.push(
     {
       title:"Enter personal and contact information",
       body:"Standard identity information for you as the owner: legal name, date of birth, SSN, address, contact info. The same federal identity rules apply here as for any account.",
-      shot:"sch-529-04",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › New account"
     },
@@ -4075,7 +4029,6 @@ TUTORIALS.push(
       body:"Check the beneficiary's details (especially the SSN and birthdate), agree to the plan terms, and click [[Open Account]]. Approval is usually quick and you'll get a 529 account number.",
       app:{body:"Review the beneficiary's SSN and birthdate, agree to the plan terms, and tap [[Open Account]]. Approval is usually quick — you'll get a 529 account number.",
         url:"Schwab Mobile › Review"},
-      shot:"sch-529-06",
       url:"client.schwab.com"
     },
     {
@@ -4083,7 +4036,6 @@ TUTORIALS.push(
       body:"Link your bank (via **Schwab MoneyLink** or [[Transfers & Payments]]) and contribute. There's no annual contribution limit like an IRA, but 529 contributions count as **gifts** to the beneficiary.\n\nFor 2026 you can give up to **{{L.gift.annual}} per child** ({{L.gift.annualMarried}} if married and splitting gifts) without any gift-tax paperwork. Grandparents and others can each give their own {{L.gift.annual}}, too.",
       app:{body:"Set up **MoneyLink** ([[Move Money]]) and contribute. No annual limit like an IRA — but contributions are **gifts**: up to {{L.gift.annual}} per child in 2026 ({{L.gift.annualMarried}} married) with no gift-tax paperwork.",
         url:"Schwab Mobile › Move Money"},
-      shot:"sch-529-07",
       url:"client.schwab.com/transfers",
       note:{type:"tip",title:"Superfunding: front-load five years at once",
       body:"A special 529 rule lets you contribute up to **five years' worth of the annual exclusion at once** — {{L.gift.five29}} per child in {{L.year}} ({{L.gift.five29Married}} for a married couple) — and treat it as spread over five years for gift-tax purposes. It's how grandparents often jump-start a 529. Requires filing a gift-tax return to elect it; worth a word with a tax pro if you go big."}
@@ -4138,7 +4090,6 @@ TUTORIALS.push(
     {
       title:"Enter your info and business details",
       body:"Provide the standard identity information plus basic **business details** (your business name if you have one, or just yourself as a sole proprietor, and an EIN if you have one — many sole proprietors use their SSN). The solo 401(k) application includes adopting a **plan document**, which Fidelity walks you through.",
-      shot:"fid-se-02",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › New account"
     },
@@ -4147,7 +4098,6 @@ TUTORIALS.push(
       body:"Confirm everything and submit. Approval is usually quick. For a solo 401(k), keep the plan paperwork Fidelity provides — you may need it, and once the plan's assets pass **$250,000** you'll file a simple annual **Form 5500-EZ**.",
       app:{body:"Confirm and submit. For a solo 401(k), keep the plan paperwork — and note you'll file a simple **Form 5500-EZ** once plan assets exceed $250,000.",
         url:"Fidelity app › Review"},
-      shot:"fid-se-03",
       url:"digital.fidelity.com"
     },
     {
@@ -4201,7 +4151,6 @@ TUTORIALS.push(
       body:"From the [[Transfers]] screen, choose **From** and **To**. To add money, go **from your bank → to your Fidelity account**. To take money out, reverse it: **from your Fidelity account → to your bank**.\n\nBoth directions use the same free electronic (EFT/ACH) transfer.",
       app:{body:"On the [[Transfer]] screen, set **From** and **To**. Adding money: bank → Fidelity. Withdrawing: Fidelity → bank. Same free EFT either way.",
         url:"Fidelity app › Transfer"},
-      shot:"fid-xfer-02",
       url:"digital.fidelity.com/ftgw/digital/transfer"
     },
     {
@@ -4209,7 +4158,6 @@ TUTORIALS.push(
       body:"Type the **amount**, then choose **one-time** or set up a **recurring** transfer (e.g. $500 on the 1st of each month). Recurring transfers are a great way to fund an account automatically — though note that to actually invest that cash you still need a recurring *investment* (see that guide); a recurring *transfer* just moves money in.",
       app:{body:"Enter the **amount** and choose **one-time** or **recurring**. Recurring transfers auto-fund the account — but remember, moving cash in isn't investing it.",
         url:"Fidelity app › Transfer"},
-      shot:"fid-xfer-03",
       url:"digital.fidelity.com",
       note:{type:"warning",title:"If it's going into an IRA, mind the limit and tax year",
       body:"A transfer into an IRA is a **contribution** and counts toward the annual limit ({{L.ira.limit}} for {{L.year}}). Fidelity will ask which **tax year** it's for — watch that dropdown, especially January through April when two tax years are open at once."}
@@ -4219,7 +4167,6 @@ TUTORIALS.push(
       body:"Check the from/to accounts, amount, and date, then submit. You'll get a confirmation number. There's no fee for standard electronic transfers.",
       app:{body:"Confirm from/to, amount, and date, then submit. You'll get a confirmation number. Standard EFT transfers are free.",
         url:"Fidelity app › Transfer"},
-      shot:"fid-xfer-04",
       url:"digital.fidelity.com"
     },
     {
@@ -4270,7 +4217,6 @@ TUTORIALS.push(
       body:"From the transfers screen, choose **From** and **To**. To add money: **from your bank → to your Schwab account**. To take money out: reverse it, **from your Schwab account → to your bank**. Both directions use the same free electronic (ACH) transfer.",
       app:{body:"Set **From** and **To**. Adding money: bank → Schwab. Withdrawing: Schwab → bank. Same free ACH either way.",
         url:"Schwab Mobile › Move Money"},
-      shot:"sch-xfer-02",
       url:"client.schwab.com/transfers"
     },
     {
@@ -4278,7 +4224,6 @@ TUTORIALS.push(
       body:"Type the **amount**, then choose **one-time** or set up a **recurring** transfer (e.g. monthly). Recurring transfers auto-fund an account — though remember, to actually invest that cash you still need a recurring *investment*; a recurring *transfer* just moves money in.",
       app:{body:"Enter the **amount** and choose **one-time** or **recurring**. Recurring transfers auto-fund the account — but moving cash in isn't investing it.",
         url:"Schwab Mobile › Move Money"},
-      shot:"sch-xfer-03",
       url:"client.schwab.com",
       note:{type:"warning",title:"If it's going into an IRA, mind the limit and tax year",
       body:"A transfer into an IRA is a **contribution** and counts toward the annual limit ({{L.ira.limit}} for {{L.year}}). Schwab will ask which **tax year** it's for — watch that dropdown, especially January through April when two tax years are open at once."}
@@ -4288,7 +4233,6 @@ TUTORIALS.push(
       body:"Check the from/to accounts, amount, and date, then submit. You'll get a confirmation number. There's no fee for standard electronic transfers.",
       app:{body:"Confirm from/to, amount, and date, then submit. Standard ACH transfers are free.",
         url:"Schwab Mobile › Move Money"},
-      shot:"sch-xfer-04",
       url:"client.schwab.com"
     },
     {
@@ -4348,13 +4292,11 @@ TUTORIALS.push(
     {
       title:"Start the rollover from the Fidelity side",
       body:"Fidelity has a guided tool that tells you exactly what to do for your specific old provider. Sign in and search **'rollover'** or go to the transfers area and choose to **move an outside 401(k) into Fidelity**. Fidelity may offer to contact some providers on your behalf.\n\nEnter details about the old plan and the destination IRA. Fidelity then tells you whether it can pull the funds electronically or whether you'll need to call the old plan yourself.",
-      shot:"fid-roll-02",
       url:"digital.fidelity.com/ftgw/digital/rollover"
     },
     {
       title:"Contact the old plan and request a DIRECT rollover",
       body:"Most old-plan providers still require **you** to initiate the distribution, usually by phone or through their own website. When you reach them, say clearly: **'I want a direct rollover of my entire balance to my Fidelity IRA.'**\n\nHave ready: your Fidelity IRA account number, and Fidelity's mailing address for rollover checks (the Fidelity tool gives you the exact address and any 'FBO' wording to use).",
-      shot:"fid-roll-03",
       url:"(phone call to your old 401(k) provider)",
       note:{type:"warning",title:"Exact words to insist on",
       body:"Use the phrase **'direct rollover'** and confirm two things: (1) the money goes **directly to Fidelity**, not to you, and (2) **nothing is withheld** for taxes. If a check is issued, it should be payable to something like **'Fidelity Management Trust Co. FBO [your name]'** — 'FBO' means 'for benefit of.' A check made out to *you personally* is an indirect rollover — if that happens, ask them to reissue it correctly."}
@@ -4370,13 +4312,11 @@ TUTORIALS.push(
     {
       title:"Confirm the money arrived",
       body:"Electronic rollovers take a few business days; mailed checks can take 1–2 weeks to post. Check your Fidelity IRA until the full balance appears. It will land as **cash** in the core position.\n\nCross-check the amount against your old plan's final statement so you know the whole balance made it.",
-      shot:"fid-roll-05",
       url:"digital.fidelity.com/ftgw/digital/portfolio/summary"
     },
     {
       title:"Invest the money — it's just sitting in cash",
       body:"The rolled-over money is now cash in your IRA — **not invested**. This surprises people: your old 401(k) was invested in funds, but the rollover converts it to cash on the way over (unless you did an 'in-kind' transfer of the same funds, which is uncommon between a 401(k) and an IRA).\n\nBuy your index fund inside the IRA exactly as in the buy-an-index-fund guide. Until you do, this retirement money isn't growing.",
-      shot:"fid-roll-06",
       url:"digital.fidelity.com/ftgw/digital/trade-equity",
       note:{type:"warning",title:"Don't leave it in cash",
       body:"This is the most common rollover mistake — people move a big balance, feel done, and leave five or six figures sitting in cash for months or years. The move isn't finished until it's reinvested."}
@@ -4435,7 +4375,6 @@ TUTORIALS.push(
     {
       title:"Start the rollover on the Schwab side",
       body:"Sign in at schwab.com and look for Schwab's **rollover** flow — search **'rollover'** or find it under the transfers/move-money area (Schwab may offer a guided '401(k) rollover' tool). Enter details about the old plan and your destination Schwab IRA. Schwab will tell you whether it can request the funds or whether you'll need to call the old plan yourself.",
-      shot:"sch-roll-02",
       url:"client.schwab.com"
     },
     {
@@ -4449,13 +4388,11 @@ TUTORIALS.push(
     {
       title:"Handle the check, then confirm it arrived",
       body:"Many providers mail a paper check, sometimes to you to forward. If it's payable to **Schwab FBO your name**, that's still a direct rollover — you're just the courier; don't deposit it in your own bank. Send it to Schwab per their rollover deposit instructions (mobile deposit in the app often works) with your IRA account number.\n\nElectronic rollovers take a few business days; mailed checks 1–2 weeks. Check your Schwab IRA until the full balance appears, and cross-check it against your old plan's final statement.",
-      shot:"sch-roll-04",
       url:"client.schwab.com"
     },
     {
       title:"Invest the money — it's just sitting in cash",
       body:"The rolled-over money arrives as **cash** — **not invested**. This surprises people: your old 401(k) held funds, but a rollover usually converts to cash on the way over. Buy your index fund (like SWPPX) inside the IRA exactly as in the buy-an-index-fund guide. Until you do, this retirement money isn't growing.",
-      shot:"sch-roll-05",
       url:"client.schwab.com/trade",
       note:{type:"warning",title:"Don't leave it in cash",
       body:"The most common rollover mistake: people move a big balance, feel done, and leave five or six figures in cash for months. At Schwab that cash also sits in the low-yield sweep. The move isn't finished until it's reinvested."}
@@ -4510,13 +4447,11 @@ TUTORIALS.push(
       body:"Choose the firm you're transferring **from** and enter your **account number** there. Fidelity uses your statement to match everything up, so have that recent statement open. Pick the matching **account type** — the receiving account type must line up (a Roth IRA transfers into a Roth IRA, a taxable account into a taxable account).",
       app:{body:"Select the firm you're leaving and enter your **account number** there. Match the **account type** to the Fidelity account receiving it (Roth→Roth, taxable→taxable). Keep your statement handy.",
         url:"Fidelity app › Transfer of Assets"},
-      shot:"fid-toa-02",
       url:"digital.fidelity.com"
     },
     {
       title:"Choose full or partial, and confirm what's moving",
       body:"Decide whether to transfer the **entire account** (the common choice) or only **specific holdings**. For a full transfer, everything eligible comes over. Fidelity may show you your holdings from the old firm to confirm.\n\nMost stocks, ETFs, and widely-held mutual funds transfer in-kind without issue.",
-      shot:"fid-toa-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Transfer of Assets",
       note:{type:"warning",title:"What might NOT transfer cleanly",
@@ -4527,7 +4462,6 @@ TUTORIALS.push(
       body:"Confirm the delivering firm, account number, receiving Fidelity account, and whether it's full or partial. Submit. You typically don't need to contact the old broker at all — Fidelity handles the request through ACATS.",
       app:{body:"Confirm the old firm, account number, receiving Fidelity account, and full/partial, then submit. Fidelity handles the request — you usually don't contact the old broker.",
         url:"Fidelity app › Transfer of Assets"},
-      shot:"fid-toa-04",
       url:"digital.fidelity.com"
     },
     {
@@ -4583,13 +4517,11 @@ TUTORIALS.push(
       body:"Choose the firm you're transferring **from** and enter your **account number** there. Have your recent statement open so everything matches. Pick the matching **account type** — a Roth IRA transfers into a Roth IRA, a taxable account into a taxable account.",
       app:{body:"Select the firm you're leaving, enter your **account number** there, and match the **account type** to the Schwab account receiving it. Keep your statement handy.",
         url:"Schwab Mobile › Transfer Account"},
-      shot:"sch-toa-02",
       url:"client.schwab.com"
     },
     {
       title:"Choose full or partial, and confirm what's moving",
       body:"Decide whether to transfer the **entire account** (common) or only **specific holdings**. Most stocks, ETFs, and widely-held mutual funds transfer in-kind without issue.",
-      shot:"sch-toa-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Transfer Account",
       note:{type:"warning",title:"What might NOT transfer cleanly",
@@ -4600,7 +4532,6 @@ TUTORIALS.push(
       body:"Confirm the delivering firm, account number, receiving Schwab account, and full/partial. Submit. You typically don't need to contact the old broker — Schwab handles the request through ACATS.",
       app:{body:"Confirm the old firm, account number, receiving Schwab account, and full/partial, then submit. Schwab handles the request via ACATS.",
         url:"Schwab Mobile › Transfer Account"},
-      shot:"sch-toa-04",
       url:"client.schwab.com"
     },
     {
@@ -4650,13 +4581,11 @@ TUTORIALS.push(
       body:"Go to [[Accounts & Trade]] → [[Transfers]]. Set **From** to your Fidelity account and **To** to your linked bank, enter the **amount**, and choose one-time (or recurring, for regular withdrawals). Standard electronic transfers are free.",
       app:{body:"Tap [[Transact]] → [[Transfer]]. Set **From** = Fidelity, **To** = your bank, enter the **amount**, and choose one-time or recurring. Free via EFT.",
         url:"Fidelity app › Transfer"},
-      shot:"fid-wd-02",
       url:"digital.fidelity.com/ftgw/digital/transfer"
     },
     {
       title:"If it's an IRA: handle the tax questions",
       body:"Withdrawing from a **Traditional IRA** is a taxable event, so Fidelity adds screens you won't see on a regular account. You'll choose **federal (and maybe state) tax withholding** — a percentage held back to cover the tax. The withdrawal is reported on a **Form 1099-R** the following year.\n\nA **Roth IRA** is different: your own contributions come out tax- and penalty-free anytime; earnings have rules. Fidelity's withdrawal flow will ask about this.",
-      shot:"fid-wd-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Transfer",
       note:{type:"warning",title:"The under-59½ penalty",
@@ -4713,7 +4642,6 @@ TUTORIALS.push(
     {
       title:"Enter them in your employer's payroll system",
       body:"Go to your employer's payroll portal (or fill out their direct-deposit form) and add a new direct deposit using Fidelity's account and routing numbers. Choose whether to send a **percentage**, a **fixed dollar amount**, or the **remainder** of your pay, and mark the account type as requested (usually 'checking' for a CMA).",
-      shot:"fid-dd-02",
       url:"(your employer's payroll portal)",
       appUrl:"(your employer's payroll portal)"
     },
@@ -4765,7 +4693,6 @@ TUTORIALS.push(
       body:"At the top of the ticket, set the **account** field. If you have more than one (say a Roth IRA and a taxable brokerage account), make sure the right one is selected — buying in the wrong account is annoying to unwind, especially in an IRA.",
       app:{body:"Tap the **account** field at the top of the ticket and pick the right one. Choosing the wrong account — Roth vs. taxable — is a pain to reverse, so double-check.",
         url:"Schwab Mobile › Trade"},
-      shot:"sch-buy-02",
       url:"client.schwab.com/trade",
       note:{type:"warning",title:"IRA vs. brokerage matters here",
       body:"A purchase inside a Roth IRA grows tax-free; the same purchase in a taxable brokerage account does not. Confirm the account selector before continuing."}
@@ -4774,7 +4701,6 @@ TUTORIALS.push(
       title:"Enter the ticker symbol",
       body:"In the **Symbol** field, type the fund's ticker — for example **SWPPX** — and pick it from the suggestions. The ticket will show the fund's name and latest price so you can confirm it's the right one.",
       infoGuide:"general-choose-index-fund",
-      shot:"sch-buy-03",
       url:"client.schwab.com/trade",
       appUrl:"Schwab Mobile › Trade",
       note:{type:"tip",title:"Mutual fund vs. ETF — why this ticket looks different",
@@ -4792,7 +4718,6 @@ TUTORIALS.push(
       body:"Click [[Review Order]]. Read the summary: the account, the fund name, the dollar amount, and the estimated trade date. SWPPX has **no transaction fee**, so the estimated total should equal exactly what you typed.",
       app:{body:"Tap [[Review Order]]. Check the account, fund name, dollar amount, and estimated trade date. SWPPX has **no transaction fee**, so the total should match what you typed.",
         url:"Schwab Mobile › Trade"},
-      shot:"sch-buy-05",
       url:"client.schwab.com/trade"
     },
     {
@@ -4800,7 +4725,6 @@ TUTORIALS.push(
       body:"Click [[Place Order]]. You'll get an order confirmation number. Because mutual funds price once a day, the order shows as **pending** until after the market closes — that's normal, not an error.",
       app:{body:"Tap [[Place Order]]. You'll get a confirmation number. The order stays **pending** until after the market closes, since mutual funds price once a day — that's expected.",
         url:"Schwab Mobile › Trade"},
-      shot:"sch-buy-06",
       url:"client.schwab.com/trade"
     },
     {
@@ -4859,13 +4783,11 @@ TUTORIALS.push(
       body:"Set **Action** to [[Buy]]. Fidelity lets you buy ETFs in a **dollar amount** (e.g. $500, using fractional shares) or a **number of shares**. Dollars is simplest for a set budget; shares if you want a specific quantity.",
       app:{body:"Set **Action** to [[Buy]], then enter a **dollar amount** (fractional shares) or a **share count**. Dollars is simplest for a set budget.",
         url:"Fidelity app › Transact"},
-      shot:"fid-etf-02",
       url:"digital.fidelity.com/ftgw/digital/trade-equity"
     },
     {
       title:"Pick the order type — market vs. limit",
       body:"This is the one real decision. A **market order** fills immediately at the current price — fast and fine for a big, liquid ETF during normal market hours. A **limit order** only fills at a price you set or better — you control the exact price, but it might not fill if the market never reaches it.\n\nFor a first purchase of a major ETF, a **market order** during regular hours is perfectly reasonable. Use a limit order when you want price certainty.",
-      shot:"fid-etf-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Transact",
       note:{type:"warning",title:"Two habits that keep you out of trouble",
@@ -4876,7 +4798,6 @@ TUTORIALS.push(
       body:"Click [[Preview order]] and read the summary: account, ETF, action, quantity, order type, and estimated cost. If it all looks right, click [[Place order]]. A market order usually fills in seconds; you'll get a confirmation with the price you actually paid.",
       app:{body:"Tap [[Preview order]], check the summary, then [[Place order]]. A market order fills in seconds; you'll get a confirmation with your fill price.",
         url:"Fidelity app › Transact"},
-      shot:"fid-etf-04",
       url:"digital.fidelity.com"
     },
     {
@@ -4933,13 +4854,11 @@ TUTORIALS.push(
       body:"Set the action to [[Buy]]. Schwab lets you buy in a **dollar amount** (fractional shares, via its Schwab Stock Slices-style feature where available) or a **number of shares**. Dollars is simplest for a set budget.",
       app:{body:"Set the action to [[Buy]], then enter a **dollar amount** or a **share count**. Dollars is simplest for a fixed budget.",
         url:"Schwab Mobile › Trade"},
-      shot:"sch-etf-02",
       url:"client.schwab.com/trade"
     },
     {
       title:"Pick the order type — market vs. limit",
       body:"The one real decision. A **market order** fills immediately at the current price — fine for a big, liquid ETF during market hours. A **limit order** only fills at your set price or better — price control, but it might not fill.\n\nFor a first purchase of a major ETF, a **market order** during regular hours is reasonable. Use a limit order when you want price certainty.",
-      shot:"sch-etf-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Trade",
       note:{type:"warning",title:"Two habits that keep you safe",
@@ -4995,7 +4914,6 @@ TUTORIALS.push(
     {
       title:"Choose Buy, dollars or shares, and the order type",
       body:"This works just like the ETF guide. Set **Action** to [[Buy]], choose a **dollar amount** (fractional shares let you buy $100 of a stock that costs $500) or a **share count**, then pick your **order type**:\n\n**Market order** — fills now at the current price. Fine for a big, liquid stock during market hours.\n\n**Limit order** — only fills at your set price or better. Use it for price control, or for smaller/more volatile stocks where the price jumps around.",
-      shot:"fid-stock-02",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Transact",
       note:{type:"tip",title:"Fractional shares make expensive stocks accessible",
@@ -5006,7 +4924,6 @@ TUTORIALS.push(
       body:"Click [[Preview order]], check the summary (account, stock, action, quantity, order type, estimated cost), and click [[Place order]]. A market order fills in seconds and you'll see the price you paid.",
       app:{body:"Tap [[Preview order]], check the summary, then [[Place order]]. A market order fills in seconds with a confirmation of your price.",
         url:"Fidelity app › Transact"},
-      shot:"fid-stock-03",
       url:"digital.fidelity.com"
     },
     {
@@ -5059,7 +4976,6 @@ TUTORIALS.push(
     {
       title:"Choose Buy, dollars or shares, and the order type",
       body:"Just like the ETF guide. Set the action to [[Buy]], choose a **dollar amount** (fractional shares let you buy $100 of a stock that costs $500) or a **share count**, then pick your **order type**:\n\n**Market** — fills now at the current price; fine for a big, liquid stock in market hours.\n\n**Limit** — only at your set price or better; use it for price control, or for smaller/volatile stocks that jump around.",
-      shot:"sch-stock-02",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Trade",
       note:{type:"tip",title:"Fractional shares make expensive stocks accessible",
@@ -5117,7 +5033,6 @@ TUTORIALS.push(
       body:"Pick the **account** the recurring buy happens in (your Roth IRA, brokerage, etc.), then the **investment** — enter the ticker of the fund you want, e.g. **FXAIX**. Double-check the account, especially if you have both an IRA and a taxable account.",
       app:{body:"Choose the **account** (Roth IRA, brokerage, etc.) and enter the **ticker** of the fund, e.g. FXAIX. Double-check you picked the right account.",
         url:"Fidelity app › Recurring"},
-      shot:"fid-rec-02",
       url:"digital.fidelity.com",
       note:{type:"warning",title:"Mind the contribution limit in an IRA",
       body:"If you're automating buys inside an IRA, your recurring **contributions** still count toward the annual IRA limit ({{L.ira.limit}} for {{L.year}}). A recurring buy that pulls new money from your bank into a Roth IRA every month can add up — make sure the yearly total stays within the limit. (Buying with money already inside the account isn't a contribution.)"}
@@ -5127,7 +5042,6 @@ TUTORIALS.push(
       body:"Enter the **dollar amount** per purchase, choose a **frequency** (weekly, every two weeks, or monthly are common — biweekly lines up nicely with many paychecks), and pick the **funding source**: either cash already in the account, or a linked bank account it pulls from each time.\n\nIf you want it to pull from your bank, you'll need a linked bank on file (the transfer-money guide covers linking one).",
       app:{body:"Enter the **dollar amount**, pick a **frequency** (weekly / biweekly / monthly), and choose the **funding source** — cash in the account or a linked bank it pulls from each time.",
         url:"Fidelity app › Recurring"},
-      shot:"fid-rec-03",
       url:"digital.fidelity.com"
     },
     {
@@ -5135,7 +5049,6 @@ TUTORIALS.push(
       body:"Choose when the first purchase happens and confirm the schedule. Review the summary: account, fund, amount, frequency, funding source, start date. For mutual funds each scheduled buy fills at that day's closing price automatically.",
       app:{body:"Choose the start date, review the summary (account, fund, amount, frequency, source, start date), and confirm.",
         url:"Fidelity app › Recurring"},
-      shot:"fid-rec-04",
       url:"digital.fidelity.com"
     },
     {
@@ -5192,7 +5105,6 @@ TUTORIALS.push(
       body:"Pick the **account** the recurring buy happens in (Roth IRA, brokerage, etc.), then confirm the **fund** — e.g. **SWPPX**. Double-check the account, especially if you have both an IRA and a taxable account.",
       app:{body:"Choose the **account** and confirm the **fund** (e.g. SWPPX). Double-check you picked the right account.",
         url:"Schwab Mobile › Automatic Investing"},
-      shot:"sch-rec-02",
       url:"client.schwab.com",
       note:{type:"warning",title:"Mind the contribution limit in an IRA",
       body:"If you're automating buys inside an IRA that pull new money from your bank, those **contributions** count toward the annual IRA limit ({{L.ira.limit}} for {{L.year}}). Keep the yearly total within the limit. (Buying with money already in the account isn't a contribution.)"}
@@ -5202,7 +5114,6 @@ TUTORIALS.push(
       body:"Enter the **dollar amount** per purchase, choose a **frequency** (weekly, biweekly, or monthly — biweekly lines up with many paychecks), and pick the **funding source**: cash already in the account, or a linked bank via **MoneyLink** that it pulls from each time.\n\nIf you want it to pull from your bank, you'll need MoneyLink set up (the transfer-money guide covers it).",
       app:{body:"Enter the **dollar amount**, choose a **frequency**, and pick the **funding source** — account cash or a linked bank (MoneyLink) it pulls from each time.",
         url:"Schwab Mobile › Automatic Investing"},
-      shot:"sch-rec-03",
       url:"client.schwab.com"
     },
     {
@@ -5257,7 +5168,6 @@ TUTORIALS.push(
     {
       title:"Choose new-issue (auction) vs. secondary",
       body:"You have two ways to buy:\n\n**New issue (auction):** you buy a brand-new T-bill straight from a Treasury auction. Simple, no fee, and you get that term's going rate. For most people this is the way — look under **U.S. Treasury** new issues and pick the term you want.\n\n**Secondary market:** you buy a T-bill someone else is selling, with a range of maturity dates. More flexibility on exact timing, but you read a price/yield quote. Fidelity charges no commission on online secondary Treasuries.",
-      shot:"fid-tbill-02",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Fixed Income",
       note:{type:"tip",title:"Start with a new-issue auction",
@@ -5266,7 +5176,6 @@ TUTORIALS.push(
     {
       title:"Pick the term and enter your quantity",
       body:"Select the T-bill term you want (e.g. 13 weeks). Enter **quantity in increments of $1,000 face value** — a quantity of '5' means $5,000. Fidelity shows the estimated yield and the discounted price you'll actually pay (a bit under face value).",
-      shot:"fid-tbill-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Fixed Income",
       note:{type:"tip",title:"What Auto Roll does",
@@ -5277,7 +5186,6 @@ TUTORIALS.push(
       body:"Review the summary: the security, term, maturity date, quantity, estimated yield, and total cost. Confirm the account is right, then place the order. For an auction, the order is submitted to that week's auction and fills at the auction rate.",
       app:{body:"Review the security, term, maturity, quantity, estimated yield, and total cost; confirm the account; and place the order. Auction orders fill at that week's rate.",
         url:"Fidelity app › Fixed Income"},
-      shot:"fid-tbill-04",
       url:"digital.fidelity.com"
     },
     {
@@ -5331,7 +5239,6 @@ TUTORIALS.push(
     {
       title:"Choose new-issue (auction) vs. secondary",
       body:"Two ways to buy:\n\n**New issue (auction):** a brand-new T-bill straight from a Treasury auction — simple, no fee, that term's going rate. For most people this is the way; look under **U.S. Treasury** new issues and pick a term.\n\n**Secondary market:** a T-bill someone else is selling, with a range of maturity dates. More flexibility on exact timing, but you read a price/yield quote. Schwab charges no commission on online Treasuries.",
-      shot:"sch-tbill-02",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Fixed Income",
       note:{type:"tip",title:"Start with a new-issue auction",
@@ -5340,7 +5247,6 @@ TUTORIALS.push(
     {
       title:"Pick the term and enter your quantity",
       body:"Select the T-bill term (e.g. 13 weeks). Enter **quantity in increments of $1,000 face value** — a quantity of '5' means $5,000. Schwab shows the estimated yield and the discounted price you'll pay (a bit under face value).",
-      shot:"sch-tbill-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Fixed Income",
       note:{type:"tip",title:"Auto-roll, if offered",
@@ -5351,7 +5257,6 @@ TUTORIALS.push(
       body:"Review the summary: security, term, maturity date, quantity, estimated yield, and total cost. Confirm the account, then place the order. Auction orders are submitted to that week's auction and fill at the auction rate.",
       app:{body:"Review the security, term, maturity, quantity, estimated yield, and total; confirm the account; and place the order. Auction orders fill at that week's rate.",
         url:"Schwab Mobile › Fixed Income"},
-      shot:"sch-tbill-04",
       url:"client.schwab.com"
     },
     {
@@ -5405,7 +5310,6 @@ TUTORIALS.push(
     {
       title:"Browse rates by term",
       body:"Fidelity lists available CDs by **term** (3 months, 6 months, 1 year, 2 years, and so on) with the **APY** each pays. Scan for the term that matches how long you can lock the money, and note the top rate offered.\n\nStick with **new issue** CDs for your first one — you buy at face value and simply hold to maturity, no pricing to interpret.",
-      shot:"fid-cd-02",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Fixed Income",
       note:{type:"tip",title:"Multiply your FDIC coverage",
@@ -5414,7 +5318,6 @@ TUTORIALS.push(
     {
       title:"Select a CD and enter your amount",
       body:"Pick a CD and enter your **quantity in $1,000 increments** (a quantity of '10' is $10,000). Some CDs Fidelity offers as **fractional CDs** in $100 increments — handy for smaller or more precise amounts. Confirm the term, the APY, and the maturity date shown.",
-      shot:"fid-cd-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Fixed Income"
     },
@@ -5423,7 +5326,6 @@ TUTORIALS.push(
       body:"Review the bank, term, APY, maturity date, quantity, and total cost, confirm the account, and place the order. New-issue CDs carry no transaction fee. Interest is typically paid on a set schedule (e.g. monthly or at maturity, depending on the CD).",
       app:{body:"Review the bank, term, APY, maturity, quantity, and total; confirm the account; and place the order. No fee on new issues.",
         url:"Fidelity app › Fixed Income"},
-      shot:"fid-cd-04",
       url:"digital.fidelity.com"
     },
     {
@@ -5481,7 +5383,6 @@ TUTORIALS.push(
       body:"Choose the account you want to set up, then add a **primary beneficiary** — the person first in line to inherit. Enter their legal name and date of birth. If you name more than one person, you'll assign each a **percentage**, and the percentages must total 100%.",
       app:{body:"Tap the account you want to set up and add a **primary beneficiary** — first in line to inherit. Enter legal name and date of birth. Naming more than one person? Assign each a **percentage** totaling 100%.",
         url:"Fidelity app › Beneficiaries"},
-      shot:"fid-ben-02",
       url:"digital.fidelity.com",
       note:{type:"decision",title:"Primary vs. contingent",
       body:"**Primary:** first in line. **Contingent:** the backup who inherits only if every primary beneficiary has also died. Naming a contingent is smart — it covers the case where you and your primary beneficiary are gone at the same time, which is exactly when probate would otherwise take over."}
@@ -5491,7 +5392,6 @@ TUTORIALS.push(
       body:"Add at least one **contingent beneficiary** — the backup. This is the safety net if your primary can't inherit. Same details: name, date of birth, and a percentage split if there's more than one.\n\nSkipping this is the most common gap. It takes 30 extra seconds and closes a real hole.",
       app:{body:"Add a **contingent beneficiary** — the backup if your primary can't inherit. Same details, and a percentage split if there's more than one. It's the most-skipped step and takes 30 seconds.",
         url:"Fidelity app › Beneficiaries"},
-      shot:"fid-ben-03",
       url:"digital.fidelity.com"
     },
     {
@@ -5499,7 +5399,6 @@ TUTORIALS.push(
       body:"Check that your primary percentages total 100% and your contingent percentages total 100% (they're two separate groups). Confirm the names are spelled exactly as on the person's ID. Then **save** — the change is usually effective immediately, no paperwork to mail.",
       app:{body:"Confirm primary percentages total 100% and contingent percentages total 100% (separate groups), names match each person's ID, then tap **Save**. Usually effective immediately.",
         url:"Fidelity app › Beneficiaries"},
-      shot:"fid-ben-04",
       url:"digital.fidelity.com"
     },
     {
@@ -5555,7 +5454,6 @@ TUTORIALS.push(
       body:"Choose the account, then add a **primary beneficiary** — the person first in line to inherit. Enter their legal name and date of birth. If you name more than one person, assign each a **percentage**, and the percentages must total 100%.",
       app:{body:"Tap the account and add a **primary beneficiary** — first in line. Enter legal name and date of birth. More than one person? Assign each a **percentage** totaling 100%.",
         url:"Schwab Mobile › Beneficiaries"},
-      shot:"sch-ben-02",
       url:"client.schwab.com",
       note:{type:"decision",title:"Primary vs. contingent",
       body:"**Primary:** first in line. **Contingent:** the backup who inherits only if every primary beneficiary has also died. Naming a contingent covers the case where you and your primary are gone at the same time — exactly when probate would otherwise take over."}
@@ -5565,7 +5463,6 @@ TUTORIALS.push(
       body:"Add at least one **contingent beneficiary** — the safety net if your primary can't inherit. Same details: name, date of birth, and a percentage split if there's more than one.\n\nThis is the most-skipped step, and it takes about 30 seconds to close a real gap.",
       app:{body:"Add a **contingent beneficiary** — the backup. Same details, plus a percentage split if there's more than one. Most-skipped step; 30 seconds well spent.",
         url:"Schwab Mobile › Beneficiaries"},
-      shot:"sch-ben-03",
       url:"client.schwab.com"
     },
     {
@@ -5573,7 +5470,6 @@ TUTORIALS.push(
       body:"Check that your primary percentages total 100% and your contingent percentages total 100% (two separate groups). Confirm names are spelled exactly as on each person's ID. Then **save** — usually effective immediately, no paperwork to mail.",
       app:{body:"Confirm primary percentages total 100% and contingent percentages total 100% (separate groups), names match each ID, then tap **Save**. Usually immediate.",
         url:"Schwab Mobile › Beneficiaries"},
-      shot:"sch-ben-04",
       url:"client.schwab.com"
     },
     {
@@ -5627,7 +5523,6 @@ TUTORIALS.push(
       body:"You can switch an individual position to **Reinvest**, or set the **whole account** to reinvest by default so every current and future holding does it automatically. For a hands-off portfolio, setting the account-level default to reinvest is the simplest choice.\n\nToggle what you want to **Reinvest in Security**, and save.",
       app:{body:"Switch an individual holding to **Reinvest**, or set the **account default** to reinvest so everything (now and future) does automatically. Choose **Reinvest in Security** and save.",
         url:"Fidelity app › Dividends & Capital Gains"},
-      shot:"fid-drip-02",
       url:"digital.fidelity.com",
       note:{type:"tip",title:"Capital gains too",
       body:"Mutual funds also pay out **capital gains distributions** (usually once a year). The same page lets you reinvest those as well — turning both dividends and capital gains to reinvest keeps everything compounding."}
@@ -5684,7 +5579,6 @@ TUTORIALS.push(
       body:"Switch an individual position to **Reinvest dividends**, or enable reinvestment for the **whole account** so every current and future holding does it automatically. For a hands-off portfolio, the account-wide default is simplest. Toggle it on and save.",
       app:{body:"Switch a holding to **Reinvest dividends**, or set the **account default** to reinvest so everything (now and future) does automatically. Save.",
         url:"Schwab Mobile › Reinvestment"},
-      shot:"sch-drip-02",
       url:"client.schwab.com",
       note:{type:"tip",title:"Capital gains too",
       body:"Mutual funds also pay **capital gains distributions** (usually once a year). Where Schwab offers it, set those to reinvest as well so everything keeps compounding."}
@@ -5743,13 +5637,11 @@ TUTORIALS.push(
       body:"Choose a **number of shares**, a **dollar amount**, or **Sell all** of the position. For a stock or ETF you'll also pick an **order type** — a **market order** sells now at the current price, a **limit order** only at your price or better (same as when buying).\n\nFor a **mutual fund**, there's no order type — the sell executes at that day's closing price if placed before the market closes.",
       app:{body:"Choose **shares**, a **dollar amount**, or **Sell all**. For a stock/ETF pick **market** or **limit**; a mutual fund sells at that day's closing price with no order type.",
         url:"Fidelity app › Transact"},
-      shot:"fid-sell-02",
       url:"digital.fidelity.com"
     },
     {
       title:"In a taxable account: choose your tax lots",
       body:"This is the step that quietly saves money in a **taxable** account. A **tax lot** is a batch of shares you bought at one time and price. If you bought the same fund several times, you have several lots with different cost bases — and which ones you sell changes your taxable gain.\n\nOn the ticket, look for a **cost basis / lot selection** option (Fidelity may default to a method like FIFO). Choose **Specific Shares** to hand-pick lots — for example, selling higher-cost lots first realizes a smaller gain.",
-      shot:"fid-sell-03",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Transact",
       note:{type:"warning",title:"Watch the holding period and wash sales",
@@ -5760,7 +5652,6 @@ TUTORIALS.push(
       body:"Click [[Preview order]] and review everything: account, investment, shares/amount, order type, and — for a taxable account — the lots and the estimated gain or loss. If it's right, click [[Place order]]. Stock/ETF market sells fill in seconds; mutual funds settle at the day's close.",
       app:{body:"Tap [[Preview order]], review (including lots and estimated gain/loss in a taxable account), then [[Place order]]. Stock/ETF market sells fill fast; mutual funds settle at the close.",
         url:"Fidelity app › Transact"},
-      shot:"fid-sell-04",
       url:"digital.fidelity.com"
     },
     {
@@ -5816,13 +5707,11 @@ TUTORIALS.push(
       body:"Choose a **number of shares**, a **dollar amount**, or **Sell all**. For a stock or ETF you'll pick an **order type** — a **market order** sells now at the current price, a **limit order** only at your price or better. A **mutual fund** has no order type; it sells at that day's closing price.",
       app:{body:"Choose **shares**, a **dollar amount**, or **Sell all**. Stock/ETF: pick market or limit. Mutual fund: sells at that day's close, no order type.",
         url:"Schwab Mobile › Trade"},
-      shot:"sch-sell-02",
       url:"client.schwab.com"
     },
     {
       title:"In a taxable account: choose your tax lots",
       body:"The step that quietly saves money in a **taxable** account. A **tax lot** is a batch of shares bought at one time and price. If you bought the same fund several times, you have lots with different cost bases — and which you sell changes your taxable gain.\n\nOn the ticket, look for a **cost basis method / lot selection** option. Schwab defaults to a method (often FIFO); choose **Specified Lots** to hand-pick — e.g. selling higher-cost lots first to realize a smaller gain.",
-      shot:"sch-sell-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Trade",
       note:{type:"warning",title:"Holding period and wash sales",
@@ -5884,7 +5773,6 @@ TUTORIALS.push(
     {
       title:"Know when they actually arrive",
       body:"This trips people up every year: brokerage tax forms come out **later than W-2s**. The **consolidated 1099** for a taxable account typically posts in **mid-to-late February**, and can even be **corrected/reissued** in March if a fund reclassifies a distribution. **1099-R** forms come by late January. The **5498** (IRA contributions) doesn't arrive until **May**, because you can contribute for the prior year up to the April deadline.",
-      shot:"fid-tax-02",
       url:"digital.fidelity.com",
       appUrl:"Fidelity app › Tax Forms",
       note:{type:"warning",title:"Don't file too early",
@@ -5945,7 +5833,6 @@ TUTORIALS.push(
     {
       title:"Know when they actually arrive",
       body:"This trips people up: brokerage tax forms come out **later than W-2s**. Schwab's **consolidated 1099** for a taxable account typically posts in **mid-to-late February**, and can be **corrected** in March if a fund reclassifies a distribution. **1099-R** forms come by late January. The **5498** (IRA contributions) doesn't arrive until **May**, since you can contribute for the prior year up to the April deadline.",
-      shot:"sch-tax-02",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Tax Forms",
       note:{type:"warning",title:"Don't file too early",
@@ -6001,7 +5888,6 @@ TUTORIALS.push(
       body:"If your account allows it, select the higher-yielding option (e.g. **SPAXX**) and confirm. Existing cash moves to the new core, and future deposits land there. The change is usually immediate.\n\nNote: some account types (like the CMA) don't let you change the core to SPAXX — in that case, use the next step instead.",
       app:{body:"Select the higher-yield core (e.g. **SPAXX**) and confirm. Existing and future cash use it. Some accounts (like the CMA) don't allow this — use the next step instead.",
         url:"Fidelity app › Account Features"},
-      shot:"fid-core-02",
       url:"digital.fidelity.com"
     },
     {
@@ -6058,7 +5944,6 @@ TUTORIALS.push(
       body:"Sign in and go to your [[Profile]] menu → **Security** or **Authorized Access** / **Grant account access** (Fidelity may label it 'Authorized Access' or 'Add authorized user'). Choose to add a person and select the account(s) they'll have access to.",
       app:{body:"Open [[Profile]] → **Security / Authorized Access**, choose to add a person, and pick the account(s) they'll access.",
         url:"Fidelity app › Authorized Access"},
-      shot:"fid-auth-02",
       url:"digital.fidelity.com"
     },
     {
@@ -6066,7 +5951,6 @@ TUTORIALS.push(
       body:"Provide the person's information and choose the **access level** from step 2. Depending on the level, Fidelity may require additional verification or forms (full trading/money authority is a bigger grant than view-only). Submit the request.",
       app:{body:"Enter the person's details and pick the **access level**. Higher levels may need extra verification or forms. Submit.",
         url:"Fidelity app › Authorized Access"},
-      shot:"fid-auth-03",
       url:"digital.fidelity.com"
     },
     {
@@ -6130,7 +6014,6 @@ TUTORIALS.push(
     {
       title:"Wait for the cash to settle",
       body:"Let the transfer fully settle so the money shows as available in the Traditional IRA — usually 1–3 business days for a bank transfer. Some people wait a day or two more, but the key requirement is simply that the cash is settled and sitting as cash.\n\nDon't invest it while you wait. Cash-in, cash-converted keeps the tax math clean.",
-      shot:"fid-bd-02",
       url:"digital.fidelity.com/ftgw/digital/portfolio/summary"
     },
     {
@@ -6144,7 +6027,6 @@ TUTORIALS.push(
     {
       title:"Choose accounts and amount, and handle tax withholding",
       body:"Set the **from** account to your Traditional IRA and the **to** account to your Roth IRA. Convert the full cash balance.\n\nWhen asked about **tax withholding**, choose **0% / do not withhold** for a true backdoor Roth. You already paid tax on this money, so there's nothing to withhold — and withholding would pull money out of the conversion.",
-      shot:"fid-bd-04",
       url:"digital.fidelity.com",
       note:{type:"warning",title:"Withhold nothing here (in this specific case)",
       body:"Withholding taxes on the conversion only makes sense when you're converting **pre-tax** money and want to cover the resulting tax. In a clean backdoor Roth there's essentially no taxable amount, so 0% is right. If you're unsure whether your situation is 'clean,' that's the signal to check with a tax professional first."}
@@ -6152,7 +6034,6 @@ TUTORIALS.push(
     {
       title:"Review and submit the conversion",
       body:"Review the summary: from Traditional IRA, to Roth IRA, full amount, 0% withholding. Confirm and submit. The conversion usually processes the same or next business day, and you'll see the balance move from the Traditional IRA into the Roth IRA.",
-      shot:"fid-bd-05",
       url:"digital.fidelity.com"
     },
     {
@@ -6215,13 +6096,11 @@ TUTORIALS.push(
     {
       title:"Wait for the cash to settle",
       body:"Let the transfer fully settle so the money shows as available in the Traditional IRA — usually 1–3 business days. Don't invest it while you wait. Cash-in, cash-converted keeps the tax math clean.",
-      shot:"sch-bd-02",
       url:"client.schwab.com"
     },
     {
       title:"Convert the Traditional IRA to Roth",
       body:"Find Schwab's **Roth conversion** flow — search **'Roth conversion'** or look under the account's service/transfer options for **convert to Roth IRA**. Set the **from** account to your Traditional IRA and the **to** account to your Roth IRA, and convert the **full** cash balance (contribution plus any few cents of interest), which leaves a clean $0 Traditional IRA.",
-      shot:"sch-bd-03",
       url:"client.schwab.com",
       note:{type:"warning",title:"Withhold nothing here (in this specific case)",
       body:"When asked about **tax withholding**, choose **0% / do not withhold** for a clean backdoor Roth — you already paid tax on this money, so there's nothing to withhold, and withholding would pull money out of the conversion. If you're unsure whether your situation is 'clean,' that's the signal to check with a tax professional first."}
@@ -6273,7 +6152,6 @@ TUTORIALS.push(
     {
       title:"Line up a replacement — similar, NOT identical",
       body:"Before you sell, pick what you'll buy instead so you're only out of the market for moments. The replacement should track a **similar** market exposure but must not be **'substantially identical'** to what you sold, or you'll trigger a wash sale.\n\nA classic move: sell one S&P 500 fund and buy a **total-market** or **large-cap** fund from a **different provider** — similar returns, clearly not identical. (For example, swapping between two different index families.)",
-      shot:"fid-tlh-02",
       url:"digital.fidelity.com",
       note:{type:"warning",title:"The wash-sale rule — the whole game",
       body:"If you buy the **same or a 'substantially identical'** security within **30 days before or after** the sale, the IRS **disallows the loss** (a wash sale). This includes buys in your **IRA** and, per IRS guidance, your **spouse's** accounts. Also watch **dividend reinvestment** — an automatic reinvest of the same fund during the window can trigger it. Turn DRIP off on that fund around the harvest."}
@@ -6281,7 +6159,6 @@ TUTORIALS.push(
     {
       title:"Sell the loss lots",
       body:"Place a **sell** order for the specific loss lots (see the sell guide), using **Specific Shares** so you're selling exactly the underwater lots. For an ETF or stock, a limit or market order during market hours; for a mutual fund, it sells at the day's close.",
-      shot:"fid-tlh-03",
       url:"digital.fidelity.com/ftgw/digital/trade-equity"
     },
     {
@@ -6333,13 +6210,11 @@ TUTORIALS.push(
     {
       title:"Set up the distribution",
       body:"From the RMD center, choose to **take your RMD**. Pick the account, confirm the amount (at least the calculated RMD), and where it goes — to your linked bank, or to your Fidelity taxable brokerage account if you don't need the cash and just want to satisfy the requirement.",
-      shot:"fid-rmd-02",
       url:"digital.fidelity.com"
     },
     {
       title:"Set tax withholding so April isn't a shock",
       body:"An RMD is **taxable income**. Fidelity lets you withhold **federal (and state) tax** right from the distribution — often the easiest way to stay square with the IRS. Choose a withholding percentage; if you're unsure, many retirees withhold enough to cover their expected bracket so they aren't caught short at tax time.",
-      shot:"fid-rmd-03",
       url:"digital.fidelity.com",
       note:{type:"tip",title:"The QCD option (if you're charitable)",
       body:"If you give to charity, a **Qualified Charitable Distribution (QCD)** lets you send up to a set amount of your RMD **directly to a charity**, satisfying the RMD **without** the money counting as taxable income to you. It's one of the most tax-efficient ways to give in retirement — worth asking a tax pro about."}
@@ -6393,13 +6268,11 @@ TUTORIALS.push(
     {
       title:"Set up the distribution",
       body:"From the RMD center, choose to **take your RMD**. Pick the account, confirm the amount (at least the calculated RMD), and where it goes — to your linked bank via MoneyLink, or to your Schwab taxable brokerage account if you don't need the cash and just want to satisfy the requirement.",
-      shot:"sch-rmd-02",
       url:"client.schwab.com"
     },
     {
       title:"Set tax withholding so April isn't a shock",
       body:"An RMD is **taxable income**. Schwab lets you withhold **federal (and state) tax** right from the distribution — often the easiest way to stay square with the IRS. Choose a withholding percentage; if you're unsure, many retirees withhold enough to cover their expected bracket so they aren't caught short at tax time.",
-      shot:"sch-rmd-03",
       url:"client.schwab.com",
       note:{type:"tip",title:"The QCD option (if you're charitable)",
       body:"If you give to charity, a **Qualified Charitable Distribution (QCD)** lets you send up to a set amount of your RMD **directly to a charity**, satisfying the RMD **without** the money counting as taxable income to you. It's one of the most tax-efficient ways to give in retirement — worth asking a tax pro about."}
@@ -6670,13 +6543,11 @@ TUTORIALS.push(
       body:"From the top navigation choose [[Move Money]] → [[Transfers & Payments]]. Pick [[Online Transfer]], set **From** to your Schwab account and **To** to your linked bank, then enter the **amount**. You can make it one-time or recurring. Standard electronic transfers are free; a wire is faster but carries a fee.",
       app:{body:"Tap [[Move Money]] → [[Transfer]]. Set **From** = Schwab, **To** = your linked bank, enter the **amount**, and choose one-time or recurring. Free by electronic transfer.",
         url:"Schwab Mobile › Move Money"},
-      shot:"sch-wd-02",
       url:"client.schwab.com/transfers"
     },
     {
       title:"If it's an IRA: handle the tax questions",
       body:"Withdrawing from a **Traditional IRA** is a taxable event, so Schwab routes you through a distribution flow with extra screens. You'll elect **federal — and in many states, state — tax withholding**, a percentage held back to cover the tax. The withdrawal is reported to you and the IRS on a **Form 1099-R** the following January.\n\nA **Roth IRA** works differently: your own contributions come out tax- and penalty-free at any time, while earnings have their own rules. Schwab's distribution flow will ask which you're taking.",
-      shot:"sch-wd-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Move Money",
       note:{type:"warning",title:"The under-59½ penalty",
@@ -6736,7 +6607,6 @@ TUTORIALS.push(
       body:"You'll see a grid of terms — 3 months, 6 months, 1 year, 2 years, and so on — each with a yield. Pick your term first, then look at the individual CDs offered at that term. **APY** is the number to compare across banks.\n\nNote whether a CD is **callable**: a callable CD lets the issuing bank end it early, usually when rates fall and it no longer wants to pay you that rate. Non-callable is simpler.",
       app:{body:"Browse the term grid, tap a term, and compare **APY** across the listed banks. Check whether a CD is **callable** — non-callable is simpler.",
         url:"Schwab Mobile › Fixed Income"},
-      shot:"sch-cd-02",
       url:"client.schwab.com",
       note:{type:"tip",title:"Laddering, in one sentence",
       body:"Instead of putting everything in one 2-year CD, split it across 6-month, 1-year, 18-month, and 2-year CDs — something matures regularly, so you keep access to part of the money while still capturing longer-term rates. Schwab offers a **CD ladder** builder that will construct this for you in one order."}
@@ -6746,7 +6616,6 @@ TUTORIALS.push(
       body:"Click [[Buy]] on the CD you want. Enter a **quantity** — brokered CDs are quoted in $1,000 units, so a quantity of 10 means $10,000. Check the **maturity date** and confirm the issuing bank, since your FDIC coverage is per bank, per depositor.",
       app:{body:"Tap [[Buy]], enter a **quantity** in $1,000 units (10 = $10,000), and confirm the **maturity date** and issuing bank.",
         url:"Schwab Mobile › Fixed Income"},
-      shot:"sch-cd-03",
       url:"client.schwab.com",
       note:{type:"tip",title:"How to insure more than $250,000",
       body:"FDIC insurance covers $250,000 per bank, per depositor. Because brokered CDs let you buy from **many different banks** inside one account, you can spread a large sum across several banks' CDs and stay fully insured well past $250k — something a single bank can't do for you."}
@@ -6756,7 +6625,6 @@ TUTORIALS.push(
       body:"Check the term, rate, quantity, total cost, and settlement date, then submit. The cash leaves your account on settlement and the CD appears in your [[Positions]] as a holding. Interest is paid on the schedule shown — often at maturity for short CDs, or semi-annually for longer ones.",
       app:{body:"Review the term, rate, quantity, and total, then submit. The CD shows up in [[Positions]] after settlement.",
         url:"Schwab Mobile › Positions"},
-      shot:"sch-cd-04",
       url:"client.schwab.com"
     },
     {
@@ -6814,7 +6682,6 @@ TUTORIALS.push(
       body:"Treat it exactly like buying any other fund. Go to [[Trade]] → [[Mutual Funds]], enter a money market fund symbol, set **Action** to [[Buy]], and enter a **dollar amount**.\n\nCommon Schwab options include **SWVXX** (Schwab Value Advantage Money Fund) and **SNSXX** (Schwab U.S. Treasury Money Fund, whose income is generally **exempt from state income tax** — often the better pick in a high-tax state). Check each fund's current 7-day yield and minimum on its quote page before buying.",
       app:{body:"Tap [[Trade]] → [[Mutual Funds]], enter a money fund symbol (e.g. **SWVXX**, or **SNSXX** for state-tax-exempt Treasury income), set **Action** to [[Buy]], and enter a **dollar amount**.",
         url:"Schwab Mobile › Trade"},
-      shot:"sch-cash-02",
       url:"client.schwab.com/trade",
       note:{type:"decision",title:"Money market fund vs. Treasury bills vs. a HYSA",
       body:"**Money market fund** — buy and sell any business day, rate floats with short-term rates, no fixed term. The easy default for idle cash.\n\n**Treasury bills** — slightly higher yield sometimes, state-tax-exempt, but you're committing for a set term.\n\n**HYSA at an outside bank** — FDIC-insured and separate from your brokerage, which some people prefer for the emergency fund. A money fund is not FDIC-insured; it's an investment, though these funds are built to hold a stable $1 share price."}
@@ -6873,7 +6740,6 @@ TUTORIALS.push(
     {
       title:"Enter them in your employer's payroll system",
       body:"In your payroll portal find **Direct Deposit** and add an account. Enter the routing and account numbers from the last step, choose **Checking** or **Savings** if asked (Schwab's direct deposit screen tells you which to select), and set the **amount** — a flat dollar figure per paycheck is usually easier to reason about than a percentage.\n\nIf your employer only accepts a paper form, use the pre-filled one Schwab generated.",
-      shot:"sch-dd-02",
       url:"(your employer's payroll portal)",
       appUrl:"(your employer's payroll app)"
     },
@@ -6932,13 +6798,11 @@ TUTORIALS.push(
       body:"Sign in and go to [[Service]] → [[Account Settings]], or open the **Security Center** from your profile menu, and look for the option to **grant account access** to someone else. Choose the account (access is granted per account, not across everything you own) and the level from the previous step.",
       app:{body:"Open your profile → [[Security Center]] or account settings, and find the option to **grant account access**. Access is granted per account, so pick the specific one.",
         url:"Schwab Mobile › Security Center"},
-      shot:"sch-auth-02",
       url:"client.schwab.com"
     },
     {
       title:"Enter their details and complete any forms",
       body:"Enter the other person's legal name, address, date of birth, and Social Security number — Schwab has to identify them the same way it identified you. For view-only and trading authority you can usually finish online. For **full power of attorney**, Schwab will produce a form to sign and return; expect a few business days for it to take effect.\n\nIf they don't already have a Schwab login, they'll create their own — which is the point. Their actions are logged under their credentials, not yours.",
-      shot:"sch-auth-03",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Security Center"
     },
@@ -6993,7 +6857,6 @@ TUTORIALS.push(
     {
       title:"Line up a replacement — similar, NOT identical",
       body:"Decide what you're buying before you sell, so the swap happens the same day and you're never out of the market.\n\nThe standard approach is to move to a fund tracking a **different index** in the same asset class — for example, out of an S&P 500 fund and into a total-market or large-cap fund from a different provider. Same broad exposure, different underlying index.",
-      shot:"sch-tlh-02",
       url:"client.schwab.com",
       note:{type:"warning",title:"The wash-sale rule, precisely",
       body:"If you buy the same or a **'substantially identical'** security within **30 days before or after** the sale, the loss is disallowed. The window is 61 days total, centered on the sale.\n\nThree traps: it applies **across all your accounts**, including your **IRA** (where the loss is then lost permanently) and your **spouse's** accounts; **automatic dividend reinvestment** can trigger it without you doing anything — turn DRIP off on the sold position first; and a **recurring investment** into the same fund will do it too. Schwab flags wash sales on your 1099-B, but it can't see accounts held elsewhere — that reconciliation is on you."}
@@ -7001,7 +6864,6 @@ TUTORIALS.push(
     {
       title:"Sell the loss lots",
       body:"Open [[Trade]] → [[All-in-One Trade Ticket]], enter the symbol, set **Action** to [[Sell]]. Before you place it, find the **cost basis method / lot selection** control and choose **Specified Lots**, then hand-pick exactly the losing lots you identified.\n\nThis is the step people skip. Leave it on the default method and Schwab may sell lots you didn't intend — potentially realizing a **gain** instead of the loss you came for.",
-      shot:"sch-tlh-03",
       url:"client.schwab.com/trade"
     },
     {
@@ -7054,7 +6916,6 @@ TUTORIALS.push(
     {
       title:"Choose a method",
       body:"You'll see a list of disposal methods. The ones worth knowing:\n\n**FIFO** — oldest shares first. Simple, and usually the most expensive.\n\n**Tax-Sensitive** — Fidelity picks lots to minimize the tax hit, generally taking losses first and short-term gains last. The reasonable set-and-forget choice for most taxable accounts.\n\n**High Cost** — sells the most expensive shares first, minimizing the gain but ignoring holding period.\n\n**Specific Shares** — you hand-pick lots on every sale. Maximum control, maximum attention required.\n\nIf you don't want to think about this again, **Tax-Sensitive** is the usual answer. If you actively harvest losses, **Specific Shares** gives you the control that guide assumes.",
-      shot:"fid-basis-02",
       url:"digital.fidelity.com",
       note:{type:"decision",title:"You can still override on any single trade",
       body:"This setting is a **default**, not a lock. Every sell ticket lets you change the method or pick specific lots for that trade only. Setting a sensible default just means the times you forget to look don't cost you anything."}
@@ -7062,7 +6923,6 @@ TUTORIALS.push(
     {
       title:"Save it — and know when a change can still be made",
       body:"Confirm the change. It applies to **future** sales; it doesn't rewrite trades you've already made.\n\nOne useful detail: if you sold recently and picked the wrong lots, you can generally still correct the basis election up until **settlement date** — about one business day after the trade for stocks and ETFs. After settlement it's locked in. If you notice a mistake, fix it that day.",
-      shot:"fid-basis-03",
       url:"digital.fidelity.com"
     },
     {
@@ -7115,7 +6975,6 @@ TUTORIALS.push(
     {
       title:"Choose a method",
       body:"Schwab offers several. The ones worth knowing:\n\n**FIFO** — oldest shares first. Simple, and usually the most expensive.\n\n**Tax Lot Optimizer** — Schwab ranks lots to minimize the current tax hit, taking short-term losses first and long-term gains last. The reasonable set-and-forget choice for most taxable accounts.\n\n**High Cost** — sells the most expensive shares first, minimizing the gain but ignoring holding period.\n\n**Specified Lots** — you hand-pick lots on every sale. Maximum control, maximum attention required.\n\nIf you don't want to think about this again, **Tax Lot Optimizer** is the usual answer. If you actively harvest losses, **Specified Lots** gives you the control that guide assumes.",
-      shot:"sch-basis-02",
       url:"client.schwab.com",
       note:{type:"decision",title:"You can still override on any single trade",
       body:"This setting is a **default**, not a lock. Every sell ticket lets you change the method or pick specific lots for that trade only. Setting a sensible default just means the times you forget to look don't cost you anything."}
@@ -7123,7 +6982,6 @@ TUTORIALS.push(
     {
       title:"Save it — and know when a change can still be made",
       body:"Confirm the change. It applies to **future** sales; it doesn't rewrite trades you've already made.\n\nOne useful detail: if you sold recently and picked the wrong lots, you can generally still correct the basis election up until **settlement date** — about one business day after the trade for stocks and ETFs. After settlement it's locked in. If you notice a mistake, fix it that day.",
-      shot:"sch-basis-03",
       url:"client.schwab.com"
     },
     {
@@ -7184,7 +7042,6 @@ TUTORIALS.push(
     {
       title:"Enter your info and business details",
       body:"Provide the standard identity information plus basic **business details** — your business name if you have one, or just yourself as a sole proprietor, and an **EIN** if you have one (many sole proprietors simply use their SSN).\n\nThe SEP-IRA application is short and generally finishes online. The Individual 401(k) also requires **adopting a plan document**, so expect an extra form or two; depending on the plan features you select, part of that may arrive as a document to sign and return rather than a fully online flow.",
-      shot:"sch-se-02",
       url:"client.schwab.com",
       appUrl:"Schwab Mobile › Open an Account"
     },
@@ -7193,7 +7050,6 @@ TUTORIALS.push(
       body:"Confirm everything and submit. A SEP-IRA is usually approved quickly; an Individual 401(k) can take a few business days if plan paperwork has to be processed.\n\nFor the Individual 401(k), **keep the plan documents Schwab provides**. You'll want them on file, and once the plan's assets pass **$250,000** you'll file a simple annual **Form 5500-EZ**.",
       app:{body:"Confirm and submit. Keep any Individual 401(k) plan paperwork — and note you'll file a simple **Form 5500-EZ** once plan assets exceed $250,000.",
         url:"Schwab Mobile › Open an Account"},
-      shot:"sch-se-03",
       url:"client.schwab.com"
     },
     {
@@ -9652,6 +9508,63 @@ if(typeof V621_INTENTS!=="undefined")V621_INTENTS.push(
   {ids:["general-529-vs-custodial"],phrases:["529 or custodial","529 vs custodial","ugma or 529","utma or 529"]},
   {ids:["general-rollover-vs-leave-401k"],phrases:["leave 401k or rollover","rollover or leave it","should i roll over my 401k","old 401k options"]}
 );
+
+
+
+/* ---------- Version 6.23: Confidence & Polish ---------- */
+function v623IsConsequential(t,s){
+  const hay=((s?.title||"")+" "+(s?.body||"")+" "+(s?.note?.title||"")+" "+(s?.note?.body||"")).toLowerCase();
+  const terms=["submit","place order","preview order","review order","confirm order","buy and","purchase","transfer","rollover","roll over","convert","conversion","beneficiar","withdraw","distribution","security","two-factor","2fa","link bank","bank account","wire","recurring","automatic investment","drip","reinvest","open the account","open account","final review","sign and submit"];
+  return terms.some(x=>hay.includes(x));
+}
+function v623SafetyChecks(t,s){
+  const hay=((s?.title||"")+" "+(s?.body||"")+" "+(s?.note?.body||"")).toLowerCase();
+  if(/ticker|order|buy|fund|etf|mutual fund/.test(hay))return ["The account shown is the account you intend to use.","The ticker/fund name matches the investment you intended.","The dollar amount or share quantity is correct.","The action says Buy (not Sell) and there is no unexpected fee or warning."];
+  if(/rollover|roll over|transfer|distribution|withdraw/.test(hay))return ["The source and destination accounts are correct.","The tax type (pre-tax/Traditional vs. Roth) is staying compatible unless you intentionally want a taxable conversion.","The amount or assets being moved are what you intended.","If this is meant to stay tax-deferred, the transaction is structured as the intended transfer/rollover rather than an accidental cash withdrawal."];
+  if(/beneficiar/.test(hay))return ["The people or entities listed are the ones you intend.","Names and identifying details are correct.","Percentages or shares total the amount required by the brokerage.","You understand this designation can affect who receives the account at death."];
+  if(/security|two-factor|2fa|authenticator/.test(hay))return ["The phone/email/authenticator belongs to you and is accessible.","You have saved any recovery method or backup code offered.","You recognize the device/session you are securing."];
+  if(/recurring|automatic|drip|reinvest/.test(hay))return ["The correct account and investment are selected.","The amount/frequency or dividend choice matches what you intended.","You know when the setting starts and how to change it later."];
+  if(/open account|open the account|sign and submit|final review/.test(hay))return ["Your legal name and contact information are correct.","The account type is the one you meant to open.","Any tax, beneficiary, or employment information shown is accurate to the best of your knowledge.","There is no unexpected fee, optional feature, or consent you do not understand."];
+  return ["The account or destination shown is the one you intended.","The amount/details match what you meant to enter.","There is no unexpected fee, tax warning, or irreversible choice on screen."];
+}
+function v623ModalShell(title,eyebrow,body,primary="Continue",secondary="Go back"){
+  return `<div class="v623-modal" id="v623Modal" hidden><button class="v623-modal-bg" type="button" aria-label="Close"></button><section class="v623-dialog" role="dialog" aria-modal="true" aria-labelledby="v623Title"><div class="v623-dialog-head">${rangerRandy("avatar",false)}<div><small>${esc(eyebrow)}</small><h2 id="v623Title">${esc(title)}</h2></div><button class="v623-x" type="button" aria-label="Close">×</button></div>${body}<div class="v623-actions"><button class="v623-primary" type="button">${esc(primary)}</button><button class="v623-secondary" type="button">${esc(secondary)}</button></div></section></div>`;
+}
+function v623OpenModal(html,onPrimary){
+  document.getElementById("v623Modal")?.remove();document.body.insertAdjacentHTML("beforeend",html);const m=document.getElementById("v623Modal");m.hidden=false;
+  const focusables=()=>[...m.querySelectorAll('button,a[href],input:not([disabled])')].filter(x=>!x.hidden);
+  const close=()=>{m.remove();};m.querySelector('.v623-modal-bg').onclick=close;m.querySelector('.v623-x').onclick=close;m.querySelector('.v623-secondary').onclick=close;
+  m.querySelector('.v623-primary').onclick=()=>onPrimary?.(m,close);
+  m.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();close()}if(e.key==='Tab'){const f=focusables();if(!f.length)return;const first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
+  requestAnimationFrame(()=>m.querySelector('.v623-x')?.focus());return m;
+}
+function v623SafetyModal(t,s,i,proceed){
+  const checks=v623SafetyChecks(t,s);const body=`<div class="v623-dialog-copy">Randy wants one quick check before you mark this consequential stop complete. Check each item against the real screen — don’t check a box just to get past this.</div><div class="v623-checks">${checks.map((c,n)=>`<label class="v623-check"><input type="checkbox" data-v623-check><span>${esc(c)}</span></label>`).join("")}</div><div class="v623-safety-note">If anything is different or unclear, go back to the trail and use <b>Ask Ranger Randy</b> or <b>I think I made a mistake</b>. For an actual submitted trade, transfer, tax election, or account-ownership issue, use the brokerage’s support rather than guessing.</div>`;
+  const m=v623OpenModal(v623ModalShell("Quick trail check","Before you click",body,"Everything looks right →","Something doesn’t look right"),(modal,close)=>{if(![...modal.querySelectorAll('[data-v623-check]')].every(x=>x.checked))return;close();proceed()});
+  const p=m.querySelector('.v623-primary'),sync=()=>{p.disabled=![...m.querySelectorAll('[data-v623-check]')].every(x=>x.checked)};m.querySelectorAll('[data-v623-check]').forEach(x=>x.addEventListener('change',sync));sync();
+}
+function v623AlreadyDone(t){
+  const body=`<div class="v623-dialog-copy">Use this only if you have already completed this real-world task outside PathFinder. Randy will mark every stop on <b>${esc(t.title)}</b> complete and move your route forward.</div><div class="v623-safety-note">This changes PathFinder progress only. It does not change anything at your brokerage, bank, employer, or other financial institution.</div>`;
+  v623OpenModal(v623ModalShell("Already completed this trail?","Catch PathFinder up",body,"Yes — mark trail complete","Cancel"),(m,close)=>{setProg(t.id,t.steps.map((_,i)=>i));try{localStorage.setItem("pf2-last-completed-trail",JSON.stringify({id:t.id,at:Date.now(),source:"already-done"}))}catch(e){}close();v623ShowCompletion(t);});
+}
+function v623ShowCompletion(t){
+  document.getElementById('v623Complete')?.remove();const n=v68NextBestTrail(t.id);const route=v68PreferredRoute(t.id);const routeName=n?.route?.title||route?.title||"Your route";
+  const next=n?`<div class="v623-next"><small>Ranger Randy recommends next</small><b>${esc(n.t.title)}</b><p>${esc(n.reason||n.t.tagline||"")}</p></div>`:`<div class="v623-next"><small>Route complete</small><b>You’ve reached the end of this route.</b><p>Explore the park when you’re ready to choose another destination.</p></div>`;
+  document.body.insertAdjacentHTML('beforeend',`<div class="v623-complete" id="v623Complete" role="dialog" aria-modal="true" aria-labelledby="v623CompleteTitle"><section class="v623-complete-card"><div class="v623-complete-randy">${rangerRandy("hero",false)}</div><div class="eyebrow">🏕 Checkpoint reached</div><h2 id="v623CompleteTitle">${esc(t.title)} complete</h2><p>Randy moved your marker forward on <b>${esc(routeName)}</b>. Your progress is saved.</p>${next}<div class="v623-complete-actions">${n?`<a class="v623-next-btn" href="#/t/${esc(n.t.id)}">Keep hiking →</a>`:`<a class="v623-next-btn" href="#/explore">Explore another trail →</a>`}<a class="v623-camp-btn" href="#/">Return to Camp</a></div></section></div>`);
+  const c=document.getElementById('v623Complete');requestAnimationFrame(()=>c.querySelector('a')?.focus());c.addEventListener('keydown',e=>{if(e.key==='Escape'){location.hash='#/';c.remove()}});
+}
+function v623EnhanceTrail(id){
+  const t=getTut(id);if(!t)return;const prog=getProg(id),allDone=prog.length>=t.steps.length;
+  const before=app.querySelector('.before')||app.querySelector('.steps');if(before&&!app.querySelector('.v623-catchup'))before.insertAdjacentHTML('beforebegin',`<div class="v623-catchup"><div><b>Already completed this in real life?</b><small>You can catch PathFinder up without walking through steps you’ve already done.</small></div><button type="button" ${allDone?'disabled aria-disabled="true"':''}>${allDone?'Trail already complete':'I already did this ✓'}</button></div>`);
+  app.querySelector('.v623-catchup button:not([disabled])')?.addEventListener('click',()=>v623AlreadyDone(t));
+  const guarded=new Set();
+  const guard=(el,i)=>{if(!el||guarded.has(el)||!v623IsConsequential(t,t.steps[i]))return;guarded.add(el);el.addEventListener('click',e=>{if(el.dataset.v623Proceed==='1'){delete el.dataset.v623Proceed;return}if(getProg(id).includes(i))return;e.preventDefault();e.stopImmediatePropagation();v623SafetyModal(t,t.steps[i],i,()=>{el.dataset.v623Proceed='1';el.click()})},true)};
+  app.querySelectorAll('.walk-next').forEach(el=>guard(el,+el.dataset.walk));
+  app.querySelectorAll('.stepcheck').forEach(el=>guard(el,+el.dataset.i));
+  const mobile=app.querySelector('.v614-mobile-complete');if(mobile){mobile.addEventListener('click',e=>{const i=+mobile.dataset.i;if(mobile.dataset.v623Proceed==='1'){delete mobile.dataset.v623Proceed;return}if(!Number.isFinite(i)||getProg(id).includes(i)||!v623IsConsequential(t,t.steps[i]))return;e.preventDefault();e.stopImmediatePropagation();v623SafetyModal(t,t.steps[i],i,()=>{mobile.dataset.v623Proceed='1';mobile.click()})},true)}
+  const watchCompletion=e=>{const btn=e.target.closest('.walk-next,.stepcheck,.v614-mobile-complete');if(!btn)return;setTimeout(()=>{if(getProg(id).length>=t.steps.length&&!document.getElementById('v623Complete'))v623ShowCompletion(t)},220)};app.addEventListener('click',watchCompletion);
+}
+const v623_renderTutorial=renderTutorial;renderTutorial=function(id,focusStep){v623_renderTutorial(id,focusStep);v623EnhanceTrail(id)};
 
 
 /* ---------- router ---------- */
