@@ -1361,6 +1361,13 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 @media(prefers-reduced-motion:reduce){.v623-dialog,.v623-complete-card{animation:none!important;transition:none!important}}
 @media(orientation:landscape) and (max-height:500px){.v623-dialog,.v623-complete-card{max-height:94vh;overflow:auto}.guide-scene{min-height:300px!important}}
 
+
+/* ---------- Version 6.25: tap reliability ---------- */
+a[href^="#"],button,[role="button"]{
+  -webkit-tap-highlight-color:rgba(30,86,49,.12);
+}
+button,[role="button"],a[href^="#"]{touch-action:manipulation}
+
 </style>
 </head>
 <body>
@@ -9584,6 +9591,88 @@ function v623EnhanceTrail(id){
 const v623_renderTutorial=renderTutorial;renderTutorial=function(id,focusStep){v623_renderTutorial(id,focusStep);v623EnhanceTrail(id)};
 
 
+
+/* ---------- Version 6.25: global internal navigation reliability ---------- */
+(function(){
+  function pf25Navigate(href){
+    if(!href || href.charAt(0)!=="#") return false;
+    if(location.hash===href){
+      // Hashchange does not fire when navigating to the same hash.
+      // Route it explicitly so dead-looking taps still work.
+      const h=href||"#/";
+      let m;
+      if(h==="#"||h==="#/"||h==="#/today"){ renderHome(); return true; }
+      if(h==="#/explore"){ renderLegacyExplore(); return true; }
+      if(h==="#/journey"){ if(typeof renderJourney==="function") renderJourney(); else renderHome(); return true; }
+      if(h==="#/passport"){ renderPassport(); return true; }
+      if(h==="#/profile"){ renderProfile(); return true; }
+      if(h==="#/changes"){ renderChanges(); return true; }
+      if((m=h.match(/^#\/p\/(.+)$/))){ renderPath(decodeURIComponent(m[1])); return true; }
+      if((m=h.match(/^#\/t\/([^/]+)(?:\/s(\d+))?$/))){
+        renderTutorial(decodeURIComponent(m[1]), m[2]!=null?Number(m[2]):undefined);
+        return true;
+      }
+      route();
+      return true;
+    }
+    location.hash=href;
+    return true;
+  }
+
+  document.addEventListener("click",function(e){
+    const el=e.target.closest('a[href^="#"],button[data-href^="#"],[role="button"][data-href^="#"]');
+    if(!el) return;
+    const href=el.getAttribute("href")||el.getAttribute("data-href");
+    if(!href || href==="#" || href==="javascript:void(0)") return;
+    e.preventDefault();
+    e.stopPropagation();
+    pf25Navigate(href);
+  },true);
+
+  // Make Enter/Space activate role=button navigation controls as well.
+  document.addEventListener("keydown",function(e){
+    if(e.key!=="Enter" && e.key!==" ") return;
+    const el=e.target.closest('[role="button"][data-href^="#"]');
+    if(!el) return;
+    e.preventDefault();
+    pf25Navigate(el.getAttribute("data-href"));
+  },true);
+
+  window.pf25Navigate=pf25Navigate;
+})();
+
+
+
+/* ---------- Version 6.25: upgrade rendered action controls ---------- */
+function pf25EnhanceNavigationControls(){
+  // Any button inside an element with a single obvious internal destination inherits it.
+  app.querySelectorAll("button").forEach(btn=>{
+    const label=(btn.textContent||"").trim().toLowerCase();
+    if(!label) return;
+
+    // Continue/Start/Open buttons: if the button already has an onclick, leave it.
+    // If it has a data-target/data-route value, normalize it to data-href.
+    const direct=btn.getAttribute("data-target")||btn.getAttribute("data-route")||btn.dataset?.href;
+    if(direct && String(direct).startsWith("#")) btn.setAttribute("data-href",direct);
+
+    // Camp "Continue to Your Next Stop" fallback.
+    if(label.includes("continue to your next stop") && !btn.getAttribute("data-href")){
+      const card=btn.closest(".v615-camp-focus,.v6-panel,.v5-return-card,.resume-card,.finish");
+      const a=card?.querySelector('a[href^="#/t/"],a[href^="#/p/"]');
+      if(a) btn.setAttribute("data-href",a.getAttribute("href"));
+    }
+
+    // Generic visible action buttons sitting next to a single internal route link.
+    if(!btn.getAttribute("data-href") && /(continue|start|open|resume|keep hiking|next stop)/i.test(btn.textContent||"")){
+      const scope=btn.closest("section,article,.card,.v6-panel,.v5-card,.finish,.resume-card,.guided-focus,.v621-primary")||btn.parentElement;
+      const links=[...(scope?.querySelectorAll?.('a[href^="#/"]')||[])];
+      const uniq=[...new Set(links.map(a=>a.getAttribute("href")).filter(Boolean))];
+      if(uniq.length===1) btn.setAttribute("data-href",uniq[0]);
+    }
+  });
+}
+
+
 /* ---------- router ---------- */
 function route(){
   ensureRanger();
@@ -9623,6 +9712,16 @@ route();
     sb.hidden=false;
   }
 })();
+
+
+/* ---------- Version 6.25: run nav enhancement after every render ---------- */
+const pf25_route_base = route;
+route = function(){
+  const r = pf25_route_base.apply(this, arguments);
+  requestAnimationFrame(()=>{ try{ pf25EnhanceNavigationControls(); }catch(e){} });
+  return r;
+};
+
 </script>
 </body>
 </html>
