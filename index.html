@@ -1355,33 +1355,6 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 @media(prefers-reduced-motion:reduce){.v623-dialog,.v623-complete-card{animation:none!important;transition:none!important}}
 @media(orientation:landscape) and (max-height:500px){.v623-dialog,.v623-complete-card{max-height:94vh;overflow:auto}.guide-scene{min-height:300px!important}}
 
-
-/* ---------- Version 6.27: reliable internal navigation ---------- */
-.pitem-wrap,
-.v615-camp-focus,
-.v6-panel,
-.v5-card,
-.finish,
-.card,
-.pathcard{
-  position:relative;
-  z-index:5;
-}
-a.pitem-card,
-a.v615-primary,
-a[href^="#/"],
-button[data-href^="#/"]{
-  position:relative;
-  z-index:10;
-  pointer-events:auto !important;
-  cursor:pointer;
-  touch-action:manipulation;
-  -webkit-tap-highlight-color:rgba(30,86,49,.14);
-}
-a.pitem-card{
-  display:block;
-}
-
 </style>
 </head>
 <body>
@@ -8001,11 +7974,29 @@ function stepView(s,plat,dual){
   const img=shotBase?`img/${shotBase}-${plat}.png`:s.img||null;
   return {body,url,img};
 }
+function normalizeIndexList(v){
+  let a=[];
+  if(Array.isArray(v))a=v;
+  else if(v&&typeof v==="object"){
+    if(Array.isArray(v.done))a=v.done;
+    else if(Array.isArray(v.completed))a=v.completed;
+    else a=Object.keys(v).filter(k=>v[k]).map(Number);
+  }
+  return [...new Set(a.map(Number).filter(n=>Number.isInteger(n)&&n>=0))].sort((a,b)=>a-b);
+}
 function getProg(id){
-  try{return JSON.parse(localStorage.getItem(progKey(id))||"[]")}catch(e){return[]}
+  try{
+    const raw=JSON.parse(localStorage.getItem(progKey(id))||"[]");
+    const clean=normalizeIndexList(raw);
+    /* Self-heal legacy/corrupt progress so future reads are safe. */
+    if(!Array.isArray(raw)||JSON.stringify(raw)!==JSON.stringify(clean)){
+      localStorage.setItem(progKey(id),JSON.stringify(clean));
+    }
+    return clean;
+  }catch(e){return[]}
 }
 function setProg(id,arr){
-  try{localStorage.setItem(progKey(id),JSON.stringify(arr))}catch(e){}
+  try{localStorage.setItem(progKey(id),JSON.stringify(normalizeIndexList(arr)))}catch(e){}
 }
 
 /* =========================================================
@@ -8212,7 +8203,16 @@ const PROFILE_OPTIONS={
   accounts:["401(k) / 403(b)","Roth IRA","Traditional IRA","Taxable brokerage","HSA","529","Emergency fund","Cash management account"],
   goals:["Start investing","Build emergency savings","Save for retirement","Save for college","Reduce taxes","Move an old 401(k)","Switch brokerages","Protect my family","Create retirement income"]
 };
-function getProfile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"null")||{brokerage:[],life:[],accounts:[],goals:[]}}catch(e){return {brokerage:[],life:[],accounts:[],goals:[]}}}
+function getProfile(){
+  const empty={brokerage:[],life:[],accounts:[],goals:[]};
+  try{
+    const raw=JSON.parse(localStorage.getItem(PROFILE_KEY)||"null");
+    if(!raw||typeof raw!=="object"||Array.isArray(raw))return empty;
+    const clean={};
+    for(const k of Object.keys(empty))clean[k]=Array.isArray(raw[k])?raw[k].filter(x=>typeof x==="string"):[];
+    return clean;
+  }catch(e){return empty}
+}
 function setProfile(p){try{localStorage.setItem(PROFILE_KEY,JSON.stringify(p))}catch(e){}}
 function profileReady(){const p=getProfile();return Object.values(p).some(a=>a&&a.length)}
 const RECOMMEND_RULES={
@@ -8636,7 +8636,7 @@ function renderTutorial(id,focusStep){
 
   if(t.before && t.before.length){
     let ready=[];
-    try{ready=JSON.parse(localStorage.getItem("pf-ready-"+id)||"[]")}catch(e){}
+    try{ready=normalizeIndexList(JSON.parse(localStorage.getItem("pf-ready-"+id)||"[]"))}catch(e){}
     html+=`<div class="before" data-ready-guide="${esc(id)}"><h2>Before you start, have ready:</h2><ul>`;
     t.before.forEach((b,i)=>{
       const checked=ready.includes(i);
@@ -8696,7 +8696,7 @@ function renderTutorial(id,focusStep){
   html+=`</div>`;
 
   if(immersive){
-    const activeIdx=Array.from({length:total},(_,n)=>n).find(n=>!done.includes(n));
+    const activeIdx=Array.from({length:total},(_,n)=>n).find(n=>!prog.includes(n));
     html+=`<div class="v614-mobile-action"><button type="button" class="v614-mobile-complete" data-i="${activeIdx===undefined?total-1:activeIdx}">${activeIdx===undefined?"Trail complete":"Complete & Continue"}</button><button type="button" class="v614-mobile-pause">Pause</button></div>`;
   }
 
@@ -8759,7 +8759,7 @@ function renderTutorial(id,focusStep){
     btn.addEventListener("click",()=>{
       const i=+btn.dataset.readyI;
       let ready=[];
-      try{ready=JSON.parse(localStorage.getItem("pf-ready-"+id)||"[]")}catch(e){}
+      try{ready=normalizeIndexList(JSON.parse(localStorage.getItem("pf-ready-"+id)||"[]"))}catch(e){}
       if(ready.includes(i)) ready=ready.filter(x=>x!==i); else ready.push(i);
       ready.sort((a,b)=>a-b);
       localStorage.setItem("pf-ready-"+id,JSON.stringify(ready));
@@ -8771,7 +8771,7 @@ function renderTutorial(id,focusStep){
 
   // Trail Confidence: save a tiny per-step signal so users can acknowledge whether the screenshot still matches.
   let confidence={};
-  try{confidence=JSON.parse(localStorage.getItem("pf-confidence-"+id)||"{}")||{}}catch(e){}
+  try{const c=JSON.parse(localStorage.getItem("pf-confidence-"+id)||"{}");confidence=(c&&typeof c==="object"&&!Array.isArray(c))?c:{}}catch(e){}
   app.querySelectorAll(".trail-confidence").forEach(box=>{
     const i=+box.dataset.confidenceStep, val=confidence[i];
     if(val){box.querySelectorAll(".tc-btn").forEach(b=>b.classList.toggle("active",b.dataset.v===val));box.querySelector(".tc-help")?.classList.toggle("show",val==="different")}
@@ -9090,7 +9090,7 @@ function renderPath(id){
         ${isHere?'<div class="youhere">You are here</div>':""}
         <span class="pbox" aria-hidden="true">&#9744;</span>
         ${clickable&&!agnostic
-          ?`<a class="pitem-card" href="#/t/${t.id}" data-tutorial-id="${t.id}">${brokTag}${inner}</a>`
+          ?`<a class="pitem-card" href="#/t/${t.id}">${brokTag}${inner}</a>`
           :`<div class="pitem-card${agnostic?" agn":""}">${brokTag}${inner}</div>`}
         ${override}
       </div>
@@ -9101,14 +9101,6 @@ function renderPath(id){
   html+=`${th?`<div class="trailend"><div class="tflag">⚑</div><p>${esc(th.outro)}</p></div>`:""}</div></main>`;
   app.innerHTML=html;
   window.scrollTo(0,0);
-
-  // v6.27: direct fallback for every guide card on a route page.
-  app.querySelectorAll('a.pitem-card[data-tutorial-id]').forEach(card=>{
-    card.addEventListener('click',e=>{
-      e.preventDefault();
-      pfNavigate('#/t/'+encodeURIComponent(card.dataset.tutorialId));
-    });
-  });
 
   // path-level brokerage toggle
   app.querySelectorAll(".pbbtn,[data-pathbrok].ssbtn").forEach(btn=>{
@@ -9375,13 +9367,6 @@ function renderV5Home(){
     <nav class="v615-secondary-nav" aria-label="Other destinations"><a href="#/journey">View my Journey</a><a href="#/passport">Passport</a><a href="#/explore">Explore the Park</a></nav>
   </main>`;
   window.scrollTo(0,0);
-  // v6.27: direct fallback for Camp's primary next-step CTA.
-  app.querySelectorAll('a.v615-primary[href^="#/"]').forEach(a=>{
-    a.addEventListener('click',e=>{
-      e.preventDefault();
-      pfNavigate(a.getAttribute('href'));
-    });
-  });
 }
 function renderHome(filter=""){renderV5Home()}
 
@@ -9775,43 +9760,21 @@ function v623EnhanceTrail(id){
 const v623_renderTutorial=renderTutorial;renderTutorial=function(id,focusStep){v623_renderTutorial(id,focusStep);v623EnhanceTrail(id)};
 
 
-
-/* ---------- Version 6.27: deterministic internal navigation ---------- */
-function pfNavigate(href){
-  if(!href || !String(href).startsWith("#/")) return false;
-
-  /* pushState updates the visible route without relying on Safari's
-     sometimes-finicky hashchange dispatch. We then render immediately. */
-  try{
-    if(location.hash !== href) history.pushState({pfRoute:true},"",href);
-  }catch(e){
-    location.hash = href;
-  }
-
-  if(typeof route === "function"){
-    route();
-    return true;
-  }
-  return false;
+/* ---------- verified internal navigation ---------- */
+function pfInternalNavigate(href){
+  if(!href||!String(href).startsWith("#/"))return false;
+  if(location.hash===href){ route(); return true; }
+  location.hash=href;
+  return true;
 }
-
-/* Catch every PathFinder internal link in one place.
-   Bubble phase is intentional so any link-specific cleanup handlers run first. */
-document.addEventListener("click",function(e){
-  if(e.defaultPrevented) return;
-  const a=e.target && e.target.closest ? e.target.closest('a[href^="#/"]') : null;
-  if(!a) return;
+/* Normal anchors already work through hashchange. This only handles the same-route
+   case where browsers correctly do not emit a second hashchange event. */
+document.addEventListener("click",e=>{
+  const a=e.target&&e.target.closest?e.target.closest('a[href^="#/"]'):null;
+  if(!a)return;
   const href=a.getAttribute("href");
-  if(!href) return;
-  e.preventDefault();
-  pfNavigate(href);
-},false);
-
-/* Browser Back/Forward when routes were changed with pushState. */
-window.addEventListener("popstate",function(){
-  if(typeof route==="function") route();
+  if(href&&location.hash===href){e.preventDefault();pfInternalNavigate(href)}
 });
-
 
 /* ---------- router ---------- */
 function route(){
