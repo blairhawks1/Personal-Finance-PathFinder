@@ -1355,6 +1355,97 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 @media(prefers-reduced-motion:reduce){.v623-dialog,.v623-complete-card{animation:none!important;transition:none!important}}
 @media(orientation:landscape) and (max-height:500px){.v623-dialog,.v623-complete-card{max-height:94vh;overflow:auto}.guide-scene{min-height:300px!important}}
 
+
+/* ---------- Version 6.28: decorative-background containment ----------
+   Decorative trail/landscape art must never paint over readable content.
+   Applies globally to guide heroes and other illustrated panels.
+--------------------------------------------------------------------- */
+
+/* Establish isolated stacking contexts for illustrated surfaces. */
+.v6-hero,
+.v6-guide-hero,
+.v6-tutorial-hero,
+.tutorial-hero,
+.guide-hero,
+[class*="hero"],
+.v615-camp-hero,
+.v615-camp-focus,
+.path-hero{
+  isolation:isolate;
+}
+
+/* Keep decorative pseudo-elements behind actual content. */
+.v6-hero::before,.v6-hero::after,
+.v6-guide-hero::before,.v6-guide-hero::after,
+.v6-tutorial-hero::before,.v6-tutorial-hero::after,
+.tutorial-hero::before,.tutorial-hero::after,
+.guide-hero::before,.guide-hero::after,
+[class*="hero"]::before,[class*="hero"]::after,
+.v615-camp-hero::before,.v615-camp-hero::after,
+.path-hero::before,.path-hero::after{
+  z-index:-1 !important;
+  pointer-events:none !important;
+}
+
+/* Any direct content in an illustrated hero sits above background artwork. */
+.v6-hero > *,
+.v6-guide-hero > *,
+.v6-tutorial-hero > *,
+.tutorial-hero > *,
+.guide-hero > *,
+[class*="hero"] > *,
+.v615-camp-hero > *,
+.path-hero > *{
+  position:relative;
+  z-index:2;
+}
+
+/* Specifically protect the guide header's typography and controls from all
+   decorative landscape layers, including dynamically inserted scenery. */
+.v6-guide-head,
+.v6-guide-head *,
+.v6-guide-meta,
+.v6-guide-meta *,
+.v6-guide-mode,
+.v6-guide-mode *,
+.v6-guide-status,
+.v6-guide-status *,
+.tutorial-head,
+.tutorial-head *,
+.guide-head,
+.guide-head *{
+  position:relative;
+  z-index:20;
+}
+
+/* Scenery/art classes are always visual-only and stay below copy. */
+[class*="scenery"],
+[class*="landscape"],
+[class*="mountain"],
+[class*="ridge"],
+[class*="hills"],
+[class*="trail-bg"],
+[class*="hero-art"],
+[class*="decor"]{
+  z-index:0 !important;
+  pointer-events:none !important;
+}
+
+/* Prevent decorative SVG/canvas/image layers that are absolutely positioned
+   in heroes from escaping above text. Normal content images remain unchanged. */
+[class*="hero"] > svg[aria-hidden="true"],
+[class*="hero"] > img[aria-hidden="true"],
+[class*="hero"] > canvas,
+[class*="hero"] > .absolute-art{
+  z-index:0 !important;
+  pointer-events:none !important;
+}
+
+
+/* v6.29: do not let Safari scroll anchoring pull a newly opened guide
+   back toward the previous trail-card position. */
+#app{overflow-anchor:none}
+
 </style>
 </head>
 <body>
@@ -8569,6 +8660,18 @@ function v68RefreshNextBest(currentGuideId){
 }
 
 function renderTutorial(id,focusStep){
+  /* v6.29: every guide opens at its top.
+     Safari can preserve the previous route's scroll position, so reset both
+     immediately and once more after the new guide has painted. */
+  window.scrollTo(0,0);
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
+  requestAnimationFrame(()=>{
+    window.scrollTo(0,0);
+    document.documentElement.scrollTop=0;
+    document.body.scrollTop=0;
+  });
+
   const t=TUTORIALS.find(x=>x.id===id);
   if(!t||t.status!=="ready"){location.hash="#/";return}
   const prog=getProg(id);
