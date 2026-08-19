@@ -1358,6 +1358,16 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 :where(a,button,input,summary,[role="button"],[role="checkbox"]):focus-visible{outline:3px solid #176c46!important;outline-offset:3px!important}
 .step,.finish,[id]{scroll-margin-top:150px}.stepcheck,.before-check,.tc-btn,.v614-pause,.walk-next,.index-info-link,.v622-ask{touch-action:manipulation}
 .stepcheck{min-width:44px;min-height:44px}.before-check{min-height:44px}.tc-btn{min-height:44px}.trail-mode-exit,.trail-detour-back,.trail-mode-close-secondary{min-height:44px}
+
+/* ---------- Version 6.24: one clear primary action ---------- */
+.v621-finder.compact{box-shadow:none;background:#fbfcfa;border-style:dashed}
+.v621-finder.compact .v621-submit{background:#fff;color:var(--ink);border:1.5px solid var(--ink);box-shadow:none}
+.v621-finder.compact .v621-submit:hover{background:var(--panel);filter:none}
+.v6-journey-head .v6-journey-actions a.primary{background:#fff;color:var(--ink);border-color:var(--line);box-shadow:none}
+.trail-exit-actions .to-route{background:#fff;color:var(--ink);border-color:var(--line)}
+.trail-exit-actions .keep-hiking{border-color:transparent;color:var(--muted);text-decoration:underline}
+.step.current .v622-ask,.step.current .v614-pause{box-shadow:none}
+@media(max-width:700px){.v621-finder.compact{padding:16px}.trail-exit-actions .keep-hiking{min-height:44px}}
 @media(max-width:700px){body.trail-mode{padding-bottom:calc(84px + env(safe-area-inset-bottom))}.trail-mode-bar{padding-top:calc(8px + env(safe-area-inset-top));min-height:calc(62px + env(safe-area-inset-top))}body.trail-mode .trail-sign{top:calc(62px + env(safe-area-inset-top))}.v623-catchup{align-items:flex-start;flex-direction:column}.v623-catchup button{width:100%}.v623-modal{padding:0}.v623-dialog{border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}.v623-actions{grid-template-columns:1fr}.v623-complete{padding:10px}.v623-complete-card{padding:21px 16px calc(18px + env(safe-area-inset-bottom));border-radius:23px}.v623-complete-actions{grid-template-columns:1fr}.v623-complete-card h2{font-size:27px}}
 @media(prefers-reduced-motion:reduce){.v623-dialog,.v623-complete-card{animation:none!important;transition:none!important}}
 @media(orientation:landscape) and (max-height:500px){.v623-dialog,.v623-complete-card{max-height:94vh;overflow:auto}.guide-scene{min-height:300px!important}}
@@ -9803,8 +9813,8 @@ function v621BindFinder(root){
 }
 function v621AttachHomeFinder(){
   if(app.querySelector("[data-v621-finder]"))return;
-  const marketing=app.querySelector(".pf65-how-section");
-  if(marketing){marketing.insertAdjacentHTML("afterend",v621FinderHTML(false));v621BindFinder(app.querySelector("[data-v621-finder]"));return}
+  const marketing=app.querySelector(".pf65-start-section");
+  if(marketing){marketing.insertAdjacentHTML("afterend",v621FinderHTML(true));v621BindFinder(app.querySelector("[data-v621-finder]"));return}
   const camp=app.querySelector(".v615-camp-focus");
   if(camp){camp.insertAdjacentHTML("afterend",v621FinderHTML(true));v621BindFinder(app.querySelector("[data-v621-finder]"))}
 }
