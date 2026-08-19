@@ -1250,6 +1250,7 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 .v615-camp-focus h2{font-size:clamp(25px,4vw,36px);color:var(--ink);line-height:1.15;margin-top:5px}
 .v615-camp-focus .current-landmark{display:inline-flex;align-items:center;gap:7px;margin-top:9px;background:var(--hi-soft);border:1px solid var(--hi);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:850;color:#715b00}
 .v615-camp-focus p{color:var(--muted);margin-top:8px;max-width:660px}
+.v615-resume-details{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.v615-resume-details span{background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:5px 9px;color:var(--ink-soft);font-size:10.5px;font-weight:800}.v615-resume-details .saved{background:var(--done-soft);border-color:#bcd9c7;color:var(--done)}
 .v615-primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;margin-top:18px;min-height:52px;padding:0 20px;background:var(--primary-cta);color:#fff;border-radius:13px;text-decoration:none;font-weight:900;box-shadow:0 5px 0 #174327}
 .v615-primary:hover{transform:translateY(-1px)}
 .v615-camp-randy{margin-top:15px;display:flex;align-items:center;gap:10px;padding:12px 14px;background:#f6faf6;border:1px solid var(--line);border-radius:14px;font-size:13px;color:var(--muted)}
@@ -8336,9 +8337,19 @@ function recommendedPaths(){
   }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,6);
 }
 function resumeTarget(){
+  const build=(t,preferred)=>{
+    if(!t||t.status!=="ready"||!t.steps.length)return null;
+    const prog=getProg(t.id);if(prog.length>=t.steps.length)return null;
+    const firstOpen=Array.from({length:t.steps.length},(_,i)=>i).find(i=>!prog.includes(i));
+    const step=Number.isInteger(preferred)&&preferred>=0&&preferred<t.steps.length&&!prog.includes(preferred)?preferred:(firstOpen??0);
+    const route=v68PreferredRoute(t.id);
+    return {kind:"resume",title:t.title,stepTitle:t.steps[step]?.title||`Step ${step+1}`,step:step+1,total:t.steps.length,completed:prog.length,routeTitle:route?.title||"Your route",text:`Step ${step+1} of ${t.steps.length} is ready. Your ${prog.length} completed ${prog.length===1?"step":"steps"} are saved.`,href:`#/t/${t.id}/s${step}`};
+  };
+  let last=null;try{last=JSON.parse(localStorage.getItem("pf2-last-trail")||"null")}catch(e){}
+  if(last?.id){const saved=build(getTut(last.id),Number(last.step));if(saved)return saved}
   const inprog=TUTORIALS.find(t=>t.status==="ready"&&getProg(t.id).length>0&&getProg(t.id).length<t.steps.length);
-  if(inprog){const d=getProg(inprog.id).length;return {title:inprog.title,text:`Landmark ${Math.min(d+1,inprog.steps.length)} of ${inprog.steps.length} is waiting.`,href:`#/t/${inprog.id}/s${Math.min(d,inprog.steps.length-1)}`}}
-  const rec=recommendedPaths()[0]; if(rec)return {title:rec.path.title,text:"Ranger Randy’s recommended trail is ready to begin.",href:`#/p/${rec.path.id}`};
+  if(inprog){const saved=build(inprog);if(saved)return saved}
+  const rec=recommendedPaths()[0]; if(rec)return {kind:"recommendation",title:rec.path.title,text:"Ranger Randy’s recommended trail is ready to begin.",href:`#/p/${rec.path.id}`};
   return null;
 }
 function journeyDashboardHTML(){
@@ -8787,7 +8798,7 @@ function renderTutorial(id,focusStep){
                onerror="this.outerHTML='<div class=&quot;placeholder&quot;>Screenshot goes here<br><span class=&quot;fn&quot;>${esc(v.img)}</span></div>'">
           ${captureNote(v.img)}
         </figure>
-        <div class="trail-confidence" data-confidence-step="${i}"><div class="tc-q">Did this match what you saw?</div><div class="tc-actions"><button type="button" class="tc-btn" data-v="yes">✓ Yes, I’m on track</button><button type="button" class="tc-btn" data-v="different">⚠ Not exactly</button></div><div class="tc-help v614-help"><div class="v614-trouble-title"><span>${rangerRandy("avatar",false)}</span><div><b>Let’s get you unstuck.</b><br>Pick what looks different and Ranger Randy will suggest the safest next move.</div></div><div class="v614-trouble-actions"><button type="button" class="v614-trouble" data-help="missing">I can’t find the button</button><button type="button" class="v614-trouble" data-help="layout">My screen looks different</button><button type="button" class="v614-trouble" data-help="device">I’m on the other device</button><button type="button" class="v614-trouble" data-help="stop">I’m not comfortable continuing</button></div><div class="v614-trouble-answer" aria-live="polite"></div></div></div>`:""}
+        <div class="trail-confidence" data-confidence-step="${i}"><div class="tc-q">Did this match what you saw?</div><div class="tc-actions"><button type="button" class="tc-btn" data-v="yes">✓ Yes, I’m on track</button><button type="button" class="tc-btn" data-v="different">⚠ Not exactly</button></div><div class="tc-help v614-help"><div class="v614-trouble-title"><span>${rangerRandy("avatar",false)}</span><div><b>Let’s get you unstuck.</b><br>Pick the closest match. If money moved or an order was submitted, pause before doing anything else.</div></div><div class="v614-trouble-actions"><button type="button" class="v614-trouble" data-help="renamed">The button has a different name</button><button type="button" class="v614-trouble" data-help="missing">The button is missing</button><button type="button" class="v614-trouble" data-help="ahead">I’m already farther along</button><button type="button" class="v614-trouble" data-help="device">I’m using another device</button><button type="button" class="v614-trouble" data-help="warning">I received an error or warning</button><button type="button" class="v614-trouble" data-help="submitted">I accidentally submitted something</button></div><div class="v614-trouble-answer" aria-live="polite"></div></div></div>`:""}
         ${v.img?`<div class="v614-see"><b>What you should see</b>Look for the screen shown above and the labels called out in this step. The exact layout can vary slightly by device or brokerage update.</div>`:""}
         ${s.note?`
         <div class="callout ${s.note.type}">
@@ -8899,6 +8910,8 @@ function renderTutorial(id,focusStep){
     if(ahead)ahead.textContent=n>=total?"Trail complete":`${total-n} stops ahead`;
     if(saved){saved.textContent="✓ Progress saved";saved.setAttribute("aria-live","polite")}
   };
+  const rememberTrail=step=>{try{localStorage.setItem("pf2-last-trail",JSON.stringify({id,step,at:Date.now()}))}catch(e){}};
+  const clearRememberedTrail=()=>{try{const last=JSON.parse(localStorage.getItem("pf2-last-trail")||"null");if(last?.id===id)localStorage.removeItem("pf2-last-trail")}catch(e){}};
   const completeStepAndWalk=i=>{
     let p=getProg(id);
     if(!p.includes(i)){p.push(i);p.sort((a,b)=>a-b);setProg(id,p)}
@@ -8917,6 +8930,8 @@ function renderTutorial(id,focusStep){
     app.querySelector("#pfill").style.width=Math.round(p.length/total*100)+"%";
     syncTrailStatus(p.length);
     const newDone=p.length;
+    const nextOpen=Array.from({length:total},(_,n)=>n).find(n=>!p.includes(n));
+    if(nextOpen===undefined)clearRememberedTrail();else rememberTrail(nextOpen);
     const signCurrent=app.querySelector("#signCurrent"), signNext=app.querySelector("#signNext");
     if(signCurrent)signCurrent.textContent=newDone<total?(landmarks[newDone]||t.steps[newDone].title):"Trail complete";
     if(signNext)signNext.textContent=newDone+1<total?(landmarks[newDone+1]||t.steps[newDone+1].title):(newDone<total?"Summit":"Camp");
@@ -8952,6 +8967,7 @@ function renderTutorial(id,focusStep){
     syncTrailStatus(p.length);
     const firstOpen=Array.from({length:total},(_,n)=>n).find(n=>!p.includes(n));
     const current=firstOpen===undefined?total:firstOpen;
+    if(current<total)rememberTrail(current);else clearRememberedTrail();
     const signCurrent=app.querySelector("#signCurrent"), signNext=app.querySelector("#signNext");
     if(signCurrent)signCurrent.textContent=current<total?(landmarks[current]||t.steps[current].title):"Trail complete";
     if(signNext)signNext.textContent=current+1<total?(landmarks[current+1]||t.steps[current+1].title):(current<total?"Summit":"Camp");
@@ -8992,10 +9008,12 @@ function renderTutorial(id,focusStep){
     const ans=b.closest(".v614-help")?.querySelector(".v614-trouble-answer");
     if(!ans)return;
     const msgs={
-      missing:"Don’t guess. Re-read the button names in this step and look in menus with similar wording. If it still isn’t there, pause the trail and come back after checking the latest guide.",
-      layout:"That’s common after a site update. Match the goal and labels rather than exact spacing or colors. If the choices themselves are different, pause rather than selecting something uncertain.",
-      device:"Use the Website / App switch near the top of this trail when available. PathFinder will keep your step progress while the directions change for that device.",
-      stop:"Good call. Pause here. Your completed steps stay saved, and Camp will bring you back to this trail when you’re ready."
+      renamed:"Compare the goal of the button, the surrounding heading, and the next screen—not just the exact wording. Continue only if those signals all match this step. If the choices or account type differ, pause rather than guessing.",
+      missing:"First switch between Website and App directions if that option is available. Then check menus with the same goal as this step. If the control is still missing, pause here; do not choose a merely similar financial action.",
+      ahead:"Do not go backward just to recreate the screenshot. Find the first unfinished outcome in this guide, confirm that earlier actions really are complete, and continue from there. PathFinder will keep the steps you mark complete.",
+      device:"Use the Website / App switch near the top of this trail when available. Your PathFinder progress stays saved while the directions change. If your device is not covered, follow labels and outcomes rather than screen position.",
+      warning:"Stop before continuing. Read and save the exact warning, then verify the account, amount, tax treatment, and action. If the warning involves eligibility, taxes, a transfer, or unavailable funds, use the brokerage’s support rather than dismissing it.",
+      submitted:"Do not place an opposite transaction to undo it. Open Orders or Activity and check whether it is pending, filled, or cancelable. If money, an order, a transfer, or account ownership changed, contact the brokerage before taking another action."
     };
     ans.textContent=msgs[b.dataset.help]||"Pause here if anything feels uncertain.";
     ans.classList.add("show");
@@ -9501,17 +9519,18 @@ function renderV5Home(){
   const v=getV5();
   if(!v.complete)return renderMarketingHome();
   const state=v.state||{},rec=v5Recommendation(state),resume=resumeTarget(),path=rec.path,pst=pathStats(path),rows=v68RouteStops(path);
+  const isResume=resume?.kind==="resume";
   let currentIdx=rows.findIndex(x=>x.state!=="done");if(currentIdx<0)currentIdx=rows.length;
   const currentGuide=currentIdx<rows.length?rows[currentIdx].t:null;
   const currentProg=currentGuide?getProg(currentGuide.id):[],currentStep=currentGuide?Math.min(currentProg.length,currentGuide.steps.length-1):0;
-  const lead=resume?{title:resume.title,text:resume.text,href:resume.href,label:"Continue Your Trail"}:currentGuide?{title:currentGuide.title,text:currentGuide.tagline,href:`#/t/${currentGuide.id}/s${currentStep}`,label:"Continue to Your Next Stop"}:{title:path.title,text:"You completed every trail on this route.",href:"#/journey",label:"View Your Completed Route"};
-  const landmark=currentGuide?(currentGuide.steps[currentStep]?.title||`Stop ${currentStep+1}`):"Route complete";
+  const lead=resume?{title:resume.title,text:resume.text,href:resume.href,label:isResume?"Continue Where I Stopped":"Start My Recommended Route"}:currentGuide?{title:currentGuide.title,text:currentGuide.tagline,href:`#/t/${currentGuide.id}/s${currentStep}`,label:"Continue to Your Next Stop"}:{title:path.title,text:"You completed every trail on this route.",href:"#/journey",label:"View Your Completed Route"};
+  const landmark=isResume?resume.stepTitle:(currentGuide?(currentGuide.steps[currentStep]?.title||`Stop ${currentStep+1}`):"Route complete");
   const event=pfGetRandyEvent();
-  let randy=resume?`Welcome back. You were at “${landmark}.” Your progress is right where you left it.`:`This is the one thing I’d do next. You can explore anything else without changing this route.`;
+  let randy=isResume?`Welcome back. You were at “${landmark}.” Your completed steps are saved, so you can continue without retracing them.`:`This is the one thing I’d do next. You can explore anything else without changing this route.`;
   if(event?.type==="step_complete")randy=`Nice work on “${event.data?.step||"your last stop"}.” The next unfinished stop is ready whenever you are.`;
   app.innerHTML=`<main class="camp-shell v615-camp">
-    <section class="camp-hero"><div class="camp-hero-copy"><div class="camp-eyebrow">PathFinder Camp</div><h1>Your home base.</h1><p>Camp remembers where you are and keeps one clear next action in front of you.</p></div><div class="camp-randy">${rangerRandy("hero",false)}</div></section>
-    <section class="v615-camp-focus"><div class="eyebrow">Your next step</div><h2>${esc(lead.title)}</h2><span class="current-landmark">📍 ${esc(landmark)}</span><p>${esc(lead.text)}</p><a class="v615-primary" href="${lead.href}">${esc(lead.label)} <span>→</span></a><div class="v615-camp-randy"><span>${rangerRandy("avatar",false)}</span><div><b>Ranger Randy:</b> ${esc(randy)}</div></div></section>
+    <section class="camp-hero"><div class="camp-hero-copy"><div class="camp-eyebrow">PathFinder Camp</div><h1>${isResume?"Welcome back—your place is saved.":"Your home base."}</h1><p>${isResume?"Continue at the exact unfinished step, or explore without changing your saved place.":"Camp remembers where you are and keeps one clear next action in front of you."}</p></div><div class="camp-randy">${rangerRandy("hero",false)}</div></section>
+    <section class="v615-camp-focus"><div class="eyebrow">${isResume?"Continue where you stopped":"Your next step"}</div><h2>${esc(lead.title)}</h2><span class="current-landmark">📍 ${esc(landmark)}</span><p>${esc(lead.text)}</p>${isResume?`<div class="v615-resume-details"><span>${esc(resume.routeTitle)}</span><span>Step ${resume.step} of ${resume.total}</span><span>${resume.completed} complete</span><span class="saved">✓ Progress saved</span></div>`:""}<a class="v615-primary" href="${lead.href}">${esc(lead.label)} <span>→</span></a><div class="v615-camp-randy"><span>${rangerRandy("avatar",false)}</span><div><b>Ranger Randy:</b> ${esc(randy)}</div></div></section>
     <section class="v615-you-are-here"><div class="v615-you-are-here-head"><div><div class="camp-eyebrow" style="color:var(--done)">Your route</div><h3>${esc(path.title)}</h3></div><span>${pst.done}/${pst.total} trails complete</span></div>${v68RouteOverviewHTML(path)}</section>
     <nav class="v615-secondary-nav" aria-label="Other destinations"><a href="#/journey">View my Journey</a><a href="#/passport">Passport</a><a href="#/explore">Explore the Park</a></nav>
   </main>`;
