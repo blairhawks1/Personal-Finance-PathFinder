@@ -1368,6 +1368,13 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 .trail-exit-actions .keep-hiking{border-color:transparent;color:var(--muted);text-decoration:underline}
 .step.current .v622-ask,.step.current .v614-pause{box-shadow:none}
 @media(max-width:700px){.v621-finder.compact{padding:16px}.trail-exit-actions .keep-hiking{min-height:44px}}
+
+/* ---------- Version 6.25: mobile navigation + accessibility ---------- */
+.pf-skip-link{position:fixed;z-index:900;left:12px;top:10px;transform:translateY(-150%);background:var(--ink);color:#fff;padding:10px 14px;border-radius:9px;font-weight:850;text-decoration:none;transition:transform .15s}
+.pf-skip-link:focus{transform:none}
+.pf-route-status{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+html{scroll-padding-top:150px}button,a,input,summary{-webkit-tap-highlight-color:rgba(30,86,49,.16)}
+@media(max-width:700px){input,select,textarea{font-size:16px!important}.v6-bottom-nav a{min-height:56px}.v5-back,.trail-help-close,.broker-undecided{min-height:44px}.v623-dialog,.v622-explain-card,.trail-help-card,.glossary-card,.trail-exit-dialog{overscroll-behavior:contain}}
 @media(max-width:700px){body.trail-mode{padding-bottom:calc(84px + env(safe-area-inset-bottom))}.trail-mode-bar{padding-top:calc(8px + env(safe-area-inset-top));min-height:calc(62px + env(safe-area-inset-top))}body.trail-mode .trail-sign{top:calc(62px + env(safe-area-inset-top))}.v623-catchup{align-items:flex-start;flex-direction:column}.v623-catchup button{width:100%}.v623-modal{padding:0}.v623-dialog{border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}.v623-actions{grid-template-columns:1fr}.v623-complete{padding:10px}.v623-complete-card{padding:21px 16px calc(18px + env(safe-area-inset-bottom));border-radius:23px}.v623-complete-actions{grid-template-columns:1fr}.v623-complete-card h2{font-size:27px}}
 @media(prefers-reduced-motion:reduce){.v623-dialog,.v623-complete-card{animation:none!important;transition:none!important}}
 @media(orientation:landscape) and (max-height:500px){.v623-dialog,.v623-complete-card{max-height:94vh;overflow:auto}.guide-scene{min-height:300px!important}}
@@ -1466,6 +1473,7 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 </style>
 </head>
 <body>
+<a class="pf-skip-link" href="#app">Skip to main content</a>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
 <defs>
 <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CDE9F5"/><stop offset="1" stop-color="#EAF6FB"/></linearGradient>
@@ -1613,7 +1621,8 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 </header>
 
 <div class="staleban" id="staleban" hidden></div>
-<div id="app"></div>
+<div id="pfRouteStatus" class="pf-route-status" role="status" aria-live="polite" aria-atomic="true"></div>
+<div id="app" tabindex="-1"></div>
 <nav class="v6-bottom-nav" aria-label="Primary">
   <a data-tab="today" href="#/"><span class="navicon">🏕️</span><span>Today</span></a>
   <a data-tab="explore" href="#/explore"><span class="navicon">🗺️</span><span>Explore</span></a>
@@ -9958,6 +9967,34 @@ document.addEventListener("click",e=>{
   if(href&&location.hash===href){e.preventDefault();pfInternalNavigate(href)}
 });
 
+/* Shared keyboard behavior for every modal/sheet, including older renderers. */
+let pf625DialogTrigger=null;
+function pf625VisibleDialog(){
+  return [...document.querySelectorAll('[role="dialog"][aria-modal="true"]')].find(d=>{const root=d.parentElement;return root&&!root.hidden&&getComputedStyle(root).display!=="none"});
+}
+function pf625ActivateDialog(dialog){
+  if(!dialog||dialog.dataset.pf625Active)return;dialog.dataset.pf625Active="1";
+  const root=dialog.parentElement;const trigger=pf625DialogTrigger;
+  const focusables=()=>[...dialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(x=>x.getClientRects().length);
+  const restore=()=>{if(trigger&&document.contains(trigger))requestAnimationFrame(()=>trigger.focus({preventScroll:true}))};
+  const watch=new MutationObserver(()=>{if(!document.contains(root)||root.hidden||getComputedStyle(root).display==="none"){watch.disconnect();restore()}});watch.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:["hidden","style","class"]});
+  root.addEventListener("keydown",e=>{const f=focusables();if(e.key==="Escape"){const close=root.querySelector('[aria-label^="Close"],.keep-hiking,.trail-help-close,.v622-gotit,.v623-secondary');if(close){e.preventDefault();close.click()}}else if(e.key==="Tab"&&f.length){const first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
+  if(!dialog.contains(document.activeElement))requestAnimationFrame(()=>focusables()[0]?.focus());
+}
+document.addEventListener("click",e=>{pf625DialogTrigger=e.target.closest?.('button,a,[role="button"]')||null;requestAnimationFrame(()=>pf625ActivateDialog(pf625VisibleDialog()))},true);
+new MutationObserver(()=>requestAnimationFrame(()=>pf625ActivateDialog(pf625VisibleDialog()))).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:["hidden"]});
+
+let pf625LastHash=null;
+function pf625AfterRoute(){
+  const main=app.querySelector("main")||app;const heading=main.querySelector("h1,h2");
+  if(main!==app&&!main.hasAttribute("tabindex"))main.setAttribute("tabindex","-1");
+  const label=(heading?.textContent||"Personal Finance PathFinder").replace(/\s+/g," ").trim();
+  document.title=`${label} | Personal Finance PathFinder`;
+  const status=document.getElementById("pfRouteStatus");if(status)status.textContent=`Page loaded: ${label}`;
+  if(pf625LastHash!==null&&pf625LastHash!==location.hash)app.focus({preventScroll:true});
+  pf625LastHash=location.hash;
+}
+
 /* ---------- router ---------- */
 function route(){
   ensureRanger();
@@ -9984,6 +10021,8 @@ function route(){
   if(h==="#/changes"){renderChanges();return}
   renderHome();
 }
+const pf625Route=route;
+route=function(){pf625Route();requestAnimationFrame(pf625AfterRoute)};
 window.addEventListener("hashchange",route);
 route();
 (function(){
