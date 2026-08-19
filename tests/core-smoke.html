@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PathFinder core smoke tests</title>
+<style>
+body{font:15px/1.45 system-ui,sans-serif;margin:0;padding:24px;background:#f4f7f1;color:#17351f}main{max-width:900px;margin:auto}button{min-height:44px;padding:0 16px;border:0;border-radius:10px;background:#1e5631;color:#fff;font-weight:800}#results{margin:16px 0;padding:16px;background:#fff;border:1px solid #ccd8ca;border-radius:12px}li{margin:6px 0}.pass{color:#17633a}.fail{color:#a32323;font-weight:700}iframe{display:block;width:390px;max-width:100%;height:844px;border:1px solid #9cad9b;border-radius:14px;background:#fff}
+</style>
+</head>
+<body><main><h1>PathFinder core smoke tests</h1><p>Runs against the adjacent <code>index.html</code> at a 390×844 mobile viewport. Saved PathFinder browser data is restored when the run finishes.</p><button id="run">Run tests</button><ol id="results"></ol><iframe id="site" title="PathFinder test viewport"></iframe></main>
+<script>
+const frame=document.getElementById('site'),results=document.getElementById('results'),wait=ms=>new Promise(r=>setTimeout(r,ms));
+function line(name,ok,detail=''){const li=document.createElement('li');li.className=ok?'pass':'fail';li.textContent=`${ok?'PASS':'FAIL'} — ${name}${detail?`: ${detail}`:''}`;results.appendChild(li);return ok}
+async function load(hash){return new Promise(resolve=>{frame.onload=()=>setTimeout(resolve,180);frame.src=`../index.html?smoke=${Date.now()}${hash}`})}
+async function hash(h){const w=frame.contentWindow;w.location.hash=h;await wait(420)}
+document.getElementById('run').onclick=async()=>{
+  results.innerHTML='';const saved={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);saved[k]=localStorage.getItem(k)}
+  try{
+    Object.keys(saved).filter(k=>k.startsWith('pf2-')).forEach(k=>localStorage.removeItem(k));
+    await load('#/');let d=frame.contentDocument,w=frame.contentWindow;
+    line('mobile page has no horizontal overflow',d.documentElement.scrollWidth<=d.documentElement.clientWidth+1,`${d.documentElement.scrollWidth}px / ${d.documentElement.clientWidth}px`);
+    line('new-user home has one clear start action',!!d.querySelector('.pf65-start-card a.primary'));
+    const input=d.querySelector('.v621-input'),submit=d.querySelector('.v621-submit');input.value='old 401k';submit.click();await wait(80);
+    line('Trail Finder returns a recommendation',!!d.querySelector('.v621-results.show .v621-primary'));
+    await hash('#/explore');d=frame.contentDocument;
+    line('Explore route renders and announces itself',!!d.querySelector('.explore-mode-banner')&&d.getElementById('pfRouteStatus').textContent.startsWith('Page loaded:'));
+    line('active navigation uses aria-current',d.querySelector('[data-tab="explore"]')?.getAttribute('aria-current')==='page');
+    const routeMain=d.querySelector('main');line('route change moves keyboard focus into main content',d.activeElement===d.getElementById('app')||d.activeElement===routeMain||routeMain?.contains(d.activeElement));
+    d.querySelector('[data-tab="explore"]')?.click();await wait(100);line('same-route navigation remains responsive',w.location.hash==='#/explore'&&!!d.querySelector('.explore-mode-banner'));
+    await hash('#/journey');w.history.back();await wait(250);line('browser Back restores the previous route',w.location.hash==='#/explore');
+    await hash('#/t/schwab-open-roth-ira/s0');d=frame.contentDocument;
+    line('guide exposes one primary completion action',!!d.querySelector('.step.current .walk-next'));
+    const ask=d.querySelector('.step.current .v622-ask');ask?.click();await wait(300);const dialog=d.querySelector('#v622Explain [role="dialog"][aria-modal="true"]');
+    line('guide help opens an accessible modal',!!dialog&&dialog.contains(d.activeElement));
+    dialog?.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));await wait(180);line('Escape closes the modal',!d.querySelector('#v622Explain'));
+  }catch(e){line('test runner completed',false,e.message)}finally{
+    Object.keys(localStorage).filter(k=>k.startsWith('pf2-')).forEach(k=>localStorage.removeItem(k));for(const [k,v] of Object.entries(saved))localStorage.setItem(k,v);
+  }
+};
+</script></body></html>
