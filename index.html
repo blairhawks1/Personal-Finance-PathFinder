@@ -217,6 +217,8 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 20px 80px}
   transition:border-color .15s, box-shadow .15s;
 }
 a.pitem-card:hover{border-color:var(--ink-soft);box-shadow:0 4px 16px rgba(24,58,38,.09)}
+.path-guide-pick{width:100%;font:inherit;text-align:left;cursor:pointer}
+.path-guide-pick:hover{border-color:var(--ink-soft);box-shadow:0 4px 16px rgba(24,58,38,.09)}
 .pitem-card h3{font-size:16px;font-weight:700;color:var(--ink);line-height:1.35;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .pitem-card p{font-size:13.5px;color:var(--muted);margin-top:4px}
 .pitem-card .pim{font-size:12.5px;color:var(--muted);margin-top:8px}
@@ -763,6 +765,7 @@ footer p+p{margin-top:8px}
 .guide-scene{position:relative;min-height:430px;margin:0 -20px 28px;padding:56px clamp(22px,6vw,76px) 50px;overflow:hidden;color:#fff;background:linear-gradient(180deg,#72a5bd 0 52%,#66835b 52% 70%,#42683e 70%);border-radius:0 0 34px 34px;box-shadow:0 18px 50px rgba(26,57,38,.16)}
 .guide-scene::before{content:"";position:absolute;left:-4%;right:-4%;bottom:25%;height:42%;background:linear-gradient(145deg,transparent 0 20%,#7f9c92 20% 40%,transparent 40%),linear-gradient(215deg,transparent 0 28%,#94aca4 28% 48%,transparent 48%);opacity:.72}
 .guide-scene::after{content:"";position:absolute;left:-2%;right:-2%;bottom:-8px;height:145px;background:radial-gradient(ellipse at 8% 100%,#294e32 0 34%,transparent 35%),radial-gradient(ellipse at 24% 100%,#355f39 0 31%,transparent 32%),radial-gradient(ellipse at 72% 100%,#315b37 0 34%,transparent 35%),radial-gradient(ellipse at 92% 100%,#294e32 0 38%,transparent 39%)}
+.guide-scene::before,.guide-scene::after{pointer-events:none}
 .guide-scene-copy{position:relative;z-index:3;max-width:680px}
 .guide-scene .crumb a{color:#e9f4ea}.guide-scene .crumb{margin-bottom:24px}
 .guide-stage-label{display:inline-flex;align-items:center;gap:8px;background:rgba(25,67,39,.78);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:6px 12px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
@@ -1022,8 +1025,8 @@ body.v5-first-open #rangerFab{display:none!important}
 /* ---------- Version 6.3: illustrated Ranger Randy marketing homepage ---------- */
 .pf-home-v63{background:#fbfaf6;color:#17251b;padding-bottom:24px}
 .pf63-hero{max-width:1180px;margin:0 auto;padding:28px 22px 18px}
-.pf63-hero-grid{display:grid;grid-template-columns:minmax(360px,.82fr) minmax(430px,1.18fr);min-height:690px;border-radius:30px;overflow:hidden;background:#edf7fb;box-shadow:0 18px 55px rgba(22,60,37,.13);position:relative}
-.pf63-copy{padding:62px 24px 48px 46px;position:relative;z-index:2;background:linear-gradient(90deg,#fbfaf6 0%,rgba(251,250,246,.98) 72%,rgba(251,250,246,.15) 100%)}
+.pf63-hero-grid{display:grid;grid-template-columns:minmax(410px,1fr) minmax(430px,1fr);min-height:690px;border-radius:30px;overflow:hidden;background:#edf7fb;box-shadow:0 18px 55px rgba(22,60,37,.13);position:relative}
+.pf63-copy{padding:62px 24px 48px 46px;position:relative;z-index:3;background:linear-gradient(90deg,#fbfaf6 0%,rgba(251,250,246,.98) 72%,rgba(251,250,246,.15) 100%)}
 .pf63-kicker{font-size:13px;letter-spacing:.13em;text-transform:uppercase;font-weight:850;color:#2f7048;margin-bottom:20px}
 .pf63-copy h1{font-size:clamp(46px,5.2vw,72px);line-height:.99;letter-spacing:-.052em;color:#103e22;max-width:580px}
 .pf63-copy h1 em{display:block;font-family:Georgia,'Iowan Old Style','Times New Roman',serif;font-weight:700;font-style:italic;color:#27673e;font-size:.72em;letter-spacing:-.02em;margin-top:13px}
@@ -1287,7 +1290,8 @@ body.trail-mode .trail-steps .step.current .step-body{animation:v614Focus .25s e
 .v620-why{margin-top:12px}.v620-why summary{cursor:pointer;font-size:12px;font-weight:850;color:var(--ink);list-style:none}.v620-why summary::-webkit-details-marker{display:none}.v620-why summary:after{content:" ▾";color:var(--muted)}.v620-why[open] summary:after{content:" ▴"}.v620-why p{margin:7px 0 0;padding:10px 12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--muted);font-size:12.5px;line-height:1.45}
 .v620-test-tools{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}.v620-test-tools h3{font-size:13px;color:var(--ink);margin-bottom:4px}.v620-test-tools>p{font-size:12px;color:var(--muted);margin-bottom:10px}.v620-personas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v620-persona{border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px;text-align:left;cursor:pointer;color:var(--ink)}.v620-persona b{display:block;font-size:12.5px}.v620-persona small{display:block;color:var(--muted);font-size:10.5px;margin-top:2px;line-height:1.35}.v620-persona:hover{background:var(--panel);border-color:#a9bba8}
 .v620-route-map{position:relative;margin-top:18px;padding:22px 14px 28px;background:linear-gradient(#e7f2e0,#d7e8c8);border:1px solid #b9cdae;border-radius:22px;overflow:hidden;min-height:360px}.v620-route-map:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 18%,rgba(255,255,255,.7) 0 2px,transparent 3px),radial-gradient(circle at 85% 72%,rgba(255,255,255,.45) 0 2px,transparent 3px);background-size:46px 46px,60px 60px;opacity:.45}.v620-map-head{position:relative;z-index:2;margin-bottom:12px}.v620-map-head small{font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--done)}.v620-map-head h3{font-size:18px;color:var(--ink);margin-top:2px}.v620-map-line{position:absolute;left:50%;top:86px;bottom:34px;width:10px;transform:translateX(-50%);background:#b58a57;border:2px solid #8d6840;border-radius:99px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.25)}.v620-map-stops{position:relative;z-index:2;display:grid;gap:15px}.v620-map-stop{display:grid;grid-template-columns:1fr 50px 1fr;align-items:center;min-height:52px}.v620-map-stop:nth-child(odd) .v620-stop-card{grid-column:1;justify-self:end;text-align:right}.v620-map-stop:nth-child(even) .v620-stop-card{grid-column:3;justify-self:start}.v620-map-stop:nth-child(odd) .v620-stop-node,.v620-map-stop:nth-child(even) .v620-stop-node{grid-column:2;grid-row:1}.v620-stop-card{max-width:310px;background:rgba(255,255,255,.91);border:1px solid #c5d3bc;border-radius:12px;padding:8px 10px;box-shadow:0 5px 12px rgba(38,69,39,.06)}.v620-stop-card b{display:block;font-size:12px;color:var(--ink)}.v620-stop-card small{font-size:10.5px;color:var(--muted)}.v620-stop-node{width:34px;height:34px;border-radius:50%;justify-self:center;display:grid;place-items:center;background:#f7f2e5;border:3px solid #8d6840;font-size:13px;z-index:3}.v620-map-stop.done .v620-stop-node{background:var(--done);color:#fff;border-color:#155f3d}.v620-map-stop.current .v620-stop-node{width:44px;height:44px;background:#ffd84d;border-color:#8d6818;box-shadow:0 0 0 6px rgba(255,216,77,.28)}.v620-map-stop.current .v620-stop-card{border-color:#d1a727;box-shadow:0 0 0 3px rgba(255,216,77,.2)}.v620-you{display:block;font-size:8px;font-weight:950;letter-spacing:.08em;color:#775a00;margin-top:2px}.v620-randy-map .randy-portrait{width:34px;height:34px}
-.v620-trust{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:10px;font-size:11px;color:var(--muted)}.v620-verified{display:inline-flex;align-items:center;gap:5px;background:#eef8f0;border:1px solid #bcd7c2;color:#28633b;border-radius:99px;padding:5px 8px;font-weight:800}.v620-review{border:0;background:transparent;color:var(--muted);text-decoration:underline;font:750 11px inherit;cursor:pointer}.v620-review.warn{color:#9b5a10}.v620-report-note{display:none;margin-top:8px;padding:8px 10px;background:#fff1dd;border:1px solid #efc892;border-radius:9px;color:#80521b;font-size:11.5px}.v620-report-note.show{display:block}
+.v620-trust{position:relative;z-index:4;display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:10px;font-size:11px;color:var(--muted)}.v620-verified{display:inline-flex;align-items:center;gap:5px;background:#eef8f0;border:1px solid #bcd7c2;color:#28633b;border-radius:99px;padding:5px 8px;font-weight:800}.v620-review{border:0;background:transparent;color:var(--muted);text-decoration:underline;font:750 11px inherit;cursor:pointer}.v620-review.warn{color:#9b5a10}.v620-report-note{position:relative;z-index:4;display:none;margin-top:8px;padding:8px 10px;background:#fff1dd;border:1px solid #efc892;border-radius:9px;color:#80521b;font-size:11.5px}.v620-report-note.show{display:block}
+@media(max-width:700px){.v620-trust{max-width:calc(100% - 145px)}}
 .v620-recovery{display:grid;gap:7px;margin-top:10px}.v620-recovery button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 10px;text-align:left;color:var(--ink);font:750 12px inherit;cursor:pointer}.v620-recovery button:hover{background:var(--panel)}.v620-recovery-result{margin-top:9px;padding:10px;background:var(--panel);border-radius:9px;color:var(--muted);font-size:12px;line-height:1.45}
 @media(max-width:700px){.v620-personas{grid-template-columns:1fr}.v620-route-map{padding:18px 8px 24px}.v620-map-stop{grid-template-columns:1fr 44px 1fr}.v620-stop-card{max-width:145px;padding:7px 8px}.v620-stop-card b{font-size:10.5px}.v620-stop-card small{font-size:9.5px}.v620-map-line{top:80px}}
 
@@ -9169,7 +9173,7 @@ function renderPath(id){
     const brokTag=(variant&&!agnostic)?`<span class="brokmini ${sbrok==="Schwab"?"sch":"fid"}">${sbrok}</span>`:"";
     const g=th&&th.stops&&th.stops[i];
     const shownTitle=alias?slot.title:(agnostic?agnosticTitle(t.title):t.title);
-    const shownTag=alias?slot.tag:(agnostic?"Available for Fidelity or Schwab — pick one and this stop unlocks the exact click-by-click walkthrough.":t.tagline);
+    const shownTag=alias?slot.tag:(agnostic?"Available for Fidelity or Schwab — choose your brokerage when you enter the guide.":t.tagline);
     const inner=`
       ${g?`<div class="pguide">Your guide · <b>${esc(g.c)}</b> <span class="prole">— ${esc(g.r)}</span></div>`:""}
       <h3>${esc(shownTitle)} ${chip}</h3>
@@ -9177,11 +9181,7 @@ function renderPath(id){
       ${alias?`<div class="pim">Re-opens the high-yield savings guide</div>`
         :clickable&&!agnostic?`<div class="pim">~${t.minutes} min · ${t.steps.length} steps</div>`:""}`;
     // the little per-stop override toggle (only when this slot has both brokerages)
-    const override=alias?"":agnostic?`
-      <div class="slotswitch agn">
-        <span class="agnlabel">Unlock with:</span>
-        ${["Fidelity","Schwab"].map(b=>`<button class="ssbtn" data-pathbrok="${b}" aria-label="Choose ${b} for this path">${b}</button>`).join("")}
-      </div>`:variant?`
+    const override=alias||agnostic?"":variant?`
       <div class="slotswitch">
         ${["Fidelity","Schwab"].map(b=>`<button class="ssbtn${sbrok===b?" active":""}" data-path="${p.id}" data-slot="${i}" data-brok="${b}" aria-label="Use ${b} for this stop">${b==="Fidelity"?"Fidelity":"Schwab"}</button>`).join("")}
       </div>`:"";
@@ -9194,6 +9194,8 @@ function renderPath(id){
         <span class="pbox" aria-hidden="true">&#9744;</span>
         ${clickable&&!agnostic
           ?`<a class="pitem-card" href="#/t/${t.id}">${brokTag}${inner}</a>`
+          :clickable&&agnostic
+          ?`<button type="button" class="pitem-card agn path-guide-pick" data-path-guide-pick="${i}">${brokTag}${inner}</button>`
           :`<div class="pitem-card${agnostic?" agn":""}">${brokTag}${inner}</div>`}
         ${override}
       </div>
@@ -9219,6 +9221,26 @@ function renderPath(id){
   });
   // intake quiz
   wireIntake(p,id);
+  // Enter an unresolved brokerage-specific stop first, then choose the provider once.
+  app.querySelectorAll("[data-path-guide-pick]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const i=+btn.dataset.pathGuidePick;
+      const slot=p.guides[i];
+      const body=`<div class="v623-dialog-copy">This walkthrough needs to match the brokerage you use. Pick one now and Randy will take you straight into the correct guide.</div>`;
+      const m=v623OpenModal(v623ModalShell("Which brokerage do you use?","One quick trail choice",body,"Fidelity →","Schwab →"),(modal,close)=>{
+        setPathBrok(p.id,"Fidelity");
+        if(!getBrok())setBrok("Fidelity");
+        close();
+        location.hash="#/t/"+resolveSlot(slot,"Fidelity");
+      });
+      m.querySelector(".v623-secondary").onclick=()=>{
+        setPathBrok(p.id,"Schwab");
+        if(!getBrok())setBrok("Schwab");
+        m.remove();
+        location.hash="#/t/"+resolveSlot(slot,"Schwab");
+      };
+    });
+  });
   // per-stop override toggle
   app.querySelectorAll(".ssbtn").forEach(btn=>{
     btn.addEventListener("click",()=>{
