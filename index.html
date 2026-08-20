@@ -8694,7 +8694,7 @@ function renderTutorial(id,focusStep){
     html+=`<div class="finish">
       <h2>${esc(t.finish.title)}</h2>
       <p>${esc(t.finish.body)}</p>
-      ${v68NextBestHTML(t.id,done===total)}
+      ${t.brokeragePicker&&!getBrok()?`<div class="next-best pending" id="nextBestBox"><div class="nb-kicker">One choice before the next trail</div><h3>Choose Fidelity or Schwab above</h3><p>Randy needs that choice before opening provider-specific directions.</p><div class="nb-reason"><b>Why this comes next:</b> Your next guide must match the brokerage you choose.</div></div>`:v68NextBestHTML(t.id,done===total)}
       <a class="camp-return" href="#/">Return to Camp</a>
     </div>`;
   }
@@ -8904,6 +8904,8 @@ function renderTutorial(id,focusStep){
         c.innerHTML=pickMsg(v);
       }
       c.classList.add("show");
+      if(returnToRandy||returnToTrail)document.getElementById("nextBestBox")?.remove();
+      else if(getProg(id).length>=t.steps.length)v68RefreshNextBest(id);
     });
   });
 }
@@ -9278,10 +9280,10 @@ function renderChanges(){
 /* ---------- Version 5 Financial GPS ---------- */
 const V5_KEY="pf2-v5-gps-v1";
 const V5_GOALS={
-  invest:{icon:"🌱",title:"Start investing",sub:"I want a clear first step",path:"just-starting",profile:{life:["Just getting started"],goals:["Start investing"]}},
-  retire:{icon:"🏔️",title:"Save for retirement",sub:"Build or improve my retirement plan",path:"build-wealth",profile:{goals:["Save for retirement"]}},
-  emergency:{icon:"🛟",title:"Build emergency savings",sub:"Make my cash safer and more useful",path:"cash-management",profile:{goals:["Build emergency savings"]}},
-  rollover:{icon:"🧳",title:"Move an old 401(k)",sub:"Handle money from a former employer",path:"old-401k",profile:{life:["New job"],goals:["Move an old 401(k)"]}},
+  invest:{icon:"🌱",title:"Start investing",sub:"I want a clear first step",path:"first-investment",profile:{life:["Just getting started"],goals:["Start investing"]}},
+  retire:{icon:"🏔️",title:"Save for retirement",sub:"Build or improve my retirement plan",path:"where-to-start",profile:{goals:["Save for retirement"]}},
+  emergency:{icon:"🛟",title:"Build emergency savings",sub:"Make my cash safer and more useful",path:"idle-cash",profile:{goals:["Build emergency savings"]}},
+  rollover:{icon:"🧳",title:"Move an old 401(k)",sub:"Handle money from a former employer",path:"changed-jobs",profile:{life:["New job"],goals:["Move an old 401(k)"]}},
   kids:{icon:"🧸",title:"Save for my kids",sub:"College savings and family protection",path:"new-parent",profile:{life:["Have children"],goals:["Save for college","Protect my family"]}},
   taxes:{icon:"🗝️",title:"Reduce taxes",sub:"Find tax-smart account strategies",path:"high-earner",profile:{life:["High earner"],goals:["Reduce taxes"]}}
 };
@@ -9289,8 +9291,8 @@ function getV5(){try{return JSON.parse(localStorage.getItem(V5_KEY)||"null")||{}
 function setV5(v){try{localStorage.setItem(V5_KEY,JSON.stringify(v))}catch(e){}}
 function v5SaveProfile(state){const goal=V5_GOALS[state.goal];if(!goal)return;const p=getProfile();for(const k of ["life","accounts","goals","brokerage"]){p[k]=Array.isArray(p[k])?p[k]:[]}for(const k of ["life","goals"]){for(const x of goal.profile[k]||[])if(!p[k].includes(x))p[k].push(x)}if(state.brokerage&&!p.brokerage.includes(state.brokerage))p.brokerage.push(state.brokerage);if(state.hasAccount){const map={roth:"Roth IRA",work:"401(k) / 403(b)",brokerage:"Taxable brokerage",none:null};const x=map[state.hasAccount];if(x&&!p.accounts.includes(x))p.accounts.push(x)}setProfile(p)}
 function v5Recommendation(state){const g=V5_GOALS[state.goal]||V5_GOALS.invest;let pathId=g.path,why=`You said your main destination is “${g.title}.”`;
- if(state.goal==="invest"&&state.hasAccount==="roth"){pathId="build-wealth";why="You already have a Roth IRA, so the next useful move is putting it to work."}
- if(state.goal==="retire"&&state.hasAccount==="none"){pathId="just-starting";why="You want to save for retirement and do not have an investment account yet, so we’ll start with the foundation."}
+ if(state.goal==="invest"&&state.hasAccount==="roth"){pathId="first-investment";why="You already have a Roth IRA, so the next useful move is putting it to work."}
+ if(state.goal==="retire"&&state.hasAccount==="none"){pathId="where-to-start";why="You want to save for retirement and do not have an investment account yet, so we’ll start with the foundation."}
  if(state.goal==="emergency"&&state.cashReady==="yes"){pathId="idle-cash";why="You already have emergency savings; the next step is making sure that cash earns something."}
  if(state.goal==="rollover")why="You have money at a former employer, so this route keeps the transfer orderly and avoids unnecessary selling.";
  if(state.goal==="kids")why="You are saving for children, so this route prioritizes the accounts and protections that benefit from time.";
@@ -9308,7 +9310,7 @@ function v66AnswerLabel(state){const labels=[];const g=V5_GOALS[state.goal];if(g
 function v66RangerLine(state,q,step){if(step===0)return "I’ll ask only what I need to choose a sensible first trail. You can change any answer later.";const g=V5_GOALS[state.goal];if(q.id==="experience")return `Good choice. ${g?g.title:"That goal"} can mean different things, so let’s pick the right starting level.`;if(q.id==="hasAccount")return state.experience==="active"?"That helps. Now I just need to know what type of account is already in place.":"Thanks—that gives me a better sense of how much background to include.";if(q.id==="cashReady")return "Got it. I won’t ask for balances or connect to your bank.";if(q.id==="has529")return "Thanks. Family finances can branch in several directions, so I’ll keep the first recommendation focused.";if(q.id==="rolloverStage")return "Good—rollovers are much easier when we first establish exactly where the money is sitting.";if(q.id==="brokerage")return "One last detail, then I’ll give you one clear place to begin.";return "Thanks. That helps me narrow the route."}
 function renderV5Onboarding(step=-1,state=getV5().draft||{}){document.body.classList.add('v5-first-open');
  if(step<0){app.innerHTML=`<main class="v5-shell"><section class="v5-card v66-intro"><div class="randy-stage">${rangerRandy("hero",false)}</div><div class="v5-kicker">A quick conversation with Ranger Randy</div><h1>Let’s find the right first trail for you.</h1><p class="v5-copy">I’ll ask one question at a time and use your answers to recommend one practical place to begin. I won’t connect to your accounts or ask for balances.</p><div class="v66-intro-actions"><button class="v5-primary" id="v66Begin">Start the conversation →</button><a class="v5-secondary" href="#/explore">I’m just browsing</a></div></section></main>`;window.scrollTo(0,0);document.getElementById('v66Begin').onclick=()=>renderV5Onboarding(0,state);return}
- const plan=v5QuestionPlan(state);if(step>=plan.length){v5SaveProfile(state);setV5({complete:true,state,draft:null});return renderV5Result(state)}const q=plan[step],facts=v66AnswerLabel(state);let h=`<main class="v5-shell"><section class="v5-card">${step?`<button class="v5-back" id="v5Back">← Back</button>`:""}<div class="v5-progress" aria-label="Question ${step+1} of ${plan.length}">${plan.map((_,i)=>`<i class="${i<=step?'on':''}"></i>`).join('')}</div><div class="v66-dialogue"><span class="randy-mini">${rangerRandy("avatar",false)}</span><div class="v66-bubble"><div class="v66-question-label">Ranger Randy</div>${esc(v66RangerLine(state,q,step))}</div></div><div class="v5-kicker">Question ${step+1} of ${plan.length}</div><h1>${esc(q.title)}</h1><p class="v5-copy">${esc(q.copy)}</p>${facts.length?`<div class="v66-summary" aria-label="What Ranger Randy has learned">${facts.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:""}<div class="v5-actions">`;
+ const plan=v5QuestionPlan(state);if(step>=plan.length){v5SaveProfile(state);setV5({complete:true,state,draft:null});return renderV5Result(state)}const q=plan[step],facts=v66AnswerLabel(state),progressText=step===0?"Starting question":`Question ${step+1} of ${plan.length}`,progressDots=step===0?'<i class="on"></i>':plan.map((_,i)=>`<i class="${i<=step?'on':''}"></i>`).join('');let h=`<main class="v5-shell"><section class="v5-card">${step?`<button class="v5-back" id="v5Back">← Back</button>`:""}<div class="v5-progress" aria-label="${progressText}">${progressDots}</div><div class="v66-dialogue"><span class="randy-mini">${rangerRandy("avatar",false)}</span><div class="v66-bubble"><div class="v66-question-label">Ranger Randy</div>${esc(v66RangerLine(state,q,step))}</div></div><div class="v5-kicker">${progressText}</div><h1>${esc(q.title)}</h1><p class="v5-copy">${esc(q.copy)}</p>${facts.length?`<div class="v66-summary" aria-label="What Ranger Randy has learned">${facts.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:""}<div class="v5-actions">`;
  q.choices.forEach(c=>h+=`<button class="v5-choice" data-v="${esc(c.v)}"><span class="ico">${c.icon}</span><span><strong>${esc(c.title)}</strong><small>${esc(c.sub)}</small></span><span class="arrow">→</span></button>`);h+=`</div><div class="v66-thinking" id="v66Thinking">Randy is updating your route <i></i><i></i><i></i></div><p class="v66-help">Choose the closest answer. You can revise it later.</p><a class="v5-secondary" href="#/explore">I’d rather browse every trail</a></section></main>`;app.innerHTML=h;window.scrollTo(0,0);document.querySelectorAll('.v5-choice').forEach(b=>b.onclick=()=>{document.querySelectorAll('.v5-choice').forEach(x=>x.disabled=true);b.classList.add('is-selected');document.getElementById('v66Thinking').classList.add('show');const ns={...state,[q.id]:b.dataset.v};setV5({...getV5(),draft:ns});if(q.id==='brokerage'&&b.dataset.v==='Other / undecided'){try{localStorage.setItem('pf2-brokerage-compare-return','1')}catch(e){}setTimeout(()=>{location.hash='#/t/general-choose-brokerage'},240);return}setTimeout(()=>renderV5Onboarding(step+1,ns),420)});document.getElementById('v5Back')?.addEventListener('click',()=>renderV5Onboarding(Math.max(0,step-1),state))}
 function renderV5Result(state){document.body.classList.remove('v5-first-open');const r=v5Recommendation(state),st=pathStats(r.path);app.innerHTML=`<main class="v5-shell"><section class="v5-card"><div class="v5-ranger"><span class="face">${rangerRandy("avatar",false)}</span><div><div class="v5-kicker">Your route is ready</div><strong>One clear next move</strong></div></div><span class="v5-result-tag">Recommended first hike</span><h1>${esc(r.path.title)}</h1><p class="lead">${esc(r.path.who)}</p><div class="v5-why"><strong>Why this trail:</strong> ${esc(r.why)}</div><div class="v5-meta"><span>${st.total} guide stops</span><span>Progress saves automatically</span><span>You can change routes anytime</span></div><a class="v5-primary" href="#/p/${r.path.id}">Start this hike →</a><a class="v5-secondary" href="#/explore">Explore every trail instead</a></section></main>`;window.scrollTo(0,0)}
 
@@ -9726,18 +9728,26 @@ if(typeof V621_INTENTS!=="undefined")V621_INTENTS.push(
 
 /* ---------- Version 6.23: Confidence & Polish ---------- */
 function v623IsConsequential(t,s){
-  const hay=((s?.title||"")+" "+(s?.body||"")+" "+(s?.note?.title||"")+" "+(s?.note?.body||"")).toLowerCase();
-  const terms=["submit","place order","preview order","review order","confirm order","buy and","purchase","transfer","rollover","roll over","convert","conversion","beneficiar","withdraw","distribution","security","two-factor","2fa","link bank","bank account","wire","recurring","automatic investment","drip","reinvest","open the account","open account","final review","sign and submit"];
-  return terms.some(x=>hay.includes(x));
+  if(!t||t.brokerage==="General")return false;
+  const title=String(s?.title||"").toLowerCase();
+  const actions=[
+    /submit/,/place (?:the )?(?:buy |sell )?order/,/review(?: everything)? and open/,
+    /review and submit/,/review, submit/,/review, place/,/preview(?:, then)? (?:and )?place/,
+    /link your bank/,/add (?:a )?(?:primary|contingent) beneficiar/,
+    /start the roth conversion/,/convert the traditional ira/,/set up the distribution/,
+    /set tax withholding/,/confirm —/,/pick the start date.*confirm/,
+    /enter their details and set the level/
+  ];
+  return actions.some(pattern=>pattern.test(title));
 }
 function v623SafetyChecks(t,s){
-  const hay=((s?.title||"")+" "+(s?.body||"")+" "+(s?.note?.body||"")).toLowerCase();
-  if(/ticker|order|buy|fund|etf|mutual fund/.test(hay))return ["The account shown is the account you intend to use.","The ticker/fund name matches the investment you intended.","The dollar amount or share quantity is correct.","The action says Buy (not Sell) and there is no unexpected fee or warning."];
-  if(/rollover|roll over|transfer|distribution|withdraw/.test(hay))return ["The source and destination accounts are correct.","The tax type (pre-tax/Traditional vs. Roth) is staying compatible unless you intentionally want a taxable conversion.","The amount or assets being moved are what you intended.","If this is meant to stay tax-deferred, the transaction is structured as the intended transfer/rollover rather than an accidental cash withdrawal."];
-  if(/beneficiar/.test(hay))return ["The people or entities listed are the ones you intend.","Names and identifying details are correct.","Percentages or shares total the amount required by the brokerage.","You understand this designation can affect who receives the account at death."];
-  if(/security|two-factor|2fa|authenticator/.test(hay))return ["The phone/email/authenticator belongs to you and is accessible.","You have saved any recovery method or backup code offered.","You recognize the device/session you are securing."];
-  if(/recurring|automatic|drip|reinvest/.test(hay))return ["The correct account and investment are selected.","The amount/frequency or dividend choice matches what you intended.","You know when the setting starts and how to change it later."];
-  if(/open account|open the account|sign and submit|final review/.test(hay))return ["Your legal name and contact information are correct.","The account type is the one you meant to open.","Any tax, beneficiary, or employment information shown is accurate to the best of your knowledge.","There is no unexpected fee, optional feature, or consent you do not understand."];
+  const title=String(s?.title||"").toLowerCase(),hay=(title+" "+String(s?.body||"")).toLowerCase();
+  if(/beneficiar/.test(title))return ["The people or entities listed are the ones you intend.","Names and identifying details are correct.","Percentages or shares total the amount required by the brokerage.","You understand this designation can affect who receives the account at death."];
+  if(/recurring|automatic|start date/.test(title))return ["The correct account and investment are selected.","The amount and frequency match what you intended.","You know when the setting starts and how to change it later."];
+  if(/open|application/.test(title)&&/open|submit/.test(title))return ["Your legal name and contact information are correct.","The account type is the one you meant to open.","Any tax, beneficiary, or employment information shown is accurate to the best of your knowledge.","There is no unexpected fee, optional feature, or consent you do not understand."];
+  if(/rollover|transfer|withdraw|distribution|conversion|convert|bank/.test(hay))return ["The source and destination accounts are correct.","The tax type (pre-tax/Traditional vs. Roth) is staying compatible unless you intentionally want a taxable conversion.","The amount or assets being moved are what you intended.","If this is meant to stay tax-deferred, the transaction is structured as the intended transfer/rollover rather than an accidental cash withdrawal."];
+  if(/order|buy|sell|ticker|fund|etf/.test(hay))return ["The account shown is the account you intend to use.","The ticker/fund name matches the investment you intended.","The dollar amount or share quantity is correct.","The action (Buy or Sell) matches your intent and there is no unexpected fee or warning."];
+  if(/access|level/.test(title))return ["The person listed is the one you intend to authorize.","The access level grants only the permissions you intend.","You understand how to review or revoke this access later."];
   return ["The account or destination shown is the one you intended.","The amount/details match what you meant to enter.","There is no unexpected fee, tax warning, or irreversible choice on screen."];
 }
 function v623ModalShell(title,eyebrow,body,primary="Continue",secondary="Go back"){
@@ -9761,6 +9771,15 @@ function v623AlreadyDone(t){
   v623OpenModal(v623ModalShell("Already completed this trail?","Catch PathFinder up",body,"Yes — mark trail complete","Cancel"),(m,close)=>{setProg(t.id,t.steps.map((_,i)=>i));try{localStorage.setItem("pf2-last-completed-trail",JSON.stringify({id:t.id,at:Date.now(),source:"already-done"}))}catch(e){}close();v623ShowCompletion(t);});
 }
 function v623ShowCompletion(t){
+  if(t.brokeragePicker&&!getBrok()){
+    renderTutorial(t.id);
+    setTimeout(()=>{
+      const picker=app.querySelector('.picker');
+      picker?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+      picker?.querySelector('.pickcard')?.focus();
+    },250);
+    return;
+  }
   document.getElementById('v623Complete')?.remove();const n=v68NextBestTrail(t.id);const route=v68PreferredRoute(t.id);const routeName=n?.route?.title||route?.title||"Your route";
   const next=n?`<div class="v623-next"><small>Your next recommended step</small><b>${esc(n.t.title)}</b><p><b>Why this comes next:</b> ${esc(n.reason||n.t.tagline||"")}</p><div class="v623-next-meta"><span>Stop ${n.position} of ${n.total}</span><span>About ${n.t.minutes||5} min</span><span>${esc(n.route.title)}</span></div></div>`:`<div class="v623-next"><small>Route complete</small><b>You’ve reached the end of this route.</b><p>Explore the park when you’re ready to choose another destination.</p></div>`;
   document.body.insertAdjacentHTML('beforeend',`<div class="v623-complete" id="v623Complete" role="dialog" aria-modal="true" aria-labelledby="v623CompleteTitle"><section class="v623-complete-card"><div class="v623-complete-randy">${rangerRandy("hero",false)}</div><div class="eyebrow">🏕 Checkpoint reached</div><h2 id="v623CompleteTitle">${esc(t.title)} complete</h2><p>Randy moved your marker forward on <b>${esc(routeName)}</b>. Your progress is saved.</p>${next}<div class="v623-complete-actions">${n?`<a class="v623-next-btn" href="#/t/${esc(n.t.id)}">Continue my path →</a>`:`<a class="v623-next-btn" href="#/explore">Choose another trail →</a>`}<a class="v623-camp-btn" href="#/">Return to Camp</a></div></section></div>`);
@@ -9768,6 +9787,7 @@ function v623ShowCompletion(t){
 }
 function v623EnhanceTrail(id){
   const t=getTut(id);if(!t)return;const prog=getProg(id),allDone=prog.length>=t.steps.length;
+  if(app._v623WatchCompletion)app.removeEventListener('click',app._v623WatchCompletion);
   const before=app.querySelector('.before')||app.querySelector('.steps');if(before&&!app.querySelector('.v623-catchup'))before.insertAdjacentHTML('beforebegin',`<div class="v623-catchup"><div><b>Already completed this in real life?</b><small>You can catch PathFinder up without walking through steps you’ve already done.</small></div><button type="button" ${allDone?'disabled aria-disabled="true"':''}>${allDone?'Trail already complete':'I already did this ✓'}</button></div>`);
   app.querySelector('.v623-catchup button:not([disabled])')?.addEventListener('click',()=>v623AlreadyDone(t));
   const guarded=new Set();
@@ -9775,7 +9795,7 @@ function v623EnhanceTrail(id){
   app.querySelectorAll('.walk-next').forEach(el=>guard(el,+el.dataset.walk));
   app.querySelectorAll('.stepcheck').forEach(el=>guard(el,+el.dataset.i));
   const mobile=app.querySelector('.v614-mobile-complete');if(mobile){mobile.addEventListener('click',e=>{const i=+mobile.dataset.i;if(mobile.dataset.v623Proceed==='1'){delete mobile.dataset.v623Proceed;return}if(!Number.isFinite(i)||getProg(id).includes(i)||!v623IsConsequential(t,t.steps[i]))return;e.preventDefault();e.stopImmediatePropagation();v623SafetyModal(t,t.steps[i],i,()=>{mobile.dataset.v623Proceed='1';mobile.click()})},true)}
-  const watchCompletion=e=>{const btn=e.target.closest('.walk-next,.stepcheck,.v614-mobile-complete');if(!btn)return;setTimeout(()=>{if(getProg(id).length>=t.steps.length&&!document.getElementById('v623Complete'))v623ShowCompletion(t)},220)};app.addEventListener('click',watchCompletion);
+  const watchCompletion=e=>{const btn=e.target.closest('.walk-next,.stepcheck,.v614-mobile-complete');if(!btn)return;setTimeout(()=>{if(getProg(id).length>=t.steps.length&&!document.getElementById('v623Complete'))v623ShowCompletion(t)},220)};app._v623WatchCompletion=watchCompletion;app.addEventListener('click',watchCompletion);
 }
 const v623_renderTutorial=renderTutorial;renderTutorial=function(id,focusStep){v623_renderTutorial(id,focusStep);v623EnhanceTrail(id)};
 
@@ -9826,6 +9846,8 @@ function pf625AfterRoute(){
 
 /* ---------- router ---------- */
 function route(){
+  document.getElementById('v623Complete')?.remove();
+  document.getElementById('v623Modal')?.remove();
   ensureRanger();
   const h=location.hash||"#/";
   const inTrailMode=/^#\/t\//.test(h);
