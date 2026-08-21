@@ -7933,13 +7933,14 @@ function normalizeIndexList(v){
 function getProg(id){
   try{
     const raw=JSON.parse(localStorage.getItem(progKey(id))||"[]");
-    const clean=normalizeIndexList(raw);
+    const t=getTut(id),max=t&&Array.isArray(t.steps)?t.steps.length:Infinity;
+    const clean=normalizeIndexList(raw).filter(n=>n<max);
     /* Self-heal legacy/corrupt progress so future reads are safe. */
     if(!Array.isArray(raw)||JSON.stringify(raw)!==JSON.stringify(clean)){
       localStorage.setItem(progKey(id),JSON.stringify(clean));
     }
     return clean;
-  }catch(e){return[]}
+  }catch(e){try{localStorage.setItem(progKey(id),"[]")}catch(x){}return[]}
 }
 function setProg(id,arr){
   try{localStorage.setItem(progKey(id),JSON.stringify(normalizeIndexList(arr)))}catch(e){}
@@ -7969,7 +7970,7 @@ const INTAKE_QUESTIONS = [
 ];
 function getIntake(){
   try{const v=JSON.parse(localStorage.getItem("pf2-intake")||"null");
-    if(!v||typeof v!=="object")return null;
+    if(!v||typeof v!=="object"||Array.isArray(v)){if(v!==null)localStorage.removeItem("pf2-intake");return null}
     /* legacy: cushion:"yes" meant "one month in cash" and was wrongly treated as
        proof of a high-yield account. Drop it so the question gets asked again.
        "hysa" was the short-lived 3-6 month answer and maps cleanly onto "full". */
@@ -8153,11 +8154,12 @@ function getProfile(){
   const empty={brokerage:[],life:[],accounts:[],goals:[]};
   try{
     const raw=JSON.parse(localStorage.getItem(PROFILE_KEY)||"null");
-    if(!raw||typeof raw!=="object"||Array.isArray(raw))return empty;
+    if(!raw||typeof raw!=="object"||Array.isArray(raw)){if(raw!==null)localStorage.setItem(PROFILE_KEY,JSON.stringify(empty));return empty}
     const clean={};
     for(const k of Object.keys(empty))clean[k]=Array.isArray(raw[k])?raw[k].filter(x=>typeof x==="string"):[];
+    if(JSON.stringify(raw)!==JSON.stringify(clean))localStorage.setItem(PROFILE_KEY,JSON.stringify(clean));
     return clean;
-  }catch(e){return empty}
+  }catch(e){try{localStorage.setItem(PROFILE_KEY,JSON.stringify(empty))}catch(x){}return empty}
 }
 function setProfile(p){try{localStorage.setItem(PROFILE_KEY,JSON.stringify(p))}catch(e){}}
 function profileReady(){const p=getProfile();return Object.values(p).some(a=>a&&a.length)}
@@ -9287,7 +9289,18 @@ const V5_GOALS={
   kids:{icon:"🧸",title:"Save for my kids",sub:"College savings and family protection",path:"new-parent",profile:{life:["Have children"],goals:["Save for college","Protect my family"]}},
   taxes:{icon:"🗝️",title:"Reduce taxes",sub:"Find tax-smart account strategies",path:"high-earner",profile:{life:["High earner"],goals:["Reduce taxes"]}}
 };
-function getV5(){try{return JSON.parse(localStorage.getItem(V5_KEY)||"null")||{}}catch(e){return {}}}
+function getV5(){
+  try{
+    const raw=JSON.parse(localStorage.getItem(V5_KEY)||"null");
+    if(!raw||typeof raw!=="object"||Array.isArray(raw)){if(raw!==null)localStorage.removeItem(V5_KEY);return {}}
+    const state=raw.state&&typeof raw.state==="object"&&!Array.isArray(raw.state)?raw.state:null;
+    const draft=raw.draft&&typeof raw.draft==="object"&&!Array.isArray(raw.draft)?raw.draft:null;
+    const complete=raw.complete===true&&!!state&&!!V5_GOALS[state.goal]&&["Fidelity","Schwab"].includes(state.brokerage);
+    const clean={complete,state:complete?state:null,draft:complete?null:(draft||state||null)};
+    if(JSON.stringify(raw)!==JSON.stringify(clean))localStorage.setItem(V5_KEY,JSON.stringify(clean));
+    return clean;
+  }catch(e){try{localStorage.removeItem(V5_KEY)}catch(x){}return {}}
+}
 function setV5(v){try{localStorage.setItem(V5_KEY,JSON.stringify(v))}catch(e){}}
 function v5SaveProfile(state){const goal=V5_GOALS[state.goal];if(!goal)return;const p=getProfile();for(const k of ["life","accounts","goals","brokerage"]){p[k]=Array.isArray(p[k])?p[k]:[]}for(const k of ["life","goals"]){for(const x of goal.profile[k]||[])if(!p[k].includes(x))p[k].push(x)}if(state.brokerage&&!p.brokerage.includes(state.brokerage))p.brokerage.push(state.brokerage);if(state.hasAccount){const map={roth:"Roth IRA",work:"401(k) / 403(b)",brokerage:"Taxable brokerage",none:null};const x=map[state.hasAccount];if(x&&!p.accounts.includes(x))p.accounts.push(x)}setProfile(p)}
 function v5Recommendation(state){const g=V5_GOALS[state.goal]||V5_GOALS.invest;let pathId=g.path,why=`You said your main destination is “${g.title}.”`;
