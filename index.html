@@ -9824,6 +9824,7 @@ function pf625VisibleDialog(){
 function pf625ActivateDialog(dialog){
   if(!dialog||dialog.dataset.pf625Active)return;dialog.dataset.pf625Active="1";
   const root=dialog.parentElement;const trigger=pf625DialogTrigger;
+  if(!root)return;
   const focusables=()=>[...dialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(x=>x.getClientRects().length);
   const restore=()=>{if(trigger&&document.contains(trigger))requestAnimationFrame(()=>trigger.focus({preventScroll:true}))};
   const watch=new MutationObserver(()=>{if(!document.contains(root)||root.hidden||getComputedStyle(root).display==="none"){watch.disconnect();restore()}});watch.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:["hidden","style","class"]});
@@ -9848,6 +9849,7 @@ function pf625AfterRoute(){
 function route(){
   document.getElementById('v623Complete')?.remove();
   document.getElementById('v623Modal')?.remove();
+  document.getElementById('v622Explain')?.remove();
   ensureRanger();
   const h=location.hash||"#/";
   const inTrailMode=/^#\/t\//.test(h);
