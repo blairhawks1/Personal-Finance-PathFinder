@@ -16,8 +16,8 @@ The current app now matches the consolidated **143-checkpoint** selection. Those
 
 ## How to use the CSV
 
-1. Filter **Priority** to `Capture`.
-2. Work by **Provider**, then **Guide title**, then **Step**.
+1. Start at **Guide order** 1 and finish one guide before moving to the next.
+2. Filter **Priority** to `Capture` to hide anything already recorded in the manifest.
 3. Save the image using **Filename** exactly under the app's `img/` folder.
 4. Check **Reused by** before recapturing a screen shared by more than one step.
 5. After adding files, update the `CAPTURED` manifest in `index.html` with the capture date and regenerate this sheet.
