@@ -28,7 +28,8 @@ for(const tutorial of tutorials.filter(t=>t.status==='ready')){
     }
   });
 }
-const rows=[...references.values()].sort((a,b)=>Math.min(...a.refs.map(r=>screenshotGuideRank(r.guideId)))-Math.min(...b.refs.map(r=>screenshotGuideRank(r.guideId)))||a.refs[0].step-b.refs[0].step||a.file.localeCompare(b.file));
+const platformRank={Desktop:0,App:1,Single:2};
+const rows=[...references.values()].sort((a,b)=>Math.min(...a.refs.map(r=>screenshotGuideRank(r.guideId)))-Math.min(...b.refs.map(r=>screenshotGuideRank(r.guideId)))||platformRank[a.platform]-platformRank[b.platform]||a.refs[0].step-b.refs[0].step||a.file.localeCompare(b.file));
 const quote=value=>`"${String(value??'').replaceAll('"','""')}"`;
 const headers=['Guide order','Priority','Status','Filename','Platform','Provider','Guide ID','Guide title','Step','What to capture','Reused by','Manifest capture date'];
 const csv=[headers.map(quote).join(',')];
